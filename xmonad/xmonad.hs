@@ -7,8 +7,7 @@
 -- amixer               -- for volume control(in alsa-utils)
 -- scrot                -- for screenshot (gnome-screenshot -a can not show border clearly)
 -- udiskie              -- for automount.
--- trayer               -- for trayer support
--- blueman              -- for bluetooth
+-- trayer               -- for trayer support( install trayer-srg for multi-monitor support)
 
 import XMonad
 import XMonad.Actions.CycleWindows -- classic alt-tab
@@ -72,27 +71,31 @@ myStartupHook = do
     spawn "xset -b"
     -- set default cursor
     spawn "xsetroot -cursor_name left_ptr"
-    -- trayer
-    spawn "pgrep -x trayer ||trayer --edge top --align right --widthtype pixel --width 146 --transparent true --alpha 0 --tint 0xC7B7A0 --height 24 --padding 1"
+    -- system tray.
+    spawn "pgrep -x trayer || trayer --edge top --align right --widthtype pixel --width 160 --transparent true --alpha 0 --tint 0x1A1918 --heighttype pixel --height 24 --padding 1"
     -- input method
     spawn "pgrep -x fcitx || fcitx"
-    -- blueman
-    -- spawn "pgrep -x blueman-applet || blueman-applet"
     -- modify by `xrandr -q`
-    spawn "/usr/bin/xrandr --auto --output LVDS1 --primary --auto --output HDMI1 --right-of LVDS1 --auto --output VGA1 --right-of LVDS1"
+    spawn "/usr/bin/xrandr --auto --output eDP1 --primary --auto --output HDMI1 --right-of eDP1 --auto --output VGA1 --right-of eDP1"
     -- xautolock daemons
     spawn "pgrep -x xautolock || xautolock -time 10 -locker sxlock -killtime 120 -killer \"systemctl hibernate\""
     -- lock after suspend or hibernate
     -- spawn "pgrep -x xss-lock || xss-lock -- /usr/bin/sxlock"
     -- automount
-    -- spawn "pgrep -x udiskie || udiskie -2"
+    spawn "pgrep -x udiskie || udiskie -2"
     -- background setting
     spawn "sleep 0.1; /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg"
+    -- screensaver daemons
+    -- spawn "pgrep -x xscreensaver || xscreensaver"
+    -- spawn "pgrep -x xautolock || xautolock -time 5 -locker \"xscreensaver-command -lock\""
+    spawn "pgrep -x xautolock || xautolock -time 5 -locker \"cinnamon-screensaver-command -l\""
     -- terminal
     spawn "pgrep -x xfce4-terminal || xfce4-terminal"
     spawn "pgrep -x tilda || tilda -h"
     -- firefox
     spawn "pgrep -x firefox || firefox"
+    -- thunderbird
+    spawn "pgrep -x thunderbird || thunderbird"
     -- pidgin
     -- spawn "pgrep -x pidgin || sleep 5 && pidgin"
     -- telegram
@@ -137,10 +140,10 @@ myKeys =
   , ((controlMask .|. shiftMask, xK_Insert), spawn "systemctl poweroff")
   -- applications key map
   , ((myModMask .|. shiftMask, xK_w), spawn "firefox")
-  , ((myModMask .|. shiftMask, xK_f), spawn "thunar")
+  , ((myModMask .|. shiftMask, xK_f), spawn "nemo --no-desktop")
   , ((myModMask .|. shiftMask, xK_m), spawn "thunderbird")
   , ((myModMask .|. shiftMask, xK_p), spawn "pidgin")
-  -- , ((myModMask .|. shiftMask, xK_v), spawn "virt-viewer -f -c qemu:///system win7")
+  , ((myModMask .|. shiftMask, xK_v), spawn "virt-viewer -c qemu:///system win7")
   -- volume control
   , ((0 , xF86XK_AudioLowerVolume), spawn "amixer set Master 4%-")
   , ((0 , xF86XK_AudioRaiseVolume), spawn "amixer set Master 4%+")
@@ -165,9 +168,9 @@ myLayout = smartBorders ( full ||| mtiled ||| tiled )
 --
 myLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }
 
-myDzenStatus = "dzen2 -xs 1 -w 700 -ta 'l'" ++ myDzenStyle
-myDzenConky  = "conky -c ~/.xmonad/conkyrc | dzen2 -xs 1 -x 700 -w 520 -ta 'r'" ++ myDzenStyle
-myDzenStyle  = " -u -h '24' -fg '#222222' -bg '#C7B7A0' -fn 'arial:bold:size=11'"
+myDzenStatus = "dzen2 -xs 1 -w 1120 -ta 'l'" ++ myDzenStyle
+myDzenConky  = "conky -c ~/.xmonad/conkyrc | dzen2 -xs 1 -x 1120 -w 640 -ta 'r'" ++ myDzenStyle
+myDzenStyle  = " -u -h '24' -fg '#777777' -bg '#222222' -fn 'arial:bold:size=11'"
 
 myDzenPP  = dzenPP
     { ppCurrent = dzenColor "#3399ff" "" . wrap " " ""
