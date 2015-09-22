@@ -98,8 +98,9 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='Source Han Sans',
-    fontsize=12,
+    # font='Source Han Sans',
+    font='文泉驿正黑',
+    fontsize=14,
     padding=1,
 )
 
@@ -111,12 +112,14 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
-                # widget.Net(interface='enp7s0', update_interval=2),
-                widget.Net(interface='wlp8s0', update_interval=2),
+                widget.Sep(),
+                widget.Net(interface='enp4s0f1', update_interval=2),
+                widget.Sep(),
+                widget.Net(interface='wlp3s0', update_interval=2),
                 widget.CPUGraph(frequency=2),
                 widget.ThermalSensor(),
                 widget.Sep(),
-                widget.Battery(battery_name='BAT1'),
+                widget.Battery(battery_name='BAT0'),
                 # widget.Wlan(interface='wlp8s0', update_interval=2),
                 widget.Systray(),
                 widget.Clock(format='%H:%M %m-%d'),
