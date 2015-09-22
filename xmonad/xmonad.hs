@@ -1,0 +1,183 @@
+
+-- needed software:
+-- conky dzen2 xdotool  -- for status bar
+-- feh                  -- for setting background
+-- xrander              -- for multi-head
+-- gmrun                -- for quick launch
+-- amixer               -- for volume control(in alsa-utils)
+-- scrot                -- for screenshot (gnome-screenshot -a can not show border clearly)
+-- udiskie              -- for automount.
+-- trayer               -- for trayer support
+-- blueman              -- for bluetooth
+
+import XMonad
+import XMonad.Actions.CycleWindows -- classic alt-tab
+import XMonad.Actions.CycleWS      -- cycle thru WS', toggle last WS
+import XMonad.Actions.DwmPromote   -- swap master like dwm
+import XMonad.Hooks.DynamicLog     -- statusbar
+import XMonad.Hooks.EwmhDesktops   -- fullscreenEventHook fixes chrome fullscreen
+import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
+import XMonad.Hooks.UrgencyHook    -- window alert bells
+import XMonad.Layout.Named         -- custom layout names
+import XMonad.Layout.NoBorders     -- smart borders on solo clients
+import XMonad.Util.EZConfig        -- append key/mouse bindings
+import XMonad.Util.Run(spawnPipe)  -- spawnPipe and hPutStrLn
+import System.IO                   -- hPutStrLn scope
+import Control.Monad(liftM2)
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.IM
+import XMonad.Hooks.ManageHelpers(doFullFloat)
+-- for volume control ...
+import Graphics.X11.ExtraTypes.XF86
+
+import qualified XMonad.StackSet as W   -- manageHook rules
+
+
+main = do
+  -- I use two dzen bars, the left one contains the Xomand workspaces
+  -- and title etc., eth right one contains the output from conky
+  -- with some stats etc.
+  status <- spawnPipe myDzenStatus
+  conky  <- spawnPipe myDzenConky
+
+  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+    terminal      = "xfce4-terminal"
+    , modMask     = myModMask
+    , workspaces  = myWorkspaces
+    , borderWidth = 3
+    -- , normalBorderColor  = "#dddddd"
+    -- , focusedBorderColor = "#0000ff"
+
+    , layoutHook  = myLayout
+    , logHook     = myLogHook status
+    , manageHook  = manageDocks <+> myManageHook <+> manageHook defaultConfig
+    , startupHook = myStartupHook
+    , focusFollowsMouse = False
+    } `additionalKeys` myKeys
+
+myModMask = mod4Mask
+
+myWorkspaces =
+  [ "1:-"
+  , "2:www"
+  , "3:mail"
+  , "4:edit"
+  , "5:file"
+  , "6"
+  , "7"
+  , "8:media"
+  , "9:chat"
+  ]
+
+myStartupHook = do
+    -- set no beep
+    spawn "xset -b"
+    -- set default cursor
+    spawn "xsetroot -cursor_name left_ptr"
+    -- trayer
+    spawn "pgrep -x trayer ||trayer --edge top --align right --widthtype pixel --width 146 --transparent true --alpha 0 --tint 0xC7B7A0 --height 24 --padding 1"
+    -- input method
+    spawn "pgrep -x fcitx || fcitx"
+    -- blueman
+    -- spawn "pgrep -x blueman-applet || blueman-applet"
+    -- modify by `xrandr -q`
+    spawn "/usr/bin/xrandr --auto --output LVDS1 --primary --auto --output HDMI1 --right-of LVDS1 --auto --output VGA1 --right-of LVDS1"
+    -- xautolock daemons
+    spawn "pgrep -x xautolock || xautolock -time 10 -locker sxlock -killtime 60 -killer \"systemctl hibernate\""
+    -- lock after suspend or hibernate
+    spawn "pgrep -x xss-lock || xss-lock -- /usr/bin/sxlock"
+    -- automount
+    -- spawn "pgrep -x udiskie || udiskie -2"
+    -- background setting
+    spawn "sleep 0.1; /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg"
+    -- terminal
+    spawn "pgrep -x xfce4-terminal || xfce4-terminal"
+    spawn "pgrep -x tilda || tilda -h"
+    -- firefox
+    spawn "pgrep -x firefox || firefox"
+    -- pidgin
+    -- spawn "pgrep -x pidgin || sleep 5 && pidgin"
+    -- telegram
+    spawn "pgrep -x telegram || telegram"
+
+myManageHook = composeAll . concat $
+    [ [ className   =? "Firefox" <&&> stringProperty "WM_WINDOW_ROLE" =? "browser" --> doF(W.shift "2:www")]
+    , [ className   =? "Thunderbird" --> doF(W.shift "3:mail")]
+    , [ className   =? "Gvim" --> viewShift "4:edit"]
+    , [ className   =? "thunar" --> doF(W.shift "5:file")]
+    , [ className   =? "nemo" --> doF(W.shift "5:file")]
+    , [ className   =? "Rhythmbox" --> doF(W.shift "8:media")]
+    , [ className   =? "Mplayer" --> viewShift "8:media"]
+    , [ className   =? c --> doF(W.shift "9:chat") | c <- ircApps]
+    , [ resource    =? "TeamViewer.exe" <&&> title =? "Computers & Contacts" --> doIgnore]
+    , [ resource    =? "TeamViewer.exe" --> viewShift "7"]
+    ]
+  where ircApps       = ["Pidgin", "Virt-viewer", "Telegram"]
+        viewShift     = doF . liftM2 (.) W.greedyView W.shift
+
+myScreenshot = "scrot" ++ myScreenshotOptions
+myScreenshotArea = "sleep 0.3s; scrot -s" ++ myScreenshotOptions
+myScreenshotOptions = " -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'"
+
+myKeys =
+  -- run command
+  [ ((mod1Mask, xK_F2), spawn "gmrun")
+  , ((myModMask, xK_p), spawn "gmrun")
+  -- classic alt-tab behaviour
+  , ((mod1Mask, xK_Tab), cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab )
+  -- lock screen
+  , ((controlMask .|. mod1Mask, xK_l), spawn "dm-tool lock")
+  -- print screen
+  , ((controlMask, xK_Print), spawn myScreenshotArea)
+  , ((0, xK_Print), spawn myScreenshot)
+  -- reboot or shutdown
+  -- TODO add comfirm box.
+  , ((controlMask .|. shiftMask, xK_Delete), spawn "systemctl reboot")
+  , ((controlMask .|. shiftMask, xK_Insert), spawn "systemctl poweroff")
+  -- applications key map
+  , ((myModMask .|. shiftMask, xK_w), spawn "firefox")
+  , ((myModMask .|. shiftMask, xK_f), spawn "thunar")
+  , ((myModMask .|. shiftMask, xK_m), spawn "thunderbird")
+  , ((myModMask .|. shiftMask, xK_p), spawn "pidgin")
+  -- , ((myModMask .|. shiftMask, xK_v), spawn "virt-viewer -f -c qemu:///system win7")
+  -- volume control
+  , ((0 , xF86XK_AudioLowerVolume), spawn "amixer set Master 4%-")
+  , ((0 , xF86XK_AudioRaiseVolume), spawn "amixer set Master 4%+")
+  , ((0 , xF86XK_AudioMute), spawn "amixer set Master toggle")
+  , ((0 , xF86XK_AudioPrev), spawn "mpc prev")
+  , ((0 , xF86XK_AudioNext), spawn "mpc next")
+  , ((0 , xF86XK_AudioPlay), spawn "mpc toggle")
+  , ((0 , xF86XK_AudioStop), spawn "mpc stop")
+  -- undo float windows.
+  , ((myModMask, xK_t ), withFocused $ windows . W.sink)
+  ]
+
+-- the default layout is fullscreen with smartborders applied to all
+myLayout = onWorkspace "8:media" fullL $ avoidStruts $ smartBorders ( full ||| mtiled ||| tiled )
+  where
+    full    = named "X" $ Full
+    mtiled  = named "M" $ Mirror tiled
+    tiled   = named "T" $ Tall 1 (5/100) (2/(1+(toRational(sqrt(5)::Double))))
+    fullL   = noBorders $ Full
+
+-- Statusbar
+--
+myLogHook h = dynamicLogWithPP $ myDzenPP { ppOutput = hPutStrLn h }
+
+myDzenStatus = "dzen2 -xs 1 -w 700 -ta 'l'" ++ myDzenStyle
+myDzenConky  = "conky -c ~/.xmonad/conkyrc | dzen2 -xs 1 -x 700 -w 520 -ta 'r'" ++ myDzenStyle
+myDzenStyle  = " -u -h '24' -fg '#222222' -bg '#C7B7A0' -fn 'arial:bold:size=11'"
+
+myDzenPP  = dzenPP
+    { ppCurrent = dzenColor "#3399ff" "" . wrap " " ""
+    , ppHidden  = dzenColor "#dddddd" "" . wrap " " ""
+    , ppHiddenNoWindows = dzenColor "#777777" "" . wrap " " ""
+    , ppUrgent  = dzenColor "#ff0000" "" . wrap " " ""
+    , ppSep     = " "
+    , ppLayout  = dzenColor "#aaaaaa" "" . wrap "^ca(1,xdotool key super+space)|" "|^ca()"
+    , ppTitle   = dzenColor "#ffffff" ""
+                    . wrap "^ca(1,xdotool key super+k)^ca(2,xdotool key super+shift+c)"
+                           "                          ^ca()^ca()" . shorten 80 . dzenEscape
+    }
+
