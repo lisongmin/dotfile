@@ -79,7 +79,7 @@ groups = [Group('a'),
           Group('e', layouts=[layout.max.Max()]),
           Group('u', layouts=[layout.stack.Stack(margin=1),
                               layout.max.Max()]),
-          Group('i'),
+          Group('i', [Match(wm_class=['Thunderbird'])]),
           Group('d', [Match(wm_class=['Telegram'])])
           ]
 

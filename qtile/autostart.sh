@@ -17,5 +17,6 @@ xfce4-terminal -e "tmux attach-session -t term"&
 tilda -h -c "tmux attach-session -t tilda"&
 
 firefox&
+thunderbird&
 
 telegram&
