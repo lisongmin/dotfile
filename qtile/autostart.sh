@@ -13,5 +13,6 @@ xfce4-terminal&
 tilda -h&
 
 firefox&
+thunderbird&
 
 telegram&
