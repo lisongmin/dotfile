@@ -61,7 +61,7 @@ keys = [
     Key([mod], "f", lazy.spawn("fcitx -r -d")),
     Key([mod], "Return", lazy.spawn("xfce4-terminal")),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
-    Key([mod, "shift"], "f", lazy.spawn("thunar")),
+    Key([mod, "shift"], "f", lazy.spawn("nemo --no-desktop")),
     Key([mod, "shift"], "m", lazy.spawn("thunderbird")),
     Key([mod, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
 
