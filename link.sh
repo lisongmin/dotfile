@@ -2,7 +2,16 @@
 
 _dir=$(realpath `dirname $0`)
 
-ln -sf $_dir/qtile ~/.config/qtile
-ln -sf $_dir/xmonad ~/.xmonad
+link()
+{
+    if [ -e "$2" -a ! -L "$2" ]; then
+        rm -rf "$2"
+    fi
+    if [ ! -e "$2" ]; then
+        ln -s "$1" "$2"
+    fi
+}
 
-ln -sf $_dir/flake8 ~/.config/flake8
+link $_dir/qtile ~/.config/qtile
+link $_dir/xmonad ~/.xmonad
+link $_dir/flake8 ~/.config/flake8
