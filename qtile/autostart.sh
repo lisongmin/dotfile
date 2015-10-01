@@ -6,7 +6,7 @@ compton -b
 
 fcitx&
 
-xautolock -time 10 -locker sxlock -killtime 60 -killer "systemctl hibernate"&
+xautolock -time 10 -locker sxlock -killtime 60 -killer "systemctl suspend"&
 xss-lock -- /usr/bin/sxlock&
 
 xfce4-terminal&
