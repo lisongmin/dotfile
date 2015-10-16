@@ -6,8 +6,8 @@ compton -b
 
 fcitx&
 
-xautolock -time 10 -locker sxlock -killtime 60 -killer "systemctl suspend"&
-xss-lock -- /usr/bin/sxlock&
+xautolock -time 10 -locker sxlock -killtime 120 -killer "systemctl suspend"&
+# xss-lock -- /usr/bin/sxlock&
 
 xfce4-terminal&
 tilda -h&
