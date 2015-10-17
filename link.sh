@@ -15,3 +15,9 @@ link()
 link $_dir/qtile ~/.config/qtile
 link $_dir/xmonad ~/.xmonad
 link $_dir/flake8 ~/.config/flake8
+
+link $_dir/_vimrc ~/.vimrc
+$_dir/init_vimrc.sh
+
+link $_dir/_tmux.conf ~/.tmux.conf
+link $_dir/_zshrc ~/.zshrc
