@@ -17,7 +17,6 @@ if [ ! -d ~/.vim/bundle ];then
     mkdir -p ~/.vim/bundle
 fi
 
-git_update rust-lang/rust
 git_update phildawes/racer
 cd ~/.vim/bundle/racer
 cargo build --release
@@ -30,3 +29,5 @@ vim +PluginInstall +qall
 cd ~/.vim/bundle/YouCompleteMe
 python2 ./install.py --clang-completer --system-libclang --system-boost
 cd -
+
+echo "You should download rust source to /usr/local/src/rust"

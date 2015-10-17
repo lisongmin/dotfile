@@ -120,7 +120,6 @@ Plugin 'rust-lang/rust.vim'
 " <leader>gd -- go to definations
 Plugin 'racer-rust/vim-racer'
 let g:racer_cmd = "~/.vim/bundle/racer/target/release/racer"
-let $RUST_SRC_PATH="~/.vim/bundle/rust/src/"
 
 Plugin 'scrooloose/syntastic'
 " set statusline+=%#warningmsg#
