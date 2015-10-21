@@ -36,7 +36,7 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 		#"cpu 240 136" \
 		"load 188 167 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD}" \
 		#"tmux_mem_cpu_load 234 136" \
-		"battery 58 87" \
+		# "battery 58 87" \
 		#"rainbarf 0 0" \
 		#"xkb_layout 125 117" \
 		"date_day 240 250" \
