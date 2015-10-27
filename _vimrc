@@ -134,7 +134,7 @@ Plugin 'raichoo/haskell-vim'
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_extra_conf_globlist = ['/work/*']
-let g:ycm_key_list_select_completion = ['<Enter>']
+let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 
 Plugin 'SirVer/ultisnips'
