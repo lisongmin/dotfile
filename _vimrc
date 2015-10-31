@@ -114,6 +114,7 @@ Plugin 'tpope/vim-fugitive'
 "  - <leader>n - related names
 Plugin 'davidhalter/jedi-vim'
 let g:jedi#completions_command = "<C-N>"
+Plugin 'hynek/vim-python-pep8-indent'
 
 " rust language
 Plugin 'rust-lang/rust.vim'
