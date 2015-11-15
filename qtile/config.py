@@ -57,6 +57,7 @@ keys = [
     Key([], "Print", lazy.spawn('scrot' + scrot_option)),
     Key(['control', 'mod1'], "Print", lazy.spawn('scrot -s' + scrot_option)),
 
+    Key([mod], "f", lazy.spawn("fcitx -r -d")),
     Key([mod], "Return", lazy.spawn("xfce4-terminal")),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
     Key([mod, "shift"], "f", lazy.spawn("thunar")),
