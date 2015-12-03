@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+sleep 0.2
+# notify-send -u critical "Select screenshot area" -t 1
+scrot -s -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'

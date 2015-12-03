@@ -55,7 +55,8 @@ keys = [
 
     Key(["control", "mod1"], "l", lazy.spawn("dm-tool lock")),
     Key([], "Print", lazy.spawn('scrot' + scrot_option)),
-    Key(['control', 'mod1'], "Print", lazy.spawn('scrot -s' + scrot_option)),
+    Key(['control', 'mod1'], "Print", lazy.spawn(
+        os.path.join(os.path.dirname(__file__), 'scrot_s'))),
 
     Key([mod], "f", lazy.spawn("fcitx -r -d")),
     Key([mod], "Return", lazy.spawn("xfce4-terminal")),
