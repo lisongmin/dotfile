@@ -32,7 +32,7 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 		#"earthquake 3 0" \
 		"pwd 89 211" \
-		"now_playing 33 37 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD}" \
+		# "now_playing 33 37 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD}" \
 		#"cpu 240 136" \
 		"load 188 167 ${TMUX_POWERLINE_SEPARATOR_LEFT_BOLD}" \
 		#"tmux_mem_cpu_load 234 136" \
