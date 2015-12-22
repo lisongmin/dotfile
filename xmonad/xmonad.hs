@@ -59,15 +59,12 @@ main = do
 myModMask = mod4Mask
 
 myWorkspaces =
-  [ "1:-"
-  , "2:www"
-  , "3:mail"
-  , "4:edit"
-  , "5:file"
-  , "6"
-  , "7"
-  , "8:media"
-  , "9:chat"
+  [ "a"
+  , "o"
+  , "e"
+  , "u"
+  , "i"
+  , "d"
   ]
 
 myStartupHook = do
@@ -102,16 +99,13 @@ myStartupHook = do
     spawn "pgrep -x telegram || telegram"
 
 myManageHook = composeAll . concat $
-    [ [ className   =? "Firefox" <&&> stringProperty "WM_WINDOW_ROLE" =? "browser" --> doF(W.shift "2:www")]
-    , [ className   =? "Thunderbird" --> doF(W.shift "3:mail")]
-    , [ className   =? "Gvim" --> viewShift "4:edit"]
-    , [ className   =? "thunar" --> doF(W.shift "5:file")]
-    , [ className   =? "nemo" --> doF(W.shift "5:file")]
-    , [ className   =? "Rhythmbox" --> doF(W.shift "8:media")]
-    , [ className   =? "Mplayer" --> viewShift "8:media"]
-    , [ className   =? c --> doF(W.shift "9:chat") | c <- ircApps]
+    [ [ className   =? "Firefox" <&&> stringProperty "WM_WINDOW_ROLE" =? "browser" --> doF(W.shift "o")]
+    , [ className   =? "Thunderbird" --> doF(W.shift "e")]
+    , [ className   =? "Gvim" --> viewShift "u"]
+    , [ className   =? "thunar" --> doF(W.shift "i")]
+    , [ className   =? "nemo" --> doF(W.shift "i")]
+    , [ className   =? c --> doF(W.shift "d") | c <- ircApps]
     , [ resource    =? "TeamViewer.exe" <&&> title =? "Computers & Contacts" --> doIgnore]
-    , [ resource    =? "TeamViewer.exe" --> viewShift "7"]
     ]
   where ircApps       = ["Pidgin", "Virt-viewer", "Telegram"]
         viewShift     = doF . liftM2 (.) W.greedyView W.shift
@@ -121,8 +115,14 @@ myScreenshotArea = "sleep 0.3s; scrot -s" ++ myScreenshotOptions
 myScreenshotOptions = " -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'"
 
 myKeys =
+  [((myModMask, xK_a), windows $ W.greedyView "a")
+  , ((myModMask, xK_o), windows $ W.greedyView "o")
+  , ((myModMask, xK_e), windows $ W.greedyView "e")
+  , ((myModMask, xK_u), windows $ W.greedyView "u")
+  , ((myModMask, xK_i), windows $ W.greedyView "i")
+  , ((myModMask, xK_d), windows $ W.greedyView "d")
   -- run command
-  [ ((mod1Mask, xK_F2), spawn "gmrun")
+  , ((mod1Mask, xK_F2), spawn "gmrun")
   , ((myModMask, xK_p), spawn "gmrun")
   -- classic alt-tab behaviour
   , ((mod1Mask, xK_Tab), cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab )
@@ -154,7 +154,7 @@ myKeys =
   ]
 
 -- the default layout is fullscreen with smartborders applied to all
-myLayout = onWorkspace "8:media" fullL $ avoidStruts $ smartBorders ( full ||| mtiled ||| tiled )
+myLayout = avoidStruts $ smartBorders ( full ||| mtiled ||| tiled )
   where
     full    = named "X" $ Full
     mtiled  = named "M" $ Mirror tiled
