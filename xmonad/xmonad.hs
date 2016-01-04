@@ -95,7 +95,7 @@ myStartupHook = do
     -- firefox
     spawn "pgrep -x firefox || firefox"
     -- thunderbird
-    spawn "pgrep -x thunderbird || thunderbird"
+    -- spawn "pgrep -x thunderbird || thunderbird"
     -- pidgin
     -- spawn "pgrep -x pidgin || sleep 5 && pidgin"
     -- telegram
