@@ -188,7 +188,10 @@ command! Fe : FufFile
 command! Fc : FufFileWithCurrentBufferDir
 command! Fb : FufBuffer
 
-Plugin 'taglist.vim'
+Plugin 'lisongmin/markdown2ctags.git'
+Plugin 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autoshowtag = 1
 
 " jump begin xml/tex tag
 Plugin 'matchit.zip'
