@@ -170,7 +170,8 @@ Plugin 'a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
 
 " markdown support
-Plugin 'vimwiki'
+Plugin 'mattn/calendar-vim'
+Plugin 'vimwiki/vimwiki'
 let g:vimwiki_list = [{'path': '~/mywiki',
       \ 'index' : 'index.html',
       \ 'syntax' : 'markdown', 'ext' : '.md'}]
@@ -180,6 +181,22 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown',
                   \ '.wiki': 'media'}
 
 let g:vimwiki_CJK_length = 1
+
+:autocmd FileType vimwiki nmap <leader>wn :VimwikiMakeDiaryNote<CR>
+function! ToggleCalendar()
+    execute ":Calendar"
+    if exists("g:calendar_open")
+        if g:calendar_open == 1
+            execute "q"
+            unlet g:calendar_open
+        else
+            g:calendar_open = 1
+        end
+    else
+        let g:calendar_open = 1
+    end
+endfunction
+:autocmd FileType vimwiki nmap <leader>wc :call ToggleCalendar()<CR>
 
 " quick open file
 Plugin 'L9'
