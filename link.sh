@@ -19,6 +19,9 @@ link $_dir/flake8 ~/.config/flake8
 link $_dir/_vimrc ~/.vimrc
 $_dir/init_vimrc.sh
 
+if [ ! -d ~/.tmux/plugins/tpm ] ; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
 link $_dir/_tmux.conf ~/.tmux.conf
 link $_dir/_tmux-powerlinerc ~/.tmux-powerlinerc
 
