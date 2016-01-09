@@ -78,7 +78,8 @@ set cinoptions=:0,g0
 "----------------------------------------------------------->
 "去掉行尾空格
 "----------------------------------------------------------->
-autocmd BufWritePre * :%s/\s\+$//e
+" autocmd BufWritePre * :%s/\s\+$//e
+nmap <leader>et :%s/\s\+$//e<CR>
 
 "----------------------------------------------------------->
 "<< file encoding >>
@@ -172,14 +173,18 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 " markdown support
 Plugin 'mattn/calendar-vim'
 Plugin 'vimwiki/vimwiki'
-let g:vimwiki_list = [{'path': '~/mywiki',
-      \ 'index' : 'index.html',
-      \ 'syntax' : 'markdown', 'ext' : '.md'}]
+let g:vimwiki_list = [
+            \ {'path': '~/mywiki',
+            \ 'index': 'index.html',
+            \ 'syntax': 'markdown', 'ext': '.md'
+            \ }
+            \ ]
 
 let g:vimwiki_ext2syntax = {'.md': 'markdown',
                   \ '.mkd': 'markdown',
                   \ '.wiki': 'media'}
 
+let g:vimwiki_nested_syntaxes = {'python': 'python', 'graphviz': 'dot', 'c++': 'cpp', 'bash': 'sh'}
 let g:vimwiki_CJK_length = 1
 
 :autocmd FileType vimwiki nmap <leader>wn :VimwikiMakeDiaryNote<CR>
