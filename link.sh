@@ -26,3 +26,4 @@ link $_dir/_tmux.conf ~/.tmux.conf
 link $_dir/_tmux-powerlinerc ~/.tmux-powerlinerc
 
 link $_dir/_zshrc ~/.zshrc
+link $_dir/_ctags ~/.ctags

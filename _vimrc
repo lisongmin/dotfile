@@ -119,6 +119,7 @@ Plugin 'hynek/vim-python-pep8-indent'
 
 " rust language
 Plugin 'rust-lang/rust.vim'
+
 " <leader>gd -- go to definations
 Plugin 'racer-rust/vim-racer'
 let g:racer_cmd = "~/.vim/bundle/racer/target/release/racer"
@@ -138,6 +139,8 @@ Plugin 'Valloric/YouCompleteMe'
 let g:ycm_extra_conf_globlist = ['/work/*']
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
+let g:ycm_rust_src_path = '/work/rust/src'
+nnoremap <Leader>] :YcmCompleter GoTo<CR>
 
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -214,6 +217,20 @@ Plugin 'lisongmin/markdown2ctags.git'
 Plugin 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autoshowtag = 1
+
+let g:tagbar_type_rust = {
+            \ 'ctagstype' : 'rust',
+            \ 'kinds' : [
+            \'T:types,type definitions',
+            \'f:functions,function definitions',
+            \'g:enum,enumeration names',
+            \'s:structure names',
+            \'m:modules,module names',
+            \'c:consts,static constants',
+            \'t:traits,traits',
+            \'i:impls,trait implementations',
+            \]
+            \}
 
 " jump begin xml/tex tag
 Plugin 'matchit.zip'
