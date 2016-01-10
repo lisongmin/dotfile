@@ -235,6 +235,11 @@ let g:tagbar_type_rust = {
 " jump begin xml/tex tag
 Plugin 'matchit.zip'
 
+
+" load indent by .editorconfig.
+Plugin 'editorconfig/editorconfig-vim'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
 " use tab or space according to contents.
 Plugin 'conormcd/matchindent.vim'
 
