@@ -104,8 +104,12 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 
+" switch fcitx to en mode in normal mode.
+Plugin 'lilydjwg/fcitx.vim'
+
 " git manager
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 
 " python complete
 " -- <leader>r - rename
@@ -175,7 +179,7 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 
 " markdown support
 Plugin 'mattn/calendar-vim'
-Plugin 'vimwiki/vimwiki'
+Plugin 'lisongmin/vimwiki'
 let g:vimwiki_list = [
             \ {'path': '~/mywiki',
             \ 'index': 'index.html',
@@ -187,7 +191,7 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown',
                   \ '.mkd': 'markdown',
                   \ '.wiki': 'media'}
 
-let g:vimwiki_nested_syntaxes = {'python': 'python', 'graphviz': 'dot', 'c++': 'cpp', 'bash': 'sh'}
+let g:vimwiki_nested_syntaxes = {'python': 'python', 'graphviz': 'dot', 'dot': 'dot', 'c++': 'cpp', 'bash': 'sh'}
 let g:vimwiki_CJK_length = 1
 
 :autocmd FileType vimwiki nmap <leader>wn :VimwikiMakeDiaryNote<CR>
