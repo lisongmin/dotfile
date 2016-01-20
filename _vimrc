@@ -236,6 +236,19 @@ let g:tagbar_type_rust = {
             \]
             \}
 
+let g:tagbar_type_tex = {
+            \ 'ctagstype' : 'latex',
+            \ 'kinds' : [
+            \'p:part',
+            \'c:chapter',
+            \'s:section',
+            \'u:subsection',
+            \'b:subsubsection',
+            \'P:paragragh',
+            \'G:subparagragh',
+            \'l:label',
+            \]
+            \}
 " jump begin xml/tex tag
 Plugin 'matchit.zip'
 
