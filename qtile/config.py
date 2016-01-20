@@ -124,7 +124,7 @@ screens = [
                 widget.Battery(battery_name='BAT0'),
                 # widget.Wlan(interface='wlp8s0', update_interval=2),
                 widget.Systray(),
-                widget.Clock(format='%H:%M %m-%d'),
+                widget.Clock(format='%a %H:%M %m-%d'),
             ],
             24,
             opacity=0.7
