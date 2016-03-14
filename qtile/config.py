@@ -175,3 +175,4 @@ def restart_on_screen_change(qtile, ev):
                      '--output', 'VGA1', '--auto', '--right-of', 'LVDS1',
                      '--output', 'HDMI1', '--auto', '--right-of', 'LVDS1'
                      ])
+    qtile.cmd_restart()
