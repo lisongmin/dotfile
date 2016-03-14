@@ -127,6 +127,7 @@ screens = [
             opacity=0.7
         ),
     ),
+    Screen()
 ]
 
 # Drag floating layouts.
@@ -165,3 +166,12 @@ wmname = "LG3D"
 def autostart():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+
+@hook.subscribe.screen_change
+def restart_on_screen_change(qtile, ev):
+    print(ev)
+    subprocess.call(['xrandr', '--output', 'LVDS1', '--primary',
+                     '--output', 'VGA1', '--auto', '--right-of', 'LVDS1',
+                     '--output', 'HDMI1', '--auto', '--right-of', 'LVDS1'
+                     ])
