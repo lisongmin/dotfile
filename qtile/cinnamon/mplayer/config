@@ -1,0 +1,2 @@
+
+heartbeat-cmd="cinnamon-screensaver-command -d >&- 2>&- &"

@@ -49,11 +49,13 @@ keys = [
     Key([mod, "shift"], "c", lazy.window.kill()),
 
     Key([mod], "q", lazy.restart()),
-    Key([mod, "shift"], "q", lazy.shutdown()),
+    Key([mod, "shift"], "q", lazy.spawn(
+        'cinnamon-session-quit --logout --no-prompt')),
 
     Key(["mod1"], "F2", lazy.spawncmd()),
 
-    Key(["control", "mod1"], "l", lazy.spawn("dm-tool lock")),
+    Key(["control", "mod1"], "l", lazy.spawn(
+        "cinnamon-screensaver-command -l")),
     Key([], "Print", lazy.spawn('scrot' + scrot_option)),
     Key(['control', 'mod1'], "Print", lazy.spawn(
         os.path.join(os.path.dirname(__file__), 'scrot_s'))),
@@ -174,7 +176,8 @@ def autostart():
 @hook.subscribe.screen_change
 def restart_on_screen_change(qtile, ev):
     print(ev)
-    subprocess.call(['xrandr', '--output', 'LVDS1', '--primary',
-                     '--output', 'VGA1', '--auto', '--right-of', 'LVDS1',
-                     '--output', 'HDMI1', '--auto', '--right-of', 'LVDS1'
+    subprocess.call(['xrandr', '--output', 'eDP1', '--primary',
+                     '--output', 'VGA1', '--auto', '--right-of', 'eDP1',
+                     '--output', 'HDMI1', '--auto', '--right-of', 'eDP1'
                      ])
+    qtile.cmd_restart()

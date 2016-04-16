@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-xset -b
-compton -b
-/usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
+if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
+    xset -b
+    /usr/bin/setxkbmap -option "caps:swapescape"
+    compton -b
+    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
 
-fcitx&
+    fcitx&
 
-xautolock -time 10 -locker sxlock -killtime 120 -killer "systemctl suspend"&
-# xss-lock -- /usr/bin/sxlock&
+    xautolock -time 10 -locker sxlock -killtime 120 -killer "systemctl suspend"&
+    # xss-lock -- /usr/bin/sxlock&
+fi
 
 tmux new-session -s term -d
 tmux new-session -s tilda -d

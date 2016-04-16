@@ -20,6 +20,9 @@ if &diff
     set list
 endif
 
+set noeb vb t_vb=
+au GuiEnter * set t_vb=
+
 " Not break line when line is out of the window.
 set nowrap
 
@@ -148,6 +151,11 @@ nnoremap <Leader>] :YcmCompleter GoTo<CR>
 
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+let g:UltiSnipsSnippetDirectories=["UltiSnips", 'mysnips']
+let g:snips_author = 'Song min.Li (Li)'
+let g:snips_email = 'lsm@skybility.com'
+let g:snips_github = ''
+let g:snips_company = 'Skybility Software Co.,Ltd.'
 
 Plugin 'brookhong/cscope.vim'
 nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
@@ -294,7 +302,7 @@ if has('win32')
     "map <leader>ve :!eog \%tmp\% . "/%:t:r.png" &<CR><CR>
 else
     map <leader>xx :!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>:!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>
-    map <leader>xe :!evince "/tmp/%:t:r.pdf"&<CR><CR>
+    map <leader>xe :!mupdf "/tmp/%:t:r.pdf"&<CR><CR>
     map <leader>vz :!dot -Tps2 "%:t:r.dot" -o "/tmp/%:t:r.eps" &<CR><CR>:!ps2pdf "/tmp/%:t:r.eps" "/tmp/%:t:r.pdf"& <CR><CR>
     let $TEXINPUTS = ":.:/tmp"
 endif

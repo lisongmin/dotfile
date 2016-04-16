@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Qtile Cinnamon
+Comment=Tiling window manager
+Exec=cinnamon-session --session=qtile
+TryExec=/usr/bin/cinnamon
+Icon=
+Type=Application

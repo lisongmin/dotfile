@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Qtile
+Comment=Window management and application launching
+Exec=qtile
+Categories=GNOME;UTF-8;System;Core;
+OnlyShowIn=GNOME;
+NoDisplay=true
+X-GNOME-Autostart-Phase=WindowManager
+X-GNOME-Provides=windowmanager;
+X-GNOME-Autostart-Notify=true
+X-GNOME-AutoRestart=true
