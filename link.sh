@@ -31,3 +31,7 @@ link $_dir/_tmux-powerlinerc ~/.tmux-powerlinerc
 
 # zsh
 link $_dir/_zshrc ~/.zshrc
+
+# pip
+mkdir -p ~/.pip
+link $_dir/pip.conf ~/.pip/pip.conf

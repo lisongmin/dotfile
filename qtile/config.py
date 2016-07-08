@@ -46,6 +46,8 @@ keys = [
     Key([mod], "space", lazy.next_layout()),
     Key([mod], "t", lazy.window.toggle_floating()),
 
+    Key([mod], "w", lazy.next_screen()),
+
     Key([mod, "shift"], "c", lazy.window.kill()),
 
     Key([mod], "q", lazy.restart()),
@@ -177,7 +179,7 @@ def autostart():
 def restart_on_screen_change(qtile, ev):
     print(ev)
     subprocess.call(['xrandr', '--output', 'eDP1', '--primary',
-                     '--output', 'VGA1', '--auto', '--right-of', 'eDP1',
-                     '--output', 'HDMI1', '--auto', '--right-of', 'eDP1'
+                     '--output', 'VGA1', '--auto', '--left-of', 'eDP1',
+                     '--output', 'HDMI1', '--auto', '--left-of', 'eDP1'
                      ])
     qtile.cmd_restart()

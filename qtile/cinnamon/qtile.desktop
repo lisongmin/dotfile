@@ -2,7 +2,7 @@
 Type=Application
 Name=Qtile
 Comment=Window management and application launching
-Exec=qtile
+Exec=/usr/bin/qtile
 Categories=GNOME;UTF-8;System;Core;
 OnlyShowIn=GNOME;
 NoDisplay=true

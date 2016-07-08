@@ -30,7 +30,7 @@ set nowrap
 let mapleader = ","
 
 " Set color scheme
-colo ron
+colo morning "ron
 if has('gui_running')
     colo evening
 endif
@@ -94,6 +94,8 @@ set fencs=utf-8,ucs-bom,gb18030,cp936
 if has("gui_running")
     if ! has("win32")
         set gfn=DejaVu\ Sans\ Mono\ 8
+        "set gfn=DejaVu\ Sans\ Mono\ 12 
+        "colo morning 
     endif
 endif
 
@@ -106,6 +108,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
+Plugin 'will133/vim-dirdiff'
 
 " switch fcitx to en mode in normal mode.
 Plugin 'lilydjwg/fcitx.vim'
@@ -126,6 +129,7 @@ Plugin 'hynek/vim-python-pep8-indent'
 
 " rust language
 Plugin 'rust-lang/rust.vim'
+Plugin 'treycordova/rustpeg.vim'
 
 " <leader>gd -- go to definations
 Plugin 'racer-rust/vim-racer'
@@ -302,7 +306,7 @@ if has('win32')
     "map <leader>ve :!eog \%tmp\% . "/%:t:r.png" &<CR><CR>
 else
     map <leader>xx :!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>:!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>
-    map <leader>xe :!mupdf "/tmp/%:t:r.pdf"&<CR><CR>
+    map <leader>xe :!evince "/tmp/%:t:r.pdf"&<CR><CR>
     map <leader>vz :!dot -Tps2 "%:t:r.dot" -o "/tmp/%:t:r.eps" &<CR><CR>:!ps2pdf "/tmp/%:t:r.eps" "/tmp/%:t:r.pdf"& <CR><CR>
     let $TEXINPUTS = ":.:/tmp"
 endif

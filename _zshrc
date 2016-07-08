@@ -94,3 +94,6 @@ man() {
 
 export JAVA_HOME=/usr/lib/jvm/default
 export RUST_SRC_PATH=/work/rust/src
+export GOPATH=~/go
+export PATH="$PATH:$GOPATH/bin"
+alias nemo="nemo --no-desktop"
