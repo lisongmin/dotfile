@@ -159,11 +159,24 @@ let g:syntastic_auto_loc_list = 1
 
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'
-let g:ycm_extra_conf_globlist = ['/work/*']
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 let g:ycm_rust_src_path = '/work/rust/src'
+let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1,
+            \ 'rust': 1, 'typescript': 1, 'javascript': 1}
+nnoremap <F4> :YcmDiags<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>] :YcmCompleter GoTo<CR>
+nnoremap <Leader>gh :YcmCompleter GoToInclude<CR>
+nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
+nnoremap <Leader>gc :YcmCompleter GoToDeclaration<CR>
+
+nnoremap <Leader>gt :YcmCompleter GetType<CR>
+nnoremap <Leader>gf :YcmCompleter FixIt<CR>
+nnoremap <Leader>gp :YcmCompleter GetParent<CR>
+nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
@@ -172,31 +185,6 @@ let g:snips_author = 'Song min.Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
-
-Plugin 'brookhong/cscope.vim'
-nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
-nnoremap <leader>l :call ToggleLocationList()<CR>
-" s: Find this C symbol
-nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
-" g: Find this definition
-nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
-" d: Find functions called by this function
-nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
-" c: Find functions calling this function
-nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
-" t: Find this text string
-nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
-" e: Find this egrep pattern
-nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
-" f: Find this file
-nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
-" i: Find files #including this file
-nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
-if has('win32')
-    nmap <leader>cs :!dir /S /b *.h *.c *.ipp *.hpp *.cpp *.java > cscope.files<CR>:!cscope -bkq -i cscope.files<CR>:cs add cscope.out<CR>
-else
-    nmap <leader>cs :!find ./ -name "*.h" -o -name "*.c" -o -name "*.ipp" -o -name "*.hpp" -o -name "*.cpp" -o -name "*.java" > cscope.files<CR>:!cscope -bkq -i cscope.files<CR>:cs add cscope.out<CR>:cs reset<CR>
-endif
 
 Plugin 'a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
