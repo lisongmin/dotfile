@@ -2,7 +2,6 @@
 
 if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
     /usr/bin/setxkbmap -option "caps:swapescape"
-    compton -b
     /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
 
     fcitx&
@@ -13,6 +12,7 @@ fi
 
 # disable beep
 xset -b
+compton -b
 
 pgrep tmux
 if [ $? -ne 0 ];then
@@ -25,10 +25,15 @@ fi
 xfce4-terminal -e "tmux attach-session -t term"&
 tilda -h -c "tmux attach-session -t tilda"&
 
-pgrep firefox
-if [ $? -ne 0 ]; then
-    firefox&
-fi
+#pgrep firefox
+#if [ $? -ne 0 ]; then
+#    firefox&
+#fi
 # thunderbird&
 
-telegram&
+#pgrep osdlyrics
+#if [ $? -ne 0 ]; then
+#    osdlyrics&
+#fi
+
+#telegram-desktop&

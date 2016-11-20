@@ -29,7 +29,7 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget
 from libqtile import hook
 import subprocess
-import os.path
+import os
 
 mod = "mod4"
 scrot_option = " -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'"
@@ -84,7 +84,8 @@ groups = [Group('a'),
           Group('u', layouts=[layout.stack.Stack(margin=1),
                               layout.max.Max()]),
           Group('i', [Match(wm_class=['Thunderbird'])]),
-          Group('d', [Match(wm_class=['Telegram'])])
+          Group('d', [Match(wm_class=['TelegramDesktop'])],
+                layouts=[layout.stack.Stack(margin=2)])
           ]
 
 for i in groups:
@@ -106,9 +107,18 @@ layouts = [
 widget_defaults = dict(
     # font='Source Han Sans',
     font='文泉驿正黑',
-    fontsize=14,
+    fontsize=20,
     padding=1,
 )
+
+nets = os.listdir('/sys/class/net')
+eth = ''
+wlan = ''
+for n in nets:
+    if not eth and n.startswith('enp'):
+        eth = n
+    elif not wlan and n.startswith('wlp'):
+        wlan = n
 
 bar.Bar.defaults
 screens = [
@@ -119,14 +129,11 @@ screens = [
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Sep(),
-                widget.Net(interface='enp4s0f1', update_interval=2),
+                widget.Net(interface=eth, update_interval=2),
                 widget.Sep(),
-                widget.Net(interface='wlp3s0', update_interval=2),
+                widget.Net(interface=wlan, update_interval=2),
                 widget.CPUGraph(frequency=2),
                 widget.ThermalSensor(),
-                widget.Sep(),
-                widget.Battery(battery_name='BAT0'),
-                # widget.Wlan(interface='wlp8s0', update_interval=2),
                 widget.Systray(),
                 widget.Clock(format='%a %H:%M %m-%d'),
             ],
@@ -166,7 +173,7 @@ log_level = INFO
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+# wmname = "LG3D"
 
 
 @hook.subscribe.startup_once
@@ -178,8 +185,4 @@ def autostart():
 @hook.subscribe.screen_change
 def restart_on_screen_change(qtile, ev):
     print(ev)
-    subprocess.call(['xrandr', '--output', 'eDP1', '--primary',
-                     '--output', 'VGA1', '--auto', '--left-of', 'eDP1',
-                     '--output', 'HDMI1', '--auto', '--left-of', 'eDP1'
-                     ])
     qtile.cmd_restart()

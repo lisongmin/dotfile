@@ -93,7 +93,7 @@ set fencs=utf-8,ucs-bom,gb18030,cp936
 "set ambiwidth=double
 if has("gui_running")
     if ! has("win32")
-        set gfn=DejaVu\ Sans\ Mono\ 8
+        set gfn=DejaVu\ Sans\ Mono\ 10
         "set gfn=DejaVu\ Sans\ Mono\ 12 
         "colo morning 
     endif
@@ -141,9 +141,6 @@ Plugin 'scrooloose/syntastic'
 " set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-
-" haskell language
-Plugin 'raichoo/haskell-vim'
 
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'
