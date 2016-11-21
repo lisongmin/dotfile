@@ -107,6 +107,7 @@ set fencs=utf-8,ucs-bom,gb18030,cp936
 "set ambiwidth=double
 if has("gui_running")
     if ! has("win32")
+        " set font
         set gfn=DejaVu\ Sans\ Mono\ 8
         "set gfn=DejaVu\ Sans\ Mono\ 12 
         "colo morning 
@@ -158,7 +159,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
 " YCM for completions
-Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost --racer-completer' }
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
