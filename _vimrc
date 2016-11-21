@@ -59,6 +59,20 @@ if has("gui_running")
     set guiheadroom=0
 endif
 
+" Put plugins and dictionaries in this dir (also on Windows)
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif
+
 " 设置swp文件保存路径
 "if has('win32')
 "    set dir=%tmp%
@@ -117,6 +131,7 @@ Plugin 'lilydjwg/fcitx.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 
+Plugin 'scrooloose/nerdcommenter'
 " python complete
 " -- <leader>r - rename
 " -- <leader>d - definations
@@ -141,9 +156,6 @@ Plugin 'scrooloose/syntastic'
 " set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-
-" haskell language
-Plugin 'raichoo/haskell-vim'
 
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'

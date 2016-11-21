@@ -84,7 +84,7 @@ groups = [Group('a'),
           Group('u', layouts=[layout.stack.Stack(margin=1),
                               layout.max.Max()]),
           Group('i', [Match(wm_class=['Thunderbird'])]),
-          Group('d', [Match(wm_class=['Telegram'])])
+          Group('d', [Match(wm_class=['TelegramDesktop'])])
           ]
 
 for i in groups:
@@ -118,6 +118,8 @@ screens = [
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
+                widget.Sep(),
+                widget.Net(interface='enp0s20u3', update_interval=2),
                 widget.Sep(),
                 widget.Net(interface='enp4s0f1', update_interval=2),
                 widget.Sep(),
