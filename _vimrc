@@ -158,12 +158,16 @@ Plugin 'scrooloose/syntastic'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
+" ctags
+Plugin 'ludovicchabant/vim-gutentags'
+
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost --racer-completer' }
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
+let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_rust_src_path = '/work/rust/src'
 let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1,
             \ 'rust': 1, 'typescript': 1, 'javascript': 1}
