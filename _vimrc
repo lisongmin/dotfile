@@ -81,8 +81,8 @@ set cinoptions=:0,g0
 "----------------------------------------------------------->
 "去掉行尾空格
 "----------------------------------------------------------->
-" autocmd BufWritePre * :%s/\s\+$//e
-nmap <leader>et :%s/\s\+$//e<CR>
+autocmd BufWritePre * :%s/\s\+$//e
+" nmap <leader>et :%s/\s\+$//e<CR>
 
 "----------------------------------------------------------->
 "<< file encoding >>
@@ -94,8 +94,8 @@ set fencs=utf-8,ucs-bom,gb18030,cp936
 if has("gui_running")
     if ! has("win32")
         set gfn=DejaVu\ Sans\ Mono\ 10
-        "set gfn=DejaVu\ Sans\ Mono\ 12 
-        "colo morning 
+        "set gfn=DejaVu\ Sans\ Mono\ 12
+        "colo morning
     endif
 endif
 
@@ -148,6 +148,7 @@ Plugin 'ludovicchabant/vim-gutentags'
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
@@ -269,6 +270,14 @@ let g:airline_powerline_fonts = 1
 set t_Co=256
 set laststatus=2
 " let g:airline_gitblame_enalbe = 1
+
+" typescript
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Quramy/vim-js-pretty-template'
+autocmd FileType typescript JsPreTmpl html
+autocmd FileType typescript syn clear foldBraces
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Quramy/tsuquyomi'
 
 call vundle#end()            " required
 " Enable file type plugin and indent
