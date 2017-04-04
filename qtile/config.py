@@ -52,7 +52,9 @@ keys = [
 
     Key([mod], "q", lazy.restart()),
     Key([mod, "shift"], "q", lazy.spawn(
-        'cinnamon-session-quit --logout --no-prompt')),
+        'cinnamon-session-quit --logout')),
+    Key([mod, "shift"], "s", lazy.spawn(
+        'systemctl suspend -i')),
 
     Key(["mod1"], "F2", lazy.spawncmd()),
 
@@ -174,6 +176,7 @@ log_level = INFO
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 # wmname = "LG3D"
+wmname = "Qtile"
 
 
 @hook.subscribe.startup_once
