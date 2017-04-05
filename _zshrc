@@ -97,3 +97,4 @@ export RUST_SRC_PATH=/work/rust/src
 export GOPATH=~/go
 export PATH="$PATH:$GOPATH/bin"
 alias nemo="nemo --no-desktop"
+export LIBVIRT_DEFAULT_URI=qemu:///system

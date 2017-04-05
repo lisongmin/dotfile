@@ -83,8 +83,7 @@ keys = [
 groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox'])]),
           Group('e', layouts=[layout.max.Max()]),
-          Group('u', layouts=[layout.stack.Stack(margin=1),
-                              layout.max.Max()]),
+          Group('u', [Match(wm_class=['Wine'])]),
           Group('i', [Match(wm_class=['Thunderbird'])]),
           Group('d', [Match(wm_class=['TelegramDesktop'])],
                 layouts=[layout.stack.Stack(margin=2)])
