@@ -144,6 +144,7 @@ let g:syntastic_auto_loc_list = 1
 
 " ctags
 Plugin 'ludovicchabant/vim-gutentags'
+let g:gutentags_cache_dir = '/tmp/tags/'
 
 " YCM for completions
 Plugin 'Valloric/YouCompleteMe'
