@@ -83,6 +83,9 @@ set cinoptions=:0,g0
 "----------------------------------------------------------->
 autocmd BufWritePre * :%s/\s\+$//e
 
+" tell vim do not indent when type : in yaml.
+autocmd FileType yaml setl indentkeys-=<:>
+
 "----------------------------------------------------------->
 "<< file encoding >>
 "----------------------------------------------------------->
@@ -278,6 +281,8 @@ autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Quramy/tsuquyomi'
+
+Plugin 'pboettch/vim-cmake-syntax'
 
 call vundle#end()            " required
 " Enable file type plugin and indent

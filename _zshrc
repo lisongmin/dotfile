@@ -97,7 +97,4 @@ export RUST_SRC_PATH=/work/rust/src
 export GOPATH=~/go
 export PATH="$PATH:$GOPATH/bin"
 alias nemo="nemo --no-desktop"
-
-export NVM_DIR="$HOME/.nvm"
-export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export LIBVIRT_DEFAULT_URI=qemu:///system
