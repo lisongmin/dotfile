@@ -183,8 +183,8 @@ def autostart():
 @hook.subscribe.screen_change
 def restart_on_screen_change(qtile, ev):
     print(ev)
-    subprocess.call(['xrandr', '--output', 'eDP1', '--primary',
-                     '--output', 'VGA1', '--auto', '--left-of', 'eDP1',
-                     '--output', 'HDMI1', '--auto', '--left-of', 'eDP1'
+    subprocess.call(['xrandr', '--output', 'eDP-1', '--primary',
+                     '--output', 'VGA-1', '--auto', '--left-of', 'eDP-1',
+                     '--output', 'HDMI-1', '--auto', '--left-of', 'eDP-1'
                      ])
     qtile.cmd_restart()

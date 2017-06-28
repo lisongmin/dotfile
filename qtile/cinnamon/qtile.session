@@ -1,5 +1,5 @@
 [Cinnamon Session]
 Name=Qtile session
-RequiredComponents=cinnamon-settings-daemon;qtile;cinnamon-screensaver;polkit-gnome-authentication-agent-1
+RequiredComponents=qtile;cinnamon-screensaver;polkit-gnome-authentication-agent-1
 RequiredProviders=windowmanager
 DefaultProvider-windowmanager=qtile
