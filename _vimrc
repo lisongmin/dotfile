@@ -96,7 +96,7 @@ set fencs=utf-8,ucs-bom,gb18030,cp936
 if has("gui_running")
     if ! has("win32")
         " set font
-        set gfn=DejaVu\ Sans\ Mono\ 8
+        " set gfn=DejaVu\ Sans\ Mono\ 8
         "set gfn=DejaVu\ Sans\ Mono\ 12
         "colo morning
     endif
@@ -160,6 +160,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_rust_src_path = '/work/rust/src'
 let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1,
             \ 'rust': 1, 'typescript': 1, 'javascript': 1}
+let g:ycm_keep_logfiles = 0
 nnoremap <F4> :YcmDiags<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <Leader>] :YcmCompleter GoTo<CR>
@@ -226,8 +227,8 @@ command! Fb : FufBuffer
 Plugin 'lisongmin/markdown2ctags.git'
 Plugin 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autoshowtag = 1
-
+"let g:tagbar_autoshowtag = 1
+"
 let g:tagbar_type_rust = {
             \ 'ctagstype' : 'rust',
             \ 'kinds' : [
@@ -255,6 +256,7 @@ let g:tagbar_type_tex = {
             \'l:label',
             \]
             \}
+
 " jump begin xml/tex tag
 Plugin 'matchit.zip'
 
