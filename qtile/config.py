@@ -112,36 +112,42 @@ widget_defaults = dict(
     padding=1,
 )
 
-nets = os.listdir('/sys/class/net')
-eth = ''
-wlan = ''
-for n in nets:
-    if not eth and n.startswith('enp'):
-        eth = n
-    elif not wlan and n.startswith('wlp'):
-        wlan = n
+
+def init_top_bar_widgets():
+    widgets = [widget.GroupBox(),
+               widget.Prompt(),
+               widget.WindowName(),
+               widget.Sep(),
+               ]
+
+    # network
+    nets = os.listdir('/sys/class/net')
+    for n in nets:
+        if n.startswith('enp') or n.startswith('wlp'):
+            widgets.extend([widget.Net(interface=n, update_interval=2),
+                            widget.Sep()])
+
+    widgets.append(widget.CPUGraph(frequency=2))
+
+    # bettery
+    widgets.append(widget.Battery())
+
+    # backlight
+    back_light_names = os.listdir('/sys/class/backlight')
+    for n in back_light_names:
+        widgets.append(widget.Backlight(backlight_name=n))
+
+    widgets.extend([
+        widget.ThermalSensor(),
+        widget.Systray(),
+        widget.Clock(format='%a %H:%M %m-%d')
+    ])
+    return widgets
+
 
 bar.Bar.defaults
 screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Sep(),
-                widget.Net(interface=eth, update_interval=2),
-                widget.Sep(),
-                widget.Net(interface=wlan, update_interval=2),
-                widget.CPUGraph(frequency=2),
-                widget.ThermalSensor(),
-                widget.Systray(),
-                widget.Clock(format='%a %H:%M %m-%d'),
-            ],
-            24,
-            opacity=0.7
-        ),
-    ),
+    Screen(top=bar.Bar(init_top_bar_widgets(), 24, opacity=0.7)),
     Screen()
 ]
 
