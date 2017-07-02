@@ -77,7 +77,13 @@ keys = [
     Key([], 'XF86AudioPlay', lazy.spawn('mpc toggle')),
     Key([], 'XF86AudioStop', lazy.spawn('mpc stop')),
     Key([], 'XF86AudioPrev', lazy.spawn('mpc prev')),
-    Key([], 'XF86AudioNext', lazy.spawn('mpc next'))
+    Key([], 'XF86AudioNext', lazy.spawn('mpc next')),
+
+    # backlight adjust.
+    # Key([], "XF86KbdBrightnessUp", lazy.spawn("maclight keyboard up")),
+    # Key([], "XF86KbdBrightnessDown", lazy.spawn("maclight keyboard down")),
+    # Key([], "XF86MonBrightnessUp", lazy.spawn("xbacklight +5%")),
+    # Key([], "XF86MonBrightnessDown", lazy.spawn("xbacklight -5%")),
 ]
 
 groups = [Group('a'),
@@ -130,12 +136,21 @@ def init_top_bar_widgets():
     widgets.append(widget.CPUGraph(frequency=2))
 
     # bettery
-    widgets.append(widget.Battery())
+    battery_names = os.listdir('/sys/class/power_supply')
+    battery_names = [x for x in battery_names if x.startswith('BAT')]
+    for n in battery_names:
+        widgets.append(widget.Battery(battery_name=n, update_delay=5))
+
+    if battery_names:
+        widgets.append(widget.Sep())
 
     # backlight
-    back_light_names = os.listdir('/sys/class/backlight')
-    for n in back_light_names:
+    backlight_names = os.listdir('/sys/class/backlight')
+    for n in backlight_names:
         widgets.append(widget.Backlight(backlight_name=n))
+
+    if backlight_names:
+        widgets.append(widget.Sep())
 
     widgets.extend([
         widget.ThermalSensor(),
