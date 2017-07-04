@@ -51,10 +51,8 @@ keys = [
     Key([mod, "shift"], "c", lazy.window.kill()),
 
     Key([mod], "q", lazy.restart()),
-    Key([mod, "shift"], "q", lazy.spawn(
-        'cinnamon-session-quit --logout')),
-    Key([mod, "shift"], "s", lazy.spawn(
-        'systemctl suspend -i')),
+    Key([mod, "shift"], "q", lazy.spawn('cinnamon-session-quit --logout')),
+    Key([mod, "shift"], "s", lazy.spawn('systemctl suspend -i')),
 
     Key(["mod1"], "F2", lazy.spawncmd()),
 
@@ -111,12 +109,23 @@ layouts = [
     layout.xmonad.MonadTall()
 ]
 
-widget_defaults = dict(
-    # font='Source Han Sans',
-    font='文泉驿正黑',
-    fontsize=20,
-    padding=1,
-)
+
+def init_widget_defaults():
+    p = subprocess.Popen(["xrandr"], stdout=subprocess.PIPE)
+    p.wait()
+    buf = p.stdout.readlines()
+    for l in buf:
+        l = l.decode()
+        if "SCreen 0:" not in l:
+            continue
+
+        if "current 3840" in l:
+            return {'font': '文泉驿正黑', 'fontsize': 20, 'padding': 1}
+
+    return {'font': '文泉驿正黑', 'fontsize': 16, 'padding': 1}
+
+
+widget_defaults = init_widget_defaults()
 
 
 def init_top_bar_widgets():
