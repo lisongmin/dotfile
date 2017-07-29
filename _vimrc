@@ -67,18 +67,6 @@ endif
 "endif
 
 "----------------------------------------------------------->
-"<< indent >>
-"----------------------------------------------------------->
-set ai
-set si
-set autoindent
-set cindent
-"----------------------------------------------------------->
-" 设置c/c++的缩进格式
-"----------------------------------------------------------->
-set cinoptions=:0,g0
-
-"----------------------------------------------------------->
 "去掉行尾空格
 "----------------------------------------------------------->
 autocmd BufWritePre * :%s/\s\+$//e
@@ -119,6 +107,12 @@ Plugin 'lilydjwg/fcitx.vim'
 " git manager
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+
+" indent
+Plugin 'Chiel92/vim-autoformat'
+let g:formatdef_clangformat = '"clang-format -style=Google"'
+" let g:autoformat_verbosemode=1
+noremap <F3> :Autoformat<CR>
 
 " python complete
 " -- <leader>r - rename
