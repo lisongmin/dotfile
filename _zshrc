@@ -8,6 +8,8 @@ ZSH=/usr/share/oh-my-zsh/
 # ZSH_THEME="sonicradish"
 # ZSH_THEME="agnoster"
 
+# depends: awesome-terminal-fonts zsh-theme-powerlevel9k
+# ln -sf /usr/share/zsh-theme-powerlevel9k powerlevel9k
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='awesome-fontconfig'
 POWERLEVEL9K_NODE_VERSION_BACKGROUND='28'
