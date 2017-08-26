@@ -2,7 +2,7 @@
 
 if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
     /usr/bin/setxkbmap -option "caps:swapescape"
-    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
+    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
 
     fcitx&
 
