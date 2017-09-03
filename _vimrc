@@ -121,39 +121,40 @@ endif
 " ------------------------------------------>
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+set rtp+=~/.vim/vim-plug/plug.vim
+call plug#begin('~/.vim/bundle')
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'will133/vim-dirdiff'
+Plug 'junegunn/vim-plug'
+'
+Plug 'will133/vim-dirdiff'
 
 " switch fcitx to en mode in normal mode.
-Plugin 'lilydjwg/fcitx.vim'
+Plug 'lilydjwg/fcitx.vim'
 
 " git manager
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " python complete
 " -- <leader>r - rename
 " -- <leader>d - definations
 "  - <leader>g - assignments
 "  - <K>       - show pydoc
 "  - <leader>n - related names
-Plugin 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim'
 let g:jedi#completions_command = "<C-N>"
-Plugin 'hynek/vim-python-pep8-indent'
+Plug 'hynek/vim-python-pep8-indent'
 
 " rust language
-Plugin 'rust-lang/rust.vim'
-Plugin 'treycordova/rustpeg.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'treycordova/rustpeg.vim'
 
 " <leader>gd -- go to definations
-Plugin 'racer-rust/vim-racer'
+Plug 'racer-rust/vim-racer'
 let g:racer_cmd = "~/.vim/bundle/racer/target/release/racer"
 
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
@@ -161,11 +162,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 
 " ctags
-Plugin 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags/'
 
 " YCM for completions
-Plugin 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost --racer-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost --racer-completer' }
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_filepath_completion_use_working_dir = 1
@@ -188,20 +189,20 @@ nnoremap <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <Leader>gp :YcmCompleter GetParent<CR>
 nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=["UltiSnips", 'mysnips']
 let g:snips_author = 'Song min.Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
 
-Plugin 'a.vim'
+Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
 
 " markdown support
-Plugin 'mattn/calendar-vim'
-Plugin 'lisongmin/vimwiki'
+Plug 'mattn/calendar-vim'
+Plug 'lisongmin/vimwiki'
 let g:vimwiki_list = [
             \ {'path': '~/mywiki',
             \ 'index': 'index.html',
@@ -233,14 +234,10 @@ endfunction
 :autocmd FileType vimwiki nmap <leader>wc :call ToggleCalendar()<CR>
 
 " quick open file
-Plugin 'L9'
-Plugin 'FuzzyFinder'
-command! Fe : FufFile
-command! Fc : FufFileWithCurrentBufferDir
-command! Fb : FufBuffer
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-Plugin 'lisongmin/markdown2ctags.git'
-Plugin 'majutsushi/tagbar'
+Plug 'lisongmin/markdown2ctags'
+Plug 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 "let g:tagbar_autoshowtag = 1
 "
@@ -273,36 +270,36 @@ let g:tagbar_type_tex = {
             \}
 
 " jump begin xml/tex tag
-Plugin 'matchit.zip'
+Plug 'vim-scripts/matchit.zip'
 
 
 " load indent by .editorconfig.
-Plugin 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " use tab or space according to contents.
-Plugin 'conormcd/matchindent.vim'
+Plug 'conormcd/matchindent.vim'
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
-Plugin 'ZenCoding.vim'
+Plug 'vim-scripts/ZenCoding.vim'
 
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 set t_Co=256
 set laststatus=2
 " let g:airline_gitblame_enalbe = 1
 
 " typescript
-Plugin 'leafgarland/typescript-vim'
-Plugin 'Quramy/vim-js-pretty-template'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/vim-js-pretty-template'
 autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim'
+Plug 'Quramy/tsuquyomi'
 
-Plugin 'pboettch/vim-cmake-syntax'
+Plug 'pboettch/vim-cmake-syntax'
 
-call vundle#end()            " required
+call plug#end()            " required
 " Enable file type plugin and indent
 filetype plugin indent on
 "-------------------------------------------<
