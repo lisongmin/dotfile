@@ -34,7 +34,7 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_middle"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=6
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
-POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="$ "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='\u2570\U2500 $ '
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -121,7 +121,4 @@ man() {
 }
 
 export JAVA_HOME=/usr/lib/jvm/default
-export RUST_SRC_PATH=/work/rust/src
-export GOPATH=~/go
-export PATH="$PATH:$GOPATH/bin"
 export LIBVIRT_DEFAULT_URI=qemu:///system

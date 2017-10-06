@@ -124,8 +124,6 @@ filetype off                   " required!
 set rtp+=~/.vim/vim-plug/plug.vim
 call plug#begin('~/.vim/bundle')
 
-Plug 'junegunn/vim-plug'
-'
 Plug 'will133/vim-dirdiff'
 
 " switch fcitx to en mode in normal mode.

@@ -74,10 +74,10 @@ keys = [
     Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer set Master 4%-')),
     Key([], 'XF86AudioMute', lazy.spawn('amixer set Master toggle')),
     Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer set Master 4%+')),
-    Key([], 'XF86AudioPlay', lazy.spawn('mpc toggle')),
-    Key([], 'XF86AudioStop', lazy.spawn('mpc stop')),
-    Key([], 'XF86AudioPrev', lazy.spawn('mpc prev')),
-    Key([], 'XF86AudioNext', lazy.spawn('mpc next'))
+    Key([], 'XF86AudioPlay', lazy.spawn('xmms2 toggle')),
+    Key([], 'XF86AudioStop', lazy.spawn('xmms2 stop')),
+    Key([], 'XF86AudioPrev', lazy.spawn('xmms2 prev')),
+    Key([], 'XF86AudioNext', lazy.spawn('xmms2 next'))
 ]
 
 groups = [Group('a'),
