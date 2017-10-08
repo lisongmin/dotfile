@@ -29,7 +29,7 @@ from libqtile.command import lazy
 from libqtile import layout, bar, widget
 from libqtile import hook
 import subprocess
-import os.path
+import os
 
 mod = "mod4"
 scrot_option = " -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'"
@@ -112,6 +112,15 @@ widget_defaults = dict(
     padding=1,
 )
 
+nets = os.listdir('/sys/class/net')
+eth = ''
+wlan = ''
+for n in nets:
+    if not eth and n.startswith('enp'):
+        eth = n
+    elif not wlan and n.startswith('wlp'):
+        wlan = n
+
 bar.Bar.defaults
 screens = [
     Screen(
@@ -121,11 +130,9 @@ screens = [
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Sep(),
-                widget.Net(interface='enp0s20u3', update_interval=2),
+                widget.Net(interface=eth, update_interval=2),
                 widget.Sep(),
-                widget.Net(interface='enp4s0f1', update_interval=2),
-                widget.Sep(),
-                widget.Net(interface='wlp3s0', update_interval=2),
+                widget.Net(interface=wlan, update_interval=2),
                 widget.CPUGraph(frequency=2),
                 widget.ThermalSensor(),
                 widget.Sep(),
@@ -183,8 +190,4 @@ def autostart():
 @hook.subscribe.screen_change
 def restart_on_screen_change(qtile, ev):
     print(ev)
-    subprocess.call(['xrandr', '--output', 'eDP-1', '--primary',
-                     '--output', 'VGA-1', '--auto', '--left-of', 'eDP-1',
-                     '--output', 'HDMI-1', '--auto', '--left-of', 'eDP-1'
-                     ])
     qtile.cmd_restart()

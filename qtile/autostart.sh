@@ -2,7 +2,11 @@
 
 if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
     /usr/bin/setxkbmap -option "caps:swapescape"
-    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
+    if [ -e ~/dotfile/wallpaper/family.jpeg ];then
+        /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
+    else
+        /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
+    fi
 
     fcitx&
 
@@ -12,8 +16,6 @@ fi
 
 # disable beep
 xset -b
-
-# compositor
 compton -b
 
 pgrep tmux
@@ -32,5 +34,10 @@ if [ $? -ne 0 ]; then
     firefox&
 fi
 # thunderbird&
+
+pgrep osdlyrics
+if [ $? -ne 0 ]; then
+    osdlyrics&
+fi
 
 telegram-desktop&

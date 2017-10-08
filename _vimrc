@@ -144,14 +144,6 @@ Plug 'davidhalter/jedi-vim'
 let g:jedi#completions_command = "<C-N>"
 Plug 'hynek/vim-python-pep8-indent'
 
-" rust language
-Plug 'rust-lang/rust.vim'
-Plug 'treycordova/rustpeg.vim'
-
-" <leader>gd -- go to definations
-Plug 'racer-rust/vim-racer'
-let g:racer_cmd = "~/.vim/bundle/racer/target/release/racer"
-
 Plug 'scrooloose/syntastic'
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
@@ -164,16 +156,15 @@ Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags/'
 
 " YCM for completions
-Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost --racer-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost' }
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_rust_src_path = '/work/rust/src'
 let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1,
-            \ 'rust': 1, 'typescript': 1, 'javascript': 1}
+            \ 'typescript': 1, 'javascript': 1}
 let g:ycm_keep_logfiles = 0
 nnoremap <F4> :YcmDiags<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -239,20 +230,6 @@ Plug 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 "let g:tagbar_autoshowtag = 1
 "
-let g:tagbar_type_rust = {
-            \ 'ctagstype' : 'rust',
-            \ 'kinds' : [
-            \'T:types,type definitions',
-            \'f:functions,function definitions',
-            \'g:enum,enumeration names',
-            \'s:structure names',
-            \'m:modules,module names',
-            \'c:consts,static constants',
-            \'t:traits,traits',
-            \'i:impls,trait implementations',
-            \]
-            \}
-
 let g:tagbar_type_tex = {
             \ 'ctagstype' : 'latex',
             \ 'kinds' : [
