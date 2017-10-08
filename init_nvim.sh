@@ -29,3 +29,15 @@ rustup component add rust-src --toolchain nightly
 # ======================
 # } rust support end.
 # ======================
+
+# ======================
+# { python support.
+# ======================
+pacman -Q python-pip
+if [ $? -ne 0 ];then
+    sudo pacman -S python-pip
+fi
+pip install --user python-language-server
+# ======================
+# { python support end.
+# ======================
