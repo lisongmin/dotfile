@@ -35,3 +35,9 @@ link $_dir/_zshrc ~/.zshrc
 # pip
 mkdir -p ~/.pip
 link $_dir/pip.conf ~/.pip/pip.conf
+
+# cargo
+if [ ! -e ~/.cargo ];then
+    mkdir -p ~/.cargo
+fi
+link $_dir/_cargo ~/.cargo/config
