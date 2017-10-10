@@ -18,8 +18,8 @@ link $_dir/xmonad ~/.xmonad
 
 # vim relative
 link $_dir/flake8 ~/.config/flake8
+link $_dir/flake8 ~/.config/pycodestyle
 link $_dir/_vimrc ~/.vimrc
-$_dir/init_vimrc.sh
 link $_dir/_ctags ~/.ctags
 
 # tmux
