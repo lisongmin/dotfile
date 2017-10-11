@@ -19,6 +19,9 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+" load indent by .editorconfig.
+Plug 'editorconfig/editorconfig-vim'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " use tab or space according to contents.
 Plug 'conormcd/matchindent.vim'
 
@@ -41,6 +44,8 @@ Plug 'zchee/deoplete-jedi'
 
 " rust highlighting, format etc.
 Plug 'rust-lang/rust.vim'
+" dockfile syntax
+Plug 'ekalinin/Dockerfile.vim'
 
 Plug 'Shougo/neco-vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -58,6 +63,9 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 "  ---------------------------
 " quick open file
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+" switch fcitx to en mode in normal mode.
+Plug 'lilydjwg/fcitx.vim'
 
 " Initialize plugin system
 call plug#end()
