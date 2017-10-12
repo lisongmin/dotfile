@@ -41,3 +41,6 @@ if [ ! -e ~/.cargo ];then
     mkdir -p ~/.cargo
 fi
 link $_dir/_cargo ~/.cargo/config
+
+# npm
+link $_dir/_npmrc ~/.npmrc
