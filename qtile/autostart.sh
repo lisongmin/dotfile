@@ -35,9 +35,9 @@ if [ $? -ne 0 ]; then
 fi
 # thunderbird&
 
-pgrep osdlyrics
-if [ $? -ne 0 ]; then
-    osdlyrics&
-fi
+# pgrep osdlyrics
+# if [ $? -ne 0 ]; then
+#    osdlyrics&
+# fi
 
-telegram-desktop&
+# telegram-desktop&
