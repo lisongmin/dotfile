@@ -25,10 +25,12 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " use tab or space according to contents.
 Plug 'conormcd/matchindent.vim'
 
+Plug 'sourcegraph/javascript-typescript-langserver', {'do': 'npm install && npm run build'}
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'python': ['pyls'],
+    \ 'javascript': ['node', '~/.local/share/nvim/plugged/javascript-typescript-langserver/lib/language-server-stdio'],
     \ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
