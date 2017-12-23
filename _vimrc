@@ -269,7 +269,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
 autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
-Plug 'Shougo/vimproc.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
 
 Plug 'pboettch/vim-cmake-syntax'

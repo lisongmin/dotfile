@@ -40,4 +40,4 @@ fi
 #    osdlyrics&
 # fi
 
-# telegram-desktop&
+telegram-desktop&
