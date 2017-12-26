@@ -178,6 +178,13 @@ nnoremap <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <Leader>gp :YcmCompleter GetParent<CR>
 nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 
+" clang format
+Plug 'rhysd/vim-clang-format'
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 1
+let g:clang_format#auto_format_on_insert_leave = 1
+let g:clang_format#auto_formatexpr = 1
+
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=["UltiSnips", 'mysnips']
@@ -190,37 +197,9 @@ Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
 
 " markdown support
-Plug 'mattn/calendar-vim'
-Plug 'lisongmin/vimwiki'
-let g:vimwiki_list = [
-            \ {'path': '~/mywiki',
-            \ 'index': 'index.html',
-            \ 'syntax': 'markdown', 'ext': '.md'
-            \ }
-            \ ]
-
-let g:vimwiki_ext2syntax = {'.md': 'markdown',
-                  \ '.mkd': 'markdown',
-                  \ '.wiki': 'media'}
-
-let g:vimwiki_nested_syntaxes = {'python': 'python', 'graphviz': 'dot', 'dot': 'dot', 'c++': 'cpp', 'bash': 'sh'}
-let g:vimwiki_CJK_length = 1
-
-:autocmd FileType vimwiki nmap <leader>wn :VimwikiMakeDiaryNote<CR>
-function! ToggleCalendar()
-    execute ":Calendar"
-    if exists("g:calendar_open")
-        if g:calendar_open == 1
-            execute "q"
-            unlet g:calendar_open
-        else
-            g:calendar_open = 1
-        end
-    else
-        let g:calendar_open = 1
-    end
-endfunction
-:autocmd FileType vimwiki nmap <leader>wc :call ToggleCalendar()<CR>
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
 
 " quick open file
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
