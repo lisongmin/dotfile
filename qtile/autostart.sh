@@ -40,4 +40,10 @@ fi
 #    osdlyrics&
 # fi
 
-telegram-desktop&
+which telegram-desktop
+if [ $? -eq 0 ];then
+    pgrep telegram
+    if [ $? -ne 0 ];then
+        telegram-desktop&
+    fi
+fi
