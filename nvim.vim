@@ -40,7 +40,7 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 
-Plug 'zchee/deoplete-clang'
+"Plug 'zchee/deoplete-clang'
 Plug 'Shougo/neoinclude.vim'
 Plug 'zchee/deoplete-jedi'
 

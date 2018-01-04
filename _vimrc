@@ -181,9 +181,14 @@ nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 " clang format
 Plug 'rhysd/vim-clang-format'
 let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format = 1
-let g:clang_format#auto_format_on_insert_leave = 1
-let g:clang_format#auto_formatexpr = 1
+let g:clang_format#auto_format_on_insert_leave = 0
+if &diff
+    let g:clang_format#auto_format = 0
+    let g:clang_format#auto_formatexpr = 0
+else
+    let g:clang_format#auto_format = 1
+    let g:clang_format#auto_formatexpr = 1
+endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -205,8 +210,8 @@ let g:vim_markdown_folding_disabled = 1
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'lisongmin/markdown2ctags'
-Plug 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
+"Plug 'majutsushi/tagbar'
+"nmap <F8> :TagbarToggle<CR>
 "let g:tagbar_autoshowtag = 1
 "
 let g:tagbar_type_tex = {
