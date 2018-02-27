@@ -22,12 +22,10 @@ pgrep tmux
 if [ $? -ne 0 ];then
     tmux new-session -d
     tmux new-session -s term -d
-    tmux new-session -s tilda -d
     tmux new-session -s work -c /work -d
 fi
 
 xfce4-terminal -e "tmux attach-session -t term"&
-tilda -h -c "tmux attach-session -t tilda"&
 
 pgrep firefox
 if [ $? -ne 0 ]; then
