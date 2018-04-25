@@ -81,9 +81,6 @@ set si
 set autoindent
 set cindent
 
-" tell vim do not indent when type : in yaml.
-autocmd FileType yaml setl indentkeys-=<:>
-
 "----------------------------------------------------------->
 "<< file encoding >>
 "----------------------------------------------------------->
@@ -161,16 +158,6 @@ nnoremap <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <Leader>gp :YcmCompleter GetParent<CR>
 nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 
-" format
-Plug 'Chiel92/vim-autoformat'
-noremap <F3> :Autoformat<CR>
-if &diff
-    let g:autoformat_autoindent = 0
-    let g:autoformat_retab = 0
-else
-    au BufWrite * :Autoformat
-endif
-
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=["UltiSnips", 'mysnips']
@@ -212,6 +199,9 @@ let g:tagbar_type_tex = {
 " jump begin xml/tex tag
 Plug 'vim-scripts/matchit.zip'
 
+" ================================
+" indent config
+" ================================
 
 " load indent by .editorconfig.
 Plug 'editorconfig/editorconfig-vim'
@@ -219,6 +209,21 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " use tab or space according to contents.
 Plug 'conormcd/matchindent.vim'
+
+" format
+Plug 'Chiel92/vim-autoformat'
+autocmd FileType yaml setl indentkeys-=<:>
+autocmd FileType yaml let b:autoformat_autoindent=0
+noremap <F3> :Autoformat<CR>
+if &diff
+    let g:autoformat_autoindent = 0
+    let g:autoformat_retab = 0
+else
+    au BufWrite *.cpp,*.c,.*hpp,*.h,*.js,*.html,*.ts,*.py,*.rs :Autoformat
+endif
+" ================================
+" indent config end.
+" ================================
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'vim-scripts/ZenCoding.vim'
