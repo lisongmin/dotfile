@@ -78,8 +78,10 @@ plugins=(git history-substring-search tmux)
 
 # User configuration
 
-export PATH=$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/node_modules/.bin
-export MANPATH="/usr/local/man:$MANPATH"
+export NPM_PACKAGES="$HOME/.local"
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+export MANPATH="$HOME/.local/share/man:/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

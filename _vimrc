@@ -73,13 +73,6 @@ if has('persistent_undo')
     set undofile
 endif
 
-" 设置swp文件保存路径
-"if has('win32')
-"    set dir=%tmp%
-"else
-"    set dir=/tmp
-"endif
-
 "----------------------------------------------------------->
 "<< indent >>
 "----------------------------------------------------------->
@@ -87,15 +80,6 @@ set ai
 set si
 set autoindent
 set cindent
-"----------------------------------------------------------->
-" 设置c/c++的缩进格式
-"----------------------------------------------------------->
-set cinoptions=:0,g0
-
-"----------------------------------------------------------->
-"去掉行尾空格
-"----------------------------------------------------------->
-autocmd BufWritePre * :%s/\s\+$//e
 
 " tell vim do not indent when type : in yaml.
 autocmd FileType yaml setl indentkeys-=<:>
@@ -142,7 +126,7 @@ Plug 'scrooloose/nerdcommenter'
 "  - <leader>n - related names
 Plug 'davidhalter/jedi-vim'
 let g:jedi#completions_command = "<C-N>"
-Plug 'hynek/vim-python-pep8-indent'
+"Plug 'hynek/vim-python-pep8-indent'
 
 Plug 'scrooloose/syntastic'
 " set statusline+=%#warningmsg#
@@ -163,8 +147,7 @@ let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1,
-            \ 'typescript': 1, 'javascript': 1}
+let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1}
 let g:ycm_keep_logfiles = 0
 nnoremap <F4> :YcmDiags<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -178,16 +161,14 @@ nnoremap <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <Leader>gp :YcmCompleter GetParent<CR>
 nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
 
-" clang format
-Plug 'rhysd/vim-clang-format'
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format_on_insert_leave = 0
+" format
+Plug 'Chiel92/vim-autoformat'
+noremap <F3> :Autoformat<CR>
 if &diff
-    let g:clang_format#auto_format = 0
-    let g:clang_format#auto_formatexpr = 0
+    let g:autoformat_autoindent = 0
+    let g:autoformat_retab = 0
 else
-    let g:clang_format#auto_format = 1
-    let g:clang_format#auto_formatexpr = 1
+    au BufWrite * :Autoformat
 endif
 
 Plug 'SirVer/ultisnips'
@@ -264,13 +245,6 @@ filetype plugin indent on
 "-------------------------------------------<
 " Bundle end
 " ------------------------------------------<
-
-"----------------------------------------------------------->
-"<< astyle setting >>
-"----------------------------------------------------------->
-autocmd filetype cpp set formatprg=!astyle\ -s4bfjpHUk1
-autocmd filetype c set formatprg=!astyle\ -s4bfjpHk1
-map <leader>gq :gggqG
 
 "----------------------------------------------------------->
 "<< Latex setting.
