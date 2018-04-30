@@ -94,6 +94,7 @@ if has("gui_running")
         " set gfn=DejaVu\ Sans\ Mono\ 8
         "set gfn=DejaVu\ Sans\ Mono\ 12
         "colo morning
+        "set gfn=Fira\ Code
     endif
 endif
 
@@ -144,7 +145,7 @@ let g:ycm_filepath_completion_use_working_dir = 1
 let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_filetype_whitelist = {'c': 1, 'cpp': 1, 'python': 1}
+let g:ycm_filetype_whitelist = {}
 let g:ycm_keep_logfiles = 0
 nnoremap <F4> :YcmDiags<CR>
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
@@ -157,6 +158,34 @@ nnoremap <Leader>gt :YcmCompleter GetType<CR>
 nnoremap <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <Leader>gp :YcmCompleter GetParent<CR>
 nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+if executable('cquery')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'cquery',
+      \ 'cmd': {server_info->['cquery']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': { 'cacheDirectory': '/path/to/cquery/cache' },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+      \ })
+endif
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server', '--stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+        \ 'whitelist': ['typescript'],
+        \ })
+endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -212,15 +241,17 @@ Plug 'conormcd/matchindent.vim'
 
 " format
 Plug 'Chiel92/vim-autoformat'
-autocmd FileType yaml setl indentkeys-=<:>
-autocmd FileType yaml let b:autoformat_autoindent=0
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+autocmd FileType cpp,c,javascript,html,ts,python,rust let b:autoformat_autoindent=1
+autocmd FileType cpp,c,javascript,html,ts,python,rust let b:autoformat_retab=1
 noremap <F3> :Autoformat<CR>
-if &diff
-    let g:autoformat_autoindent = 0
-    let g:autoformat_retab = 0
-else
+if ! &diff
     au BufWrite *.cpp,*.c,.*hpp,*.h,*.js,*.html,*.ts,*.py,*.rs :Autoformat
 endif
+
+autocmd FileType yaml setl indentkeys-=<:>
+
 " ================================
 " indent config end.
 " ================================
