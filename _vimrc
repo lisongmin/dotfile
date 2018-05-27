@@ -1,9 +1,14 @@
+"----------------------------------------------------------->
+"<< file encoding >>
+"----------------------------------------------------------->
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,cp936
+scriptencoding utf-8
+
 "---------------------------------------------------------->
 "<< General option >>
 "---------------------------------------------------------->
-
-" Get out of Vi's compatible mode.
-set nocompatible
 
 set shell=bash
 
@@ -20,14 +25,14 @@ if &diff
     set list
 endif
 
-set noeb vb t_vb=
+set noerrorbells vb t_vb=
 au GuiEnter * set t_vb=
 
 " Not break line when line is out of the window.
 set nowrap
 
 " Set map leader
-let mapleader = ","
+let g:mapleader = ','
 
 " Set color scheme
 colo morning "ron
@@ -39,19 +44,12 @@ endif
 set autoread
 
 " 切换时自动保存
-set aw
+set autowrite
 " 切换时隐藏
-set hid
-
-" Reload .vimrc when the .vimrc file changed
-if has('win32')
-    autocmd! bufwritepost vimrc source ~/_vimrc
-else
-    autocmd! bufwritepost vimrc source ~/.vimrc
-endif
+set hidden
 
 " Disable menu and toolbar
-if has("gui_running")
+if has('gui_running')
     "去掉菜单、工具栏、滚动条
     set guioptions-=m
     set guioptions-=T
@@ -60,36 +58,29 @@ if has("gui_running")
 endif
 
 " Put plugins and dictionaries in this dir (also on Windows)
-let vimDir = '$HOME/.vim'
-let &runtimepath.=','.vimDir
+let g:vimDir = '$HOME/.vim'
+let &runtimepath .= ',' . g:vimDir
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-    let myUndoDir = expand(vimDir . '/undodir')
+    let g:myUndoDir = expand(g:vimDir . '/undodir')
     " Create dirs
-    call system('mkdir ' . vimDir)
-    call system('mkdir ' . myUndoDir)
-    let &undodir = myUndoDir
+    call system('mkdir ' . g:vimDir)
+    call system('mkdir ' . g:myUndoDir)
+    let &undodir = g:myUndoDir
     set undofile
 endif
 
 "----------------------------------------------------------->
 "<< indent >>
 "----------------------------------------------------------->
-set ai
-set si
 set autoindent
+set smartindent
 set cindent
 
-"----------------------------------------------------------->
-"<< file encoding >>
-"----------------------------------------------------------->
-set enc=utf-8
-set fenc=utf-8
-set fencs=utf-8,ucs-bom,gb18030,cp936
 "set ambiwidth=double
-if has("gui_running")
-    if ! has("win32")
+if has('gui_running')
+    if ! has('win32')
         " set font
         " set gfn=DejaVu\ Sans\ Mono\ 8
         "set gfn=DejaVu\ Sans\ Mono\ 12
@@ -103,7 +94,7 @@ endif
 " ------------------------------------------>
 filetype off                   " required!
 
-set rtp+=~/.vim/vim-plug/plug.vim
+set runtimepath+=~/.vim/vim-plug/plug.vim
 call plug#begin('~/.vim/bundle')
 
 Plug 'will133/vim-dirdiff'
@@ -115,85 +106,104 @@ Plug 'lilydjwg/fcitx.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
-Plug 'scrooloose/nerdcommenter'
-" python complete
-" -- <leader>r - rename
-" -- <leader>d - definations
-"  - <leader>g - assignments
-"  - <K>       - show pydoc
-"  - <leader>n - related names
-Plug 'davidhalter/jedi-vim'
-let g:jedi#completions_command = "<C-N>"
-"Plug 'hynek/vim-python-pep8-indent'
-
-Plug 'scrooloose/syntastic'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-
 " ctags
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags/'
 
-" YCM for completions
-Plug 'Valloric/YouCompleteMe', { 'do': 'python ./install.py --clang-completer --system-libclang --system-boost' }
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_filetype_whitelist = {}
-let g:ycm_keep_logfiles = 0
-nnoremap <F4> :YcmDiags<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <Leader>] :YcmCompleter GoTo<CR>
-nnoremap <Leader>gh :YcmCompleter GoToInclude<CR>
-nnoremap <Leader>gd :YcmCompleter GoToDefinition<CR>
-nnoremap <Leader>gc :YcmCompleter GoToDeclaration<CR>
+" ============================
+" completions
+" ============================
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+let g:LanguageClient_loadSettings = 1
+let g:LanguageClient_settingsPath = expand('~/dotfile/language-client-settings.json')
+" yarn global add bash-language-server
+" pacman -S cquery
+" yarn global add javascript-typescript-langserver
+" pip install --user python-language-server
+let g:LanguageClient_serverCommands = {
+    \ 'sh': ['bash-language-server', 'start'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['pyls'],
+    \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log']
+    \ }
+let g:LanguageClient_rootMarkers = {
+    \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
+    \ }
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-nnoremap <Leader>gt :YcmCompleter GetType<CR>
-nnoremap <Leader>gf :YcmCompleter FixIt<CR>
-nnoremap <Leader>gp :YcmCompleter GetParent<CR>
-nnoremap <Leader>gr :YcmCompleter GoToReferences<CR>
+" (Optional) Multi-entry selection UI.
+" pacman -S fzf
+Plug 'junegunn/fzf.vim'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-if executable('cquery')
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'cquery',
-      \ 'cmd': {server_info->['cquery']},
-      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': { 'cacheDirectory': '/path/to/cquery/cache' },
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-      \ })
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ })
-endif
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server', '--stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript'],
-        \ })
-endif
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-let g:UltiSnipsSnippetDirectories=["UltiSnips", 'mysnips']
-let g:snips_author = 'Song min.Li (Li)'
+let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnips']
+let g:snips_author = 'Songmin Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
+
+function! ExpandLspSnippet()
+    call UltiSnips#ExpandSnippetOrJump()
+    if !pumvisible() || empty(v:completed_item)
+        return ''
+    endif
+
+    " only expand Lsp if UltiSnips#ExpandSnippetOrJump not effect.
+    let l:value = v:completed_item['word']
+    let l:kind = v:completed_item['kind']
+    let l:abbr = v:completed_item['abbr']
+
+    " remove inserted chars before expand snippet
+    let l:end = col('.')
+    let l:line = 0
+    let l:start = 0
+    for l:match in [l:abbr . '(', l:abbr, l:value]
+        let [l:line, l:start] = searchpos(l:match, 'b', line('.'))
+        if l:line != 0 || l:start != 0
+            break
+        endif
+    endfor
+    if l:line == 0 && l:start == 0
+        return ''
+    endif
+
+    let l:matched = l:end - l:start
+    if l:matched <= 0
+        return ''
+    endif
+
+    exec 'normal! ' . l:matched . 'x'
+
+    if col('.') == col('$') - 1
+        " move to $ if at the end of line.
+        call cursor(l:line, col('$'))
+    endif
+
+    " expand snippet now.
+    call UltiSnips#Anon(l:value)
+    return ''
+endfunction
+
+imap <C-k> <C-R>=ExpandLspSnippet()<CR>
+
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
@@ -207,30 +217,13 @@ let g:vim_markdown_folding_disabled = 1
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'lisongmin/markdown2ctags'
-"Plug 'majutsushi/tagbar'
-"nmap <F8> :TagbarToggle<CR>
-"let g:tagbar_autoshowtag = 1
-"
-let g:tagbar_type_tex = {
-            \ 'ctagstype' : 'latex',
-            \ 'kinds' : [
-            \'p:part',
-            \'c:chapter',
-            \'s:section',
-            \'u:subsection',
-            \'b:subsubsection',
-            \'P:paragragh',
-            \'G:subparagragh',
-            \'l:label',
-            \]
-            \}
-
-" jump begin xml/tex tag
-Plug 'vim-scripts/matchit.zip'
 
 " ================================
 " indent config
 " ================================
+
+" jump begin xml/tex tag
+Plug 'vim-scripts/matchit.zip'
 
 " load indent by .editorconfig.
 Plug 'editorconfig/editorconfig-vim'
@@ -243,18 +236,73 @@ Plug 'conormcd/matchindent.vim'
 Plug 'Chiel92/vim-autoformat'
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
-autocmd FileType cpp,c,javascript,html,ts,python,rust let b:autoformat_autoindent=1
-autocmd FileType cpp,c,javascript,html,ts,python,rust let b:autoformat_retab=1
-noremap <F3> :Autoformat<CR>
+augroup autoformat
+autocmd FileType javascript,ts let b:autoformat_autoindent=1
+autocmd FileType javascript,ts let b:autoformat_retab=1
 if ! &diff
-    au BufWrite *.cpp,*.c,.*hpp,*.h,*.js,*.html,*.ts,*.py,*.rs :Autoformat
+    au BufWrite *.js,*.ts :Autoformat
 endif
+augroup END
 
-autocmd FileType yaml setl indentkeys-=<:>
-
+noremap <F3> :Autoformat<CR>
 " ================================
 " indent config end.
 " ================================
+
+" ================================
+" lint and fixer.
+" ================================
+Plug 'w0rp/ale'
+let g:ale_linters_explicit = 1
+let g:ale_open_list = 1
+let g:ale_fix_on_save = 1
+let g:ale_warn_about_trailing_whitespace = 0
+" shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
+" c/c++: pacman -S flawfinder cppcheck clang
+" \   'c': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
+" \   'cpp': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
+" eslint: pacman -S eslint
+" vim-vint: pip install --user vim-vint
+" prettier: pacman -S prettier
+" csslint: yarn global add csslint
+" tidy: pacman -S tidy
+" alex: pacman -S alex
+" yamllint: pacman -S yamllint
+" xmllint: pacman -S libxml2 (already installed default)
+" tslint: yarn global add tslint
+let g:ale_linters = {
+\   'bash': ['shfmt'],
+\   'c': ['clangtidy'],
+\   'cpp': ['clangtidy'],
+\   'javascript': ['eslint'],
+\   'vim': ['vint'],
+\   'css': ['csslint'],
+\   'html': ['alex', 'tidy'],
+\   'markdown': ['alex'],
+\   'python': ['flake8'],
+\   'tex': ['chktex'],
+\   'typescript': ['eslint', 'tslint'],
+\   'xml': ['alex', 'xmllint'],
+\   'yaml': ['yamllint']
+\}
+
+" \   'bash': ['shfmt'],
+" \   'typescript': ['eslint', 'tslint'],
+" \   'javascript': ['eslint'],
+let g:ale_fixers = {
+\   'c': ['clang-format'],
+\   'cpp': ['clang-format'],
+\   'css': ['prettier'],
+\   'json': ['prettier'],
+\   'markdown': ['prettier'],
+\   'scss': ['prettier'],
+\   'python': ['autopep8'],
+\   'vim': ['trim_whitespace'],
+\   'tex': ['trim_whitespace'],
+\   'xml': ['trim_whitespace'],
+\   'yaml': ['trim_whitespace'],
+\   'toml': ['trim_whitespace'],
+\}
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'vim-scripts/ZenCoding.vim'
@@ -268,8 +316,11 @@ set laststatus=2
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
+augroup typescript
 autocmd FileType typescript JsPreTmpl html
 autocmd FileType typescript syn clear foldBraces
+augroup END
+
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'Quramy/tsuquyomi'
 
@@ -295,10 +346,10 @@ else
     map <leader>xx :!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>:!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>
     map <leader>xe :!evince "/tmp/%:t:r.pdf"&<CR><CR>
     map <leader>vz :!dot -Tps2 "%:t:r.dot" -o "/tmp/%:t:r.eps" &<CR><CR>:!ps2pdf "/tmp/%:t:r.eps" "/tmp/%:t:r.pdf"& <CR><CR>
-    let $TEXINPUTS = ":.:/tmp"
+    let $TEXINPUTS = ':.:/tmp'
 endif
-let tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels'
-let tlist_make_settings  = 'make;m:makros;t:targets'
+let g:tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels'
+let g:tlist_make_settings  = 'make;m:makros;t:targets'
 
 "----------------------------------------------------------->
 "<< xml folding >>
