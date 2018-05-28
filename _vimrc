@@ -106,6 +106,12 @@ Plug 'lilydjwg/fcitx.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
+" file explorer
+Plug 'tpope/vim-vinegar'
+" file / buffer search
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+
 " ctags
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags/'
@@ -212,9 +218,6 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
-
-" quick open file
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'lisongmin/markdown2ctags'
 
