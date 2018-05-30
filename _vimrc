@@ -340,6 +340,7 @@ call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'nor
 nnoremap <leader>f :<C-u>Denite file_rec<cr>
 nnoremap <leader>s :<C-u>Denite grep<cr>
 nnoremap <leader>b :<C-u>Denite buffer<cr>
+nnoremap <leader>o :<C-u>Denite outline<cr>
 
 "----------------------------------------------------------->
 "<< Latex setting.
