@@ -109,8 +109,7 @@ Plug 'tpope/vim-surround'
 " file explorer
 Plug 'tpope/vim-vinegar'
 " file / buffer search
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
+Plug 'Shougo/denite.nvim'
 
 " ctags
 Plug 'ludovicchabant/vim-gutentags'
@@ -143,10 +142,6 @@ let g:LanguageClient_rootMarkers = {
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
-" (Optional) Multi-entry selection UI.
-" pacman -S fzf
-Plug 'junegunn/fzf.vim'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -335,6 +330,16 @@ filetype plugin indent on
 "-------------------------------------------<
 " Bundle end
 " ------------------------------------------<
+call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('grep',     'command', ['rg'])
+call denite#custom#var('grep',     'default_opts', ['--hidden', '--vimgrep', '--no-heading', '-S'])
+call denite#custom#var('grep',     'recursive_opts', [])
+call denite#custom#var('grep',     'final_opts',   [])
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+nnoremap <leader>f :<C-u>Denite file_rec<cr>
+nnoremap <leader>s :<C-u>Denite grep<cr>
+nnoremap <leader>b :<C-u>Denite buffer<cr>
 
 "----------------------------------------------------------->
 "<< Latex setting.
