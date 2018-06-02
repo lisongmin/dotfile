@@ -169,33 +169,23 @@ function! ExpandLspSnippet()
 
     " only expand Lsp if UltiSnips#ExpandSnippetOrJump not effect.
     let l:value = v:completed_item['word']
-    let l:kind = v:completed_item['kind']
-    let l:abbr = v:completed_item['abbr']
 
-    " remove inserted chars before expand snippet
-    let l:end = col('.')
-    let l:line = 0
-    let l:start = 0
-    for l:match in [l:abbr . '(', l:abbr, l:value]
-        let [l:line, l:start] = searchpos(l:match, 'b', line('.'))
-        if l:line != 0 || l:start != 0
-            break
-        endif
-    endfor
-    if l:line == 0 && l:start == 0
-        return ''
-    endif
-
-    let l:matched = l:end - l:start
+    let l:matched = len(l:value)
     if l:matched <= 0
         return ''
     endif
 
-    exec 'normal! ' . l:matched . 'x'
+    " remove inserted chars before expand snippet
+    if col('.') == col('$')
+        let l:matched -= 1
+        exec 'normal! ' . l:matched . 'Xx'
+    else
+        exec 'normal! ' . l:matched . 'X'
+    endif
 
     if col('.') == col('$') - 1
         " move to $ if at the end of line.
-        call cursor(l:line, col('$'))
+        call cursor(line('.'), col('$'))
     endif
 
     " expand snippet now.
