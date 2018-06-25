@@ -277,13 +277,13 @@ let g:ale_linters = {
 " \   'bash': ['shfmt'],
 " \   'typescript': ['eslint', 'tslint'],
 " \   'javascript': ['eslint'],
+" \   'markdown': ['prettier'],
+"\   'css': ['prettier'],
+"\   'json': ['prettier'],
+"\   'scss': ['prettier'],
 let g:ale_fixers = {
 \   'c': ['clang-format'],
 \   'cpp': ['clang-format'],
-\   'css': ['prettier'],
-\   'json': ['prettier'],
-\   'markdown': ['prettier'],
-\   'scss': ['prettier'],
 \   'python': ['autopep8'],
 \   'vim': ['trim_whitespace'],
 \   'tex': ['trim_whitespace'],
@@ -305,7 +305,7 @@ set laststatus=2
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
 augroup typescript
-autocmd FileType typescript JsPreTmpl html
+autocmd FileType typescript JsPreTmpl
 autocmd FileType typescript syn clear foldBraces
 augroup END
 
