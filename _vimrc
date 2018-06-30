@@ -290,6 +290,7 @@ let g:ale_fixers = {
 \   'xml': ['trim_whitespace'],
 \   'yaml': ['trim_whitespace'],
 \   'toml': ['trim_whitespace'],
+\   'rust': ['rustfmt'],
 \}
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
