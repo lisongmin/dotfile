@@ -221,16 +221,16 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 Plug 'conormcd/matchindent.vim'
 
 " format
-Plug 'Chiel92/vim-autoformat'
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-augroup autoformat
-autocmd FileType javascript,ts let b:autoformat_autoindent=1
-autocmd FileType javascript,ts let b:autoformat_retab=1
-if ! &diff
-    au BufWrite *.js,*.ts :Autoformat
-endif
-augroup END
+"Plug 'Chiel92/vim-autoformat'
+"let g:autoformat_autoindent = 0
+"let g:autoformat_retab = 0
+"augroup autoformat
+"autocmd FileType javascript,ts let b:autoformat_autoindent=1
+"autocmd FileType javascript,ts let b:autoformat_retab=1
+"if ! &diff
+"    au BufWrite *.js,*.ts :Autoformat
+"endif
+"augroup END
 
 noremap <F3> :Autoformat<CR>
 " ================================
@@ -291,6 +291,7 @@ let g:ale_fixers = {
 \   'yaml': ['trim_whitespace'],
 \   'toml': ['trim_whitespace'],
 \   'rust': ['rustfmt'],
+\   'typescript': ['tslint'],
 \}
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
