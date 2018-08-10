@@ -245,6 +245,7 @@ let g:ale_linters_explicit = 1
 let g:ale_open_list = 1
 let g:ale_fix_on_save = 1
 let g:ale_warn_about_trailing_whitespace = 0
+let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
 " shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
 " c/c++: pacman -S flawfinder cppcheck clang
 " \   'c': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
@@ -282,9 +283,9 @@ let g:ale_linters = {
 "\   'json': ['prettier'],
 "\   'scss': ['prettier'],
 let g:ale_fixers = {
-\   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
-\   'python': ['autopep8'],
+\   'c': ['clang-format', 'trim_whitespace'],
+\   'cpp': ['clang-format', 'trim_whitespace'],
+\   'python': ['autopep8', 'trim_whitespace'],
 \   'vim': ['trim_whitespace'],
 \   'tex': ['trim_whitespace'],
 \   'xml': ['trim_whitespace'],
