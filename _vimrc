@@ -242,10 +242,13 @@ noremap <F3> :Autoformat<CR>
 " ================================
 Plug 'w0rp/ale'
 let g:ale_linters_explicit = 1
-let g:ale_open_list = 1
 let g:ale_fix_on_save = 1
+let g:ale_open_list = 1
 let g:ale_warn_about_trailing_whitespace = 0
 let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
+if &diff
+    let g:ale_fix_on_save = 0
+endif
 " shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
 " c/c++: pacman -S flawfinder cppcheck clang
 " \   'c': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
