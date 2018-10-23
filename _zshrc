@@ -125,3 +125,4 @@ man() {
 export JAVA_HOME=/usr/lib/jvm/default
 export LIBVIRT_DEFAULT_URI=qemu:///system
 alias dia="dia --integrated"
+export  GPG_TTY=$(tty)
