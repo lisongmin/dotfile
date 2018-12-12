@@ -106,6 +106,7 @@ Plug 'lilydjwg/fcitx.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
+
 " file explorer
 Plug 'tpope/vim-vinegar'
 " file / buffer search
@@ -120,7 +121,7 @@ let g:gutentags_cache_dir = '/tmp/tags/'
 " ============================
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
+    \ 'do': 'proxychains ./install.sh',
     \ }
 let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_settingsPath = expand('~/dotfile/language-client-settings.json')
@@ -133,7 +134,7 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['pyls'],
+    \ 'python': ['python', '-m', 'pyls'],
     \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log']
     \ }
 let g:LanguageClient_rootMarkers = {
@@ -232,7 +233,7 @@ Plug 'conormcd/matchindent.vim'
 "endif
 "augroup END
 
-noremap <F3> :Autoformat<CR>
+" noremap <F3> :Autoformat<CR>
 " ================================
 " indent config end.
 " ================================
@@ -286,14 +287,10 @@ let g:ale_linters = {
 "\   'json': ['prettier'],
 "\   'scss': ['prettier'],
 let g:ale_fixers = {
-\   'c': ['clang-format', 'trim_whitespace'],
-\   'cpp': ['clang-format', 'trim_whitespace'],
-\   'python': ['autopep8', 'trim_whitespace'],
-\   'vim': ['trim_whitespace'],
-\   'tex': ['trim_whitespace'],
-\   'xml': ['trim_whitespace'],
-\   'yaml': ['trim_whitespace'],
-\   'toml': ['trim_whitespace'],
+\   '*': ['trim_whitespace'],
+\   'c': ['clang-format'],
+\   'cpp': ['clang-format'],
+\   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['tslint'],
 \}
