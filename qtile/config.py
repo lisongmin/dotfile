@@ -52,7 +52,7 @@ keys = [
 
     Key([mod], "q", lazy.restart()),
     Key([mod, "shift"], "q", lazy.spawn(
-        'cinnamon-session-quit --logout')),
+        'cinnamon-session-quit --logout --no-prompt')),
     Key([mod, "shift"], "s", lazy.spawn(
         'systemctl suspend -i')),
 
