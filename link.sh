@@ -45,3 +45,7 @@ link $_dir/_cargo ~/.cargo/config
 
 # npm
 link $_dir/_npmrc ~/.npmrc
+
+# dunst
+mkdir -p ~/.config/dunst/
+link $_dir/dunstrc ~/.config/dunst/dunstrc

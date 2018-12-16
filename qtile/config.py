@@ -32,7 +32,6 @@ import subprocess
 import os
 
 mod = "mod4"
-scrot_option = " -e 'mv $f /tmp/%Y%m%dT%H%M%S_$wx$h_scrot.png'"
 
 keys = [
     # Switch between windows in current stack pane
@@ -46,23 +45,32 @@ keys = [
     Key([mod], "space", lazy.next_layout()),
     Key([mod], "t", lazy.window.toggle_floating()),
 
+    # 'win + w' switch to next screen
     Key([mod], "w", lazy.next_screen()),
 
     Key([mod, "shift"], "c", lazy.window.kill()),
 
+    # 'win + q' reload qtile config
     Key([mod], "q", lazy.restart()),
+    # 'win + shift + q' logout
     Key([mod, "shift"], "q", lazy.spawn(
         'cinnamon-session-quit --logout --no-prompt')),
+    # 'win + shift + s' to suspend os
     Key([mod, "shift"], "s", lazy.spawn(
         'systemctl suspend -i')),
-
-    Key(["mod1"], "F2", lazy.spawncmd()),
-
+    # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn(
         "cinnamon-screensaver-command -l")),
-    Key([], "Print", lazy.spawn('scrot' + scrot_option)),
-    Key(['control', 'mod1'], "Print", lazy.spawn(
-        os.path.join(os.path.dirname(__file__), 'scrot_s'))),
+
+    # 'alt + F2' to run command
+    Key(["mod1"], "F2", lazy.spawncmd()),
+
+    # take a sreenshot
+    Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 0.2')),
+    # take a full screanshot and save to file
+    Key(['shift'], "Print", lazy.spawn('flameshot full -p /tmp')),
+    # take a full screanshot to clipboard
+    Key(['ctrl', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
     Key([mod], "f", lazy.spawn("fcitx -r -d")),
     Key([mod], "Return", lazy.spawn("xfce4-terminal")),
@@ -163,7 +171,7 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating()
+floating_layout = layout.Floating([{'wmclass': 'flameshot'}])
 auto_fullscreen = True
 
 from logging import INFO
