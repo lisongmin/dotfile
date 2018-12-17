@@ -70,7 +70,7 @@ keys = [
     # take a full screanshot and save to file
     Key(['shift'], "Print", lazy.spawn('flameshot full -p /tmp')),
     # take a full screanshot to clipboard
-    Key(['ctrl', 'shift'], "Print", lazy.spawn('flameshot full -c')),
+    Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
     Key([mod], "f", lazy.spawn("fcitx -r -d")),
     Key([mod], "Return", lazy.spawn("xfce4-terminal")),
