@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 sudo pacman -S --needed --noconfirm yarn \
-    cquery \
     fzf \
     flawfinder \
     clang \
@@ -12,12 +11,15 @@ sudo pacman -S --needed --noconfirm yarn \
     alex \
     yamllint \
     libxml2 \
-    python-neovim
+    python-neovim \
+    ccls-git
 
 yarn global add bash-language-server \
     javascript-typescript-langserver \
     csslint \
-    tslint
+    tslint \
+    vim-node-rpc
+
 
 pip install --user python-language-server \
     vim-vint
@@ -31,3 +33,4 @@ if [ ! -e ~/.vim/autoload/plug.vim ];then
 fi
 
 vim +PlugInstall +qall
+vim +CocInstall coc-css coc-emoji coc-html coc-java coc-json coc-pyls coc-rls coc-tsserver coc-ultisnips coc-yaml +qall

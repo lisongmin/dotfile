@@ -119,38 +119,24 @@ let g:gutentags_cache_dir = '/tmp/tags/'
 " ============================
 " completions
 " ============================
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'proxychains ./install.sh',
-    \ }
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_settingsPath = expand('~/dotfile/language-client-settings.json')
-" yarn global add bash-language-server
-" pacman -S ccls
-" yarn global add javascript-typescript-langserver
-" pip install --user python-language-server
-let g:LanguageClient_serverCommands = {
-    \ 'sh': ['bash-language-server', 'start'],
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['python', '-m', 'pyls'],
-    \ 'cpp': ['/usr/bin/ccls'],
-    \ }
 
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install() }}
 
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+" use <tab> for trigger completion and navigate to next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -159,41 +145,6 @@ let g:snips_author = 'Songmin Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
-
-function! ExpandLspSnippet()
-    call UltiSnips#ExpandSnippetOrJump()
-    if !pumvisible() || empty(v:completed_item)
-        return ''
-    endif
-
-    " only expand Lsp if UltiSnips#ExpandSnippetOrJump not effect.
-    let l:value = v:completed_item['word']
-
-    let l:matched = len(l:value)
-    if l:matched <= 0
-        return ''
-    endif
-
-    " remove inserted chars before expand snippet
-    if col('.') == col('$')
-        let l:matched -= 1
-        exec 'normal! ' . l:matched . 'Xx'
-    else
-        exec 'normal! ' . l:matched . 'X'
-    endif
-
-    if col('.') == col('$') - 1
-        " move to $ if at the end of line.
-        call cursor(line('.'), col('$'))
-    endif
-
-    " expand snippet now.
-    call UltiSnips#Anon(l:value)
-    return ''
-endfunction
-
-imap <C-k> <C-R>=ExpandLspSnippet()<CR>
-
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'

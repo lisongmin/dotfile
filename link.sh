@@ -21,7 +21,8 @@ link $_dir/flake8 ~/.config/flake8
 link $_dir/flake8 ~/.config/pycodestyle
 link $_dir/_vimrc ~/.vimrc
 link $_dir/_ctags ~/.ctags
-link $_dir/.ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
+link $_dir/coc-settings.json ~/.vim/coc-settings.json
+link $_dir/coc-settings.json ~/.config/nvim/coc-settings.json
 
 # tmux
 if [ ! -d ~/.tmux/plugins/tpm ] ; then
