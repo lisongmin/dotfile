@@ -126,7 +126,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 let g:LanguageClient_loadSettings = 1
 let g:LanguageClient_settingsPath = expand('~/dotfile/language-client-settings.json')
 " yarn global add bash-language-server
-" pacman -S cquery
+" pacman -S ccls
 " yarn global add javascript-typescript-langserver
 " pip install --user python-language-server
 let g:LanguageClient_serverCommands = {
@@ -135,11 +135,9 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['python', '-m', 'pyls'],
-    \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log']
+    \ 'cpp': ['/usr/bin/ccls'],
     \ }
-let g:LanguageClient_rootMarkers = {
-    \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
-    \ }
+
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
@@ -251,9 +249,9 @@ if &diff
     let g:ale_fix_on_save = 0
 endif
 " shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
-" c/c++: pacman -S flawfinder cppcheck clang
-" \   'c': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
-" \   'cpp': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
+" c/c++: pacman -S clang
+" \   'c': ['clang', 'clangtidy', 'clang-format', ],
+" \   'cpp': ['clang', 'clangtidy', 'clang-format'],
 " eslint: pacman -S eslint
 " vim-vint: pip install --user vim-vint
 " prettier: pacman -S prettier
@@ -263,6 +261,7 @@ endif
 " yamllint: pacman -S yamllint
 " xmllint: pacman -S libxml2 (already installed default)
 " tslint: yarn global add tslint
+" java: yay -S checkstyle
 let g:ale_linters = {
 \   'bash': ['shfmt'],
 \   'c': ['clangtidy'],
@@ -276,7 +275,8 @@ let g:ale_linters = {
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tslint'],
 \   'xml': ['alex', 'xmllint'],
-\   'yaml': ['yamllint']
+\   'yaml': ['yamllint'],
+\   'java': ['checkstyle'],
 \}
 
 " \   'bash': ['shfmt'],
@@ -293,6 +293,7 @@ let g:ale_fixers = {
 \   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['tslint'],
+\   'java': ['checkstyle'],
 \}
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
