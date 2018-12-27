@@ -13,7 +13,7 @@
   "coc.preferences.diagnostic.infoSign": ">>",
   "coc.preferences.diagnostic.hintSign": ">>",
   "coc.preferences.snippetIndicator": "⭐︎",
-  "coc.preferences.languageserver": {
+  "languageserver": {
       "ccls": {
           "command": "ccls",
           "filetypes": ["c", "cpp", "objc", "objcpp"],

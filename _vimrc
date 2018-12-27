@@ -116,28 +116,6 @@ Plug 'Shougo/denite.nvim'
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags/'
 
-" ============================
-" completions
-" ============================
-
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install() }}
-
-" use <tab> for trigger completion and navigate to next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnips']
@@ -145,6 +123,25 @@ let g:snips_author = 'Songmin Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
+" disable ultisnips's default key bind in favote of coc-ultisnips
+let g:UltiSnipsJumpForwardTrigger =          '<c-z><c-j>'
+let g:UltiSnipsJumpBackwardTrigger =         '<c-z><c-k>'
+
+" ============================
+" completions
+" ============================
+
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install() }}
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
@@ -170,19 +167,6 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 " use tab or space according to contents.
 Plug 'conormcd/matchindent.vim'
 
-" format
-"Plug 'Chiel92/vim-autoformat'
-"let g:autoformat_autoindent = 0
-"let g:autoformat_retab = 0
-"augroup autoformat
-"autocmd FileType javascript,ts let b:autoformat_autoindent=1
-"autocmd FileType javascript,ts let b:autoformat_retab=1
-"if ! &diff
-"    au BufWrite *.js,*.ts :Autoformat
-"endif
-"augroup END
-
-" noremap <F3> :Autoformat<CR>
 " ================================
 " indent config end.
 " ================================
