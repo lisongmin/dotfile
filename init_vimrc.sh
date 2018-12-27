@@ -33,4 +33,4 @@ if [ ! -e ~/.vim/autoload/plug.vim ];then
 fi
 
 vim +PlugInstall +qall
-vim +CocInstall coc-css coc-emoji coc-html coc-java coc-json coc-pyls coc-rls coc-tsserver coc-ultisnips coc-yaml +qall
+# :CocInstall coc-css coc-emoji coc-html coc-java coc-json coc-pyls coc-rls coc-tsserver coc-ultisnips coc-yaml
