@@ -228,8 +228,11 @@ let g:ale_fixers = {
 \   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['tslint'],
-\   'java': ['checkstyle'],
+\   'java': ['google-java-format'],
+\   'xml': ['xmllint'],
 \}
+
+au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'vim-scripts/ZenCoding.vim'
