@@ -114,7 +114,8 @@ Plug 'Shougo/denite.nvim'
 
 " ctags
 Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_cache_dir = '/tmp/tags/'
+let g:gutentags_cache_dir = '/tmp/tags/' . expand('$USER')
+" let g:gutentags_trace = 1
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -150,8 +151,6 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
-
-Plug 'lisongmin/markdown2ctags'
 
 " ================================
 " indent config
