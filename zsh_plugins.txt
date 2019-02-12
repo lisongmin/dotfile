@@ -14,3 +14,6 @@ bhilburn/powerlevel9k
 robbyrussell/oh-my-zsh path:plugins/tmux
 robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/colored-man-pages
+robbyrussell/oh-my-zsh path:plugins/common-aliases
+
+djui/alias-tips
