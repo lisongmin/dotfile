@@ -114,7 +114,7 @@ Plug 'Shougo/denite.nvim'
 
 " ctags
 Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_cache_dir = '/tmp/tags/' . expand('$USER')
+let g:gutentags_cache_dir = '/tmp/tags-' . expand('$USER')
 " let g:gutentags_trace = 1
 
 Plug 'SirVer/ultisnips'

@@ -1,0 +1,16 @@
+
+# install antibody via `yay -S antibody-bin` first.
+
+chrissicool/zsh-256color
+
+zsh-users/zsh-completions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+
+zdharma/fast-syntax-highlighting
+
+bhilburn/powerlevel9k
+
+robbyrussell/oh-my-zsh path:plugins/tmux
+robbyrussell/oh-my-zsh path:plugins/git
+robbyrussell/oh-my-zsh path:plugins/colored-man-pages
