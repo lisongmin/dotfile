@@ -1,5 +1,6 @@
 
 {
+  "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.autoTrigger": "always",
   "coc.preferences.triggerAfterInsertEnter": false,
   "coc.preferences.timeout": 2000,
