@@ -16,5 +16,6 @@ robbyrussell/oh-my-zsh path:plugins/git
 robbyrussell/oh-my-zsh path:plugins/colored-man-pages
 robbyrussell/oh-my-zsh path:plugins/common-aliases
 robbyrussell/oh-my-zsh path:lib/history.zsh
+robbyrussell/oh-my-zsh path:lib/key-bindings.zsh
 
 djui/alias-tips
