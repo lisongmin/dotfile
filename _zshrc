@@ -107,3 +107,6 @@ export  GPG_TTY=$(tty)
 
 alias dia="dia --integrated"
 alias ls="ls --color=auto"
+
+# added by travis gem
+[ -f /home/lsm/.travis/travis.sh ] && source /home/lsm/.travis/travis.sh

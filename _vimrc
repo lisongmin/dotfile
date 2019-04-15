@@ -218,7 +218,6 @@ let g:ale_linters = {
 " \   'javascript': ['eslint'],
 " \   'markdown': ['prettier'],
 "\   'css': ['prettier'],
-"\   'json': ['prettier'],
 "\   'scss': ['prettier'],
 let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
@@ -229,6 +228,7 @@ let g:ale_fixers = {
 \   'typescript': ['tslint'],
 \   'java': ['google-java-format'],
 \   'xml': ['xmllint'],
+\   'json': ['prettier'],
 \}
 
 au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop

@@ -1,4 +1,3 @@
-
 {
   "coc.preferences.extensionUpdateCheck": "never",
   "coc.preferences.autoTrigger": "always",
@@ -15,15 +14,25 @@
   "coc.preferences.diagnostic.hintSign": ">>",
   "coc.preferences.snippetIndicator": "⭐︎",
   "languageserver": {
-      "ccls": {
-          "command": "ccls",
-          "filetypes": ["c", "cpp", "objc", "objcpp"],
-          "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-          "initializationOptions": {
-              "cacheDirectory": "/tmp/ccls"
-          }
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cacheDirectory": "/tmp/ccls"
       }
+    }
   },
+
+  "python.linting.enabled": false,
+  "python.jediEnabled": true,
+
   "rust-client.rlsPath": "/usr/bin/rls",
   "rust-client.disableRustup": true
 }
