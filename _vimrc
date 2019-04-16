@@ -110,6 +110,9 @@ Plug 'tpope/vim-surround'
 " file explorer
 Plug 'tpope/vim-vinegar'
 " file / buffer search
+"   required for denite
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'Shougo/denite.nvim'
 
 " ctags
@@ -146,6 +149,9 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
+"Plug 'LucHermitte/lh-vim-lib'
+"Plug 'LucHermitte/local_vimrc'
+"Plug 'LucHermitte/alternate-lite'
 
 " markdown support
 Plug 'godlygeek/tabular'
