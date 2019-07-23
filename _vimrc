@@ -116,7 +116,7 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'Shougo/denite.nvim'
 
 " ctags
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_cache_dir = '/tmp/tags-' . expand('$USER')
 " let g:gutentags_trace = 1
 
@@ -184,8 +184,9 @@ let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_c_build_dir = 'build/'
-let g:ale_c_clangformat_options = '-style=file'
+let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
+let g:ale_c_clangformat_options = '-style=file -assume-filename=a.c'
+let g:ale_cpp_clangformat_options = '-style=file -assume-filename=a.cpp'
 if &diff
     let g:ale_fix_on_save = 0
 endif
@@ -212,7 +213,7 @@ let g:ale_linters = {
 \   'css': ['csslint'],
 \   'html': ['alex', 'tidy'],
 \   'markdown': ['alex'],
-\   'python': ['flake8'],
+\   'python': ['flake8', 'pylint'],
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tslint'],
 \   'xml': ['alex', 'xmllint'],
@@ -236,6 +237,7 @@ let g:ale_fixers = {
 \   'java': ['google-java-format'],
 \   'xml': ['xmllint'],
 \   'json': ['prettier'],
+\   'bash': ['shfmt']
 \}
 
 au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop

@@ -37,8 +37,8 @@ keys = [
     # Switch between windows in current stack pane
     Key([mod], "j", lazy.layout.down()),
     Key([mod], "k", lazy.layout.up()),
-    Key([mod], "h", lazy.layout.grow()),
-    Key([mod], "l", lazy.layout.shrink()),
+    # Key([mod], "h", lazy.layout.grow()),
+    # Key([mod], "l", lazy.layout.shrink()),
     Key([mod], "n", lazy.layout.next()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
@@ -92,9 +92,9 @@ groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox'])]),
           Group('e', layouts=[layout.max.Max()]),
           Group('u', [Match(wm_class=['Wine'])]),
-          Group('i', [Match(wm_class=['Thunderbird'])]),
           Group('d', [Match(wm_class=['TelegramDesktop'])],
-                layouts=[layout.stack.Stack(margin=1)])
+                layouts=[layout.stack.Stack(margin=1)]),
+          Group('h', [Match(wm_class=['Thunderbird'])]),
           ]
 
 for i in groups:

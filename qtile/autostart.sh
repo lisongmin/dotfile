@@ -31,7 +31,11 @@ pgrep firefox
 if [ $? -ne 0 ]; then
     firefox&
 fi
-# thunderbird&
+
+pgrep thunderbird
+if [ $? -ne 0 ];then
+    thunderbird&
+fi
 
 # pgrep osdlyrics
 # if [ $? -ne 0 ]; then
