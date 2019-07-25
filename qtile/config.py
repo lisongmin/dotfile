@@ -89,7 +89,7 @@ keys = [
 ]
 
 groups = [Group('a'),
-          Group('o', [Match(wm_class=['Firefox'])]),
+          Group('o', [Match(wm_class=['Firefox', 'firefox'])]),
           Group('e', layouts=[layout.max.Max()]),
           Group('u', [Match(wm_class=['Wine'])]),
           Group('d', [Match(wm_class=['TelegramDesktop'])],
