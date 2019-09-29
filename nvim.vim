@@ -38,46 +38,9 @@ Plug 'tpope/vim-vinegar'
 Plug 'Shougo/denite.nvim'
 
 " ctags
-Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_cache_dir = '/tmp/tags/'
-
-" ============================
-" completions
-" ============================
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_settingsPath = expand('~/dotfile/language-client-settings.json')
-" yarn global add bash-language-server
-" pacman -S cquery
-" yarn global add javascript-typescript-langserver
-" pip install --user python-language-server
-let g:LanguageClient_serverCommands = {
-    \ 'sh': ['bash-language-server', 'start'],
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['pyls'],
-    \ 'cpp': ['cquery', '--language-server', '--log-file=/tmp/cq.log']
-    \ }
-let g:LanguageClient_rootMarkers = {
-    \ 'cpp': ['.cquery', 'compile_commands.json', 'build'],
-    \ }
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+" Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_cache_dir = '/tmp/tags-nvim-' . expand('$USER')
+" let g:gutentags_trace = 1
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -86,41 +49,25 @@ let g:snips_author = 'Songmin Li (Li)'
 let g:snips_email = 'lsm@skybility.com'
 let g:snips_github = ''
 let g:snips_company = 'Skybility Software Co.,Ltd.'
+" disable ultisnips's default key bind in favote of coc-ultisnips
+let g:UltiSnipsJumpForwardTrigger =          '<c-z><c-j>'
+let g:UltiSnipsJumpBackwardTrigger =         '<c-z><c-k>'
 
-function! ExpandLspSnippet()
-    call UltiSnips#ExpandSnippetOrJump()
-    if !pumvisible() || empty(v:completed_item)
-        return ''
-    endif
+" ============================
+" completions
+" ============================
 
-    " only expand Lsp if UltiSnips#ExpandSnippetOrJump not effect.
-    let l:value = v:completed_item['word']
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-    let l:matched = len(l:value)
-    if l:matched <= 0
-        return ''
-    endif
-
-    " remove inserted chars before expand snippet
-    if col('.') == col('$')
-        let l:matched -= 1
-        exec 'normal! ' . l:matched . 'Xx'
-    else
-        exec 'normal! ' . l:matched . 'X'
-    endif
-
-    if col('.') == col('$') - 1
-        " move to $ if at the end of line.
-        call cursor(line('.'), col('$'))
-    endif
-
-    " expand snippet now.
-    call UltiSnips#Anon(l:value)
-    return ''
-endfunction
-
-imap <C-k> <C-R>=ExpandLspSnippet()<CR>
-
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
@@ -129,8 +76,6 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
-
-Plug 'lisongmin/markdown2ctags'
 
 " ================================
 " indent config
@@ -155,13 +100,19 @@ Plug 'conormcd/matchindent.vim'
 " ================================
 Plug 'w0rp/ale'
 let g:ale_linters_explicit = 1
-let g:ale_open_list = 1
 let g:ale_fix_on_save = 1
+let g:ale_open_list = 1
 let g:ale_warn_about_trailing_whitespace = 0
+let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
+let g:ale_c_clangformat_options = '-style=file -assume-filename=a.c'
+let g:ale_cpp_clangformat_options = '-style=file -assume-filename=a.cpp'
+if &diff
+    let g:ale_fix_on_save = 0
+endif
 " shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
-" c/c++: pacman -S flawfinder cppcheck clang
-" \   'c': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
-" \   'cpp': ['clang', 'clangtidy', 'clang-format', 'flawfinder', 'cppcheck'],
+" c/c++: pacman -S clang
+" \   'c': ['clang', 'clangtidy', 'clang-format', ],
+" \   'cpp': ['clang', 'clangtidy', 'clang-format'],
 " eslint: pacman -S eslint
 " vim-vint: pip install --user vim-vint
 " prettier: pacman -S prettier
@@ -171,6 +122,7 @@ let g:ale_warn_about_trailing_whitespace = 0
 " yamllint: pacman -S yamllint
 " xmllint: pacman -S libxml2 (already installed default)
 " tslint: yarn global add tslint
+" java: yay -S checkstyle
 let g:ale_linters = {
 \   'bash': ['shfmt'],
 \   'c': ['clangtidy'],
@@ -180,11 +132,12 @@ let g:ale_linters = {
 \   'css': ['csslint'],
 \   'html': ['alex', 'tidy'],
 \   'markdown': ['alex'],
-\   'python': ['flake8'],
+\   'python': ['flake8', 'pylint'],
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tslint'],
 \   'xml': ['alex', 'xmllint'],
-\   'yaml': ['yamllint']
+\   'yaml': ['yamllint'],
+\   'java': ['checkstyle'],
 \}
 
 " \   'bash': ['shfmt'],
@@ -192,11 +145,21 @@ let g:ale_linters = {
 " \   'javascript': ['eslint'],
 " \   'markdown': ['prettier'],
 "\   'css': ['prettier'],
-"\   'json': ['prettier'],
 "\   'scss': ['prettier'],
 let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
+\   'c': ['clang-format'],
+\   'cpp': ['clang-format'],
+\   'python': ['autopep8'],
+\   'rust': ['rustfmt'],
+\   'typescript': ['tslint'],
+\   'java': ['google-java-format'],
+\   'xml': ['xmllint'],
+\   'json': ['prettier'],
+\   'bash': ['shfmt']
 \}
+
+au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
 
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'vim-scripts/ZenCoding.vim'
@@ -219,3 +182,16 @@ Plug 'pboettch/vim-cmake-syntax'
 
 " Initialize plugin system
 call plug#end()
+
+call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('grep',     'command', ['rg'])
+call denite#custom#var('grep',     'default_opts', ['--hidden', '--vimgrep', '--no-heading', '-S'])
+call denite#custom#var('grep',     'recursive_opts', [])
+call denite#custom#var('grep',     'final_opts',   [])
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+nnoremap <leader>f :<C-u>Denite file_rec<cr>
+nnoremap <leader>s :<C-u>Denite grep<cr>
+nnoremap <leader>b :<C-u>Denite buffer<cr>
+nnoremap <leader>o :<C-u>Denite outline<cr>
+

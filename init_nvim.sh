@@ -41,3 +41,4 @@ pip install --user python-language-server
 # ======================
 # { python support end.
 # ======================
+nvim "+CocInstall coc-css coc-emoji coc-html coc-java coc-json coc-python coc-rls coc-tsserver coc-ultisnips coc-yaml"
