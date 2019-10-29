@@ -15,6 +15,7 @@ set shell=bash
 " Enable syntax highline
 syntax on
 set hlsearch
+set incsearch
 
 " Set 4 spaces per tab
 set expandtab
@@ -109,6 +110,7 @@ Plug 'tpope/vim-surround'
 
 " file explorer
 Plug 'tpope/vim-vinegar'
+
 " file / buffer search
 "   required for denite
 Plug 'roxma/nvim-yarp'

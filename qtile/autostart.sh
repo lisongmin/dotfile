@@ -18,7 +18,7 @@ fi
 xset -b
 compton -b
 
-pgrep tmux
+pgrep -U "$USER" tmux
 if [ $? -ne 0 ];then
     tmux new-session -d
     tmux new-session -s term -d
@@ -27,12 +27,12 @@ fi
 
 xfce4-terminal -e "tmux attach-session -t term"&
 
-pgrep firefox
+pgrep -U "$USER" firefox
 if [ $? -ne 0 ]; then
     firefox&
 fi
 
-pgrep thunderbird
+pgrep -U "$USER" thunderbird
 if [ $? -ne 0 ];then
     thunderbird&
 fi
@@ -44,7 +44,7 @@ fi
 
 which telegram-desktop
 if [ $? -eq 0 ];then
-    pgrep telegram
+    pgrep -U "$USER" telegram
     if [ $? -ne 0 ];then
         telegram-desktop&
     fi
