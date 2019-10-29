@@ -186,7 +186,7 @@ let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
 let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
+"let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
 let g:ale_c_clangformat_options = '-style=file'
 let g:ale_cpp_clangformat_options = '-style=file'
 if &diff
