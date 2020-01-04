@@ -120,38 +120,63 @@ widget_defaults = dict(
     padding=1,
 )
 
+
+def get_sensor_tag():
+    p = subprocess.Popen(['sensors'], stdout=subprocess.PIPE)
+    out, dummy_err = p.communicate()
+    out = out.decode()
+    tags = ['Tdie', 'Core 0']
+    for tag in tags:
+        if tag in out:
+            return tag
+
+    return None
+
+
+widgets = [widget.GroupBox(), widget.Prompt(),
+           widget.WindowName(), widget.Sep(), ]
+
 nets = os.listdir('/sys/class/net')
 eth = ''
 wlan = ''
+if 'br0' in nets:
+    eth = 'br0'
+
 for n in nets:
     if not eth and n.startswith('enp'):
         eth = n
     elif not wlan and n.startswith('wlp'):
         wlan = n
 
+widgets.extend([
+    widget.Net(interface=eth, update_interval=2),
+    widget.Sep(),
+    widget.Net(interface=wlan, update_interval=2),
+    ])
+
+widgets.extend([
+    widget.CPUGraph(frequency=2),
+    widget.ThermalSensor(tag_sensor=get_sensor_tag()),
+    widget.Sep(),
+    ])
+
+battery_name = None
+if os.path.exists('/sys/class/power_supply/BAT0/status'):
+    battery_name = "BAT0"
+    widgets.append(widget.Battery(battery_name=battery_name))
+
+widgets.extend([
+    widget.Systray(),
+    widget.Clock(format='%a %H:%M %m-%d'),
+    ])
+
 bar.Bar.defaults
 screens = [
     Screen(
-        top=bar.Bar(
-            [
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Sep(),
-                widget.Net(interface=eth, update_interval=2),
-                widget.Sep(),
-                widget.Net(interface=wlan, update_interval=2),
-                widget.CPUGraph(frequency=2),
-                widget.ThermalSensor(),
-                widget.Sep(),
-                widget.Battery(battery_name='BAT0'),
-                # widget.Wlan(interface='wlp8s0', update_interval=2),
-                widget.Systray(),
-                widget.Clock(format='%a %H:%M %m-%d'),
-            ],
-            24,
-            opacity=0.7
-        ),
+        top=bar.Bar(widgets,
+                    24,
+                    opacity=0.7
+                    ),
     ),
     Screen()
 ]

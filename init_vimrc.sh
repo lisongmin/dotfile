@@ -12,7 +12,8 @@ sudo pacman -S --needed --noconfirm yarn \
     yamllint \
     libxml2 \
     python-neovim \
-    ccls-git
+    ccls-git \
+    flake8 autopep8 python-pylint
 
 yarn global add bash-language-server \
     javascript-typescript-langserver \

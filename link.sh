@@ -50,3 +50,5 @@ link $_dir/_npmrc ~/.npmrc
 # dunst
 mkdir -p ~/.config/dunst/
 link $_dir/dunstrc ~/.config/dunst/dunstrc
+
+link $_dir/_ccache ~/.ccache

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
-    /usr/bin/setxkbmap -option "caps:swapescape"
     if [ -e ~/dotfile/wallpaper/family.jpeg ];then
         /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
     else
