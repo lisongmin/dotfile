@@ -48,3 +48,11 @@ if [ $? -eq 0 ];then
         telegram-desktop&
     fi
 fi
+
+which mattermost-desktop
+if [ $? -eq 0 ];then
+    pgrep -U "$USER" mattermost-desktop
+    if [ $? -ne 0 ];then
+         mattermost-desktop --proxy-server=socks5://127.0.0.1:10800 &
+    fi
+fi

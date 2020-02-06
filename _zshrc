@@ -110,3 +110,4 @@ alias ls="ls --color=auto"
 
 # added by travis gem
 [ -f /home/lsm/.travis/travis.sh ] && source /home/lsm/.travis/travis.sh
+alias psky="proxychains -q -f /etc/proxychains-skybility.conf"

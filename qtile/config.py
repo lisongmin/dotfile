@@ -85,14 +85,16 @@ keys = [
     Key([], 'XF86AudioPlay', lazy.spawn('xmms2 toggle')),
     Key([], 'XF86AudioStop', lazy.spawn('xmms2 stop')),
     Key([], 'XF86AudioPrev', lazy.spawn('xmms2 prev')),
-    Key([], 'XF86AudioNext', lazy.spawn('xmms2 next'))
+    Key([], 'XF86AudioNext', lazy.spawn('xmms2 next')),
+    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl s 10%-')),
+    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl s 10%+')),
 ]
 
 groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox', 'firefox'])]),
           Group('e', layouts=[layout.max.Max()]),
           Group('u', [Match(wm_class=['Wine'])]),
-          Group('d', [Match(wm_class=['TelegramDesktop'])],
+          Group('d', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', [Match(wm_class=['Thunderbird'])]),
           ]
@@ -145,7 +147,7 @@ if 'br0' in nets:
 for n in nets:
     if not eth and n.startswith('enp'):
         eth = n
-    elif not wlan and n.startswith('wlp'):
+    elif not wlan and n.startswith('wl'):
         wlan = n
 
 widgets.extend([
