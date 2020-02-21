@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$XDG_SESSION_DESKTOP" != "qtile-cinnamon" ]; then
+if [ "$XDG_SESSION_DESKTOP" == "qtile" ]; then
     if [ -e ~/dotfile/wallpaper/family.jpeg ];then
         /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
     else
@@ -16,15 +16,6 @@ fi
 # disable beep
 xset -b
 compton -b
-
-pgrep -U "$USER" tmux
-if [ $? -ne 0 ];then
-    tmux new-session -d
-    tmux new-session -s term -d
-    tmux new-session -s work -c /work -d
-fi
-
-xfce4-terminal -e "tmux attach-session -t term"&
 
 pgrep -U "$USER" firefox
 if [ $? -ne 0 ]; then

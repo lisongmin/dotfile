@@ -4,51 +4,66 @@ _dir=$(realpath `dirname $0`)
 
 link()
 {
-    if [ -e "$2" -a ! -L "$2" ]; then
-        rm -rf "$2"
+    local source_file="$_dir/$1"
+    if [ ! -e "$source_file" ];then
+        echo "<warn> source [$source_file] not exists"
+        return 1
     fi
-    if [ ! -e "$2" ]; then
-        ln -s "$1" "$2"
+
+    local target_link="$2"
+    if [ -e "$target_link" -a ! -L "$target_link" ]; then
+        rm -rf "$target_link"
+    fi
+
+    local target_dir
+    target_dir=$(dirname "$target_link")
+    if [ ! -e "$target_dir" ];then
+        mkdir -p "$target_dir"
+    fi
+
+    if [ ! -e "$target_link" ]; then
+        ln -s "$source_file" "$target_link"
     fi
 }
 
 # windows manager
-link $_dir/qtile ~/.config/qtile
-link $_dir/xmonad ~/.xmonad
+link qtile ~/.config/qtile
 
 # vim relative
-link $_dir/flake8 ~/.config/flake8
-link $_dir/flake8 ~/.config/pycodestyle
-link $_dir/_vimrc ~/.vimrc
-link $_dir/_ctags ~/.ctags
-link $_dir/coc-settings.json ~/.vim/coc-settings.json
-link $_dir/coc-settings.json ~/.config/nvim/coc-settings.json
+link flake8 ~/.config/flake8
+link flake8 ~/.config/pycodestyle
+link _vimrc ~/.vimrc
+link _ctags ~/.ctags
+link coc-settings.json ~/.vim/coc-settings.json
+link coc-settings.json ~/.config/nvim/coc-settings.json
 
 # tmux
 if [ ! -d ~/.tmux/plugins/tpm ] ; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-link $_dir/_tmux.conf ~/.tmux.conf
-link $_dir/_tmux-powerlinerc ~/.tmux-powerlinerc
+link _tmux.conf ~/.tmux.conf
+link _config/systemd/user/tmux@.service ~/.config/systemd/user/tmux@.service
+systemctl --user enable tmux@term.service
+systemctl --user enable tmux@work.service
 
 # zsh
-link $_dir/_zshrc ~/.zshrc
+link _zshrc ~/.zshrc
 
 # pip
-mkdir -p ~/.pip
-link $_dir/pip.conf ~/.pip/pip.conf
+link pip.conf ~/.pip/pip.conf
 
 # cargo
-if [ ! -e ~/.cargo ];then
-    mkdir -p ~/.cargo
-fi
-link $_dir/_cargo ~/.cargo/config
+link _cargo ~/.cargo/config
 
 # npm
-link $_dir/_npmrc ~/.npmrc
+link _npmrc ~/.npmrc
 
 # dunst
-mkdir -p ~/.config/dunst/
-link $_dir/dunstrc ~/.config/dunst/dunstrc
+link dunstrc ~/.config/dunst/dunstrc
 
-link $_dir/_ccache ~/.ccache
+link _ccache ~/.ccache
+
+#
+link _config/fontconfig ~/.config/fontconfig
+
+link _config/termite/config ~/.config/termite/config

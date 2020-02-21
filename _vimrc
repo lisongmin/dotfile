@@ -35,12 +35,6 @@ set nowrap
 " Set map leader
 let g:mapleader = ','
 
-" Set color scheme
-colo morning "ron
-if has('gui_running')
-    colo evening
-endif
-
 " Auto reload while the file is changed from the outside
 set autoread
 
@@ -97,6 +91,32 @@ filetype off                   " required!
 
 set runtimepath+=~/.vim/vim-plug/plug.vim
 call plug#begin('~/.vim/bundle')
+
+"--------------------------
+" begin color scheme setting
+"--------------------------
+Plug 'jacoborus/tender.vim'
+Plug 'NLKNguyen/papercolor-theme'
+" Plug 'rafi/awesome-vim-colorschemes'
+
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+set laststatus=2
+" let g:airline_gitblame_enalbe = 1
+
+if (has("termguicolors"))
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
+set t_Co=256
+set term=xterm-256color
+set background=dark
+let g:airline_theme='papercolor'
+"----------------------------
+" end color scheme setting
+"---------------------------
 
 Plug 'will133/vim-dirdiff'
 
@@ -247,12 +267,6 @@ au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
 "神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'vim-scripts/ZenCoding.vim'
 
-Plug 'bling/vim-airline'
-let g:airline_powerline_fonts = 1
-set t_Co=256
-set laststatus=2
-" let g:airline_gitblame_enalbe = 1
-
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
@@ -321,3 +335,6 @@ let g:tlist_make_settings  = 'make;m:makros;t:targets'
 "<< xml folding >>
 "----------------------------------------------------------->
 let g:xml_syntax_folding=0
+
+" colorscheme tender
+colorscheme PaperColor

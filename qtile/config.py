@@ -73,7 +73,7 @@ keys = [
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
     Key([mod], "f", lazy.spawn("fcitx -r -d")),
-    Key([mod], "Return", lazy.spawn("xfce4-terminal")),
+    Key([mod], "Return", lazy.spawn("termite")),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
     Key([mod, "shift"], "f", lazy.spawn("nemo")),
     Key([mod, "shift"], "m", lazy.spawn("thunderbird")),
@@ -135,53 +135,60 @@ def get_sensor_tag():
     return None
 
 
-widgets = [widget.GroupBox(), widget.Prompt(),
-           widget.WindowName(), widget.Sep(), ]
+if os.environ.get('XDG_SESSION_DESKTOP') == 'plasma-qtile':
+    screens = [
+        Screen()
+    ]
+else:
+    widgets = [widget.GroupBox(), widget.Prompt(),
+               widget.WindowName(), widget.Sep(), ]
 
-nets = os.listdir('/sys/class/net')
-eth = ''
-wlan = ''
-if 'br0' in nets:
-    eth = 'br0'
+    nets = os.listdir('/sys/class/net')
+    eth = ''
+    wlan = ''
+    if 'br0' in nets:
+        eth = 'br0'
 
-for n in nets:
-    if not eth and n.startswith('enp'):
-        eth = n
-    elif not wlan and n.startswith('wl'):
-        wlan = n
+    for n in nets:
+        if not eth and n.startswith('enp'):
+            eth = n
+        elif not wlan and n.startswith('wl'):
+            wlan = n
 
-widgets.extend([
-    widget.Net(interface=eth, update_interval=2),
-    widget.Sep(),
-    widget.Net(interface=wlan, update_interval=2),
-    ])
+    widgets.extend([
+        widget.Net(interface=eth, update_interval=2),
+        widget.Sep(),
+        widget.Net(interface=wlan, update_interval=2),
+        ])
 
-widgets.extend([
-    widget.CPUGraph(frequency=2),
-    widget.ThermalSensor(tag_sensor=get_sensor_tag()),
-    widget.Sep(),
-    ])
+    widgets.extend([
+        widget.CPUGraph(frequency=2),
+        widget.ThermalSensor(tag_sensor=get_sensor_tag()),
+        widget.Sep(),
+        ])
 
-battery_name = None
-if os.path.exists('/sys/class/power_supply/BAT0/status'):
-    battery_name = "BAT0"
-    widgets.append(widget.Battery(battery_name=battery_name))
+    battery_name = None
+    if os.path.exists('/sys/class/power_supply/BAT0/status'):
+        battery_name = "BAT0"
+        widgets.append(widget.Battery(battery_name=battery_name))
 
-widgets.extend([
-    widget.Systray(),
-    widget.Clock(format='%a %H:%M %m-%d'),
-    ])
+    widgets.extend([
+        widget.Systray(),
+        widget.Clock(format='%a %H:%M %m-%d'),
+        ])
 
-bar.Bar.defaults
-screens = [
-    Screen(
-        top=bar.Bar(widgets,
-                    24,
-                    opacity=0.7
-                    ),
-    ),
-    Screen()
-]
+    bar.Bar.defaults
+    top = bar.Bar(widgets,
+                  24,
+                  opacity=0.7
+                  )
+
+    screens = [
+        Screen(
+            top=top
+        ),
+        Screen()
+    ]
 
 # Drag floating layouts.
 mouse = [
@@ -199,6 +206,7 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating([{'wmclass': 'flameshot'}])
+
 auto_fullscreen = True
 
 from logging import INFO
