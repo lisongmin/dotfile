@@ -61,9 +61,14 @@ link _npmrc ~/.npmrc
 # dunst
 link dunstrc ~/.config/dunst/dunstrc
 
+# ccache
 link _ccache ~/.ccache
 
-#
+# fontconfig
 link _config/fontconfig ~/.config/fontconfig
 
+# terminal
 link _config/termite/config ~/.config/termite/config
+
+# music
+systemctl --user enable xmms2d.service
