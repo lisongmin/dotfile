@@ -17,12 +17,20 @@ fi
 xset -b
 compton -b
 
-pgrep -U "$USER" firefox
+pgrep -U "$USER" '^tmux$'
+if [ $? -ne 0 ];then
+    tmux new-session -d
+    tmux new-session -s term -d
+    tmux new-session -s work -c /work -d
+    xfce4-terminal -e "tmux attach-session -t term"&
+fi
+
+pgrep -U "$USER" '^firefox$'
 if [ $? -ne 0 ]; then
     firefox&
 fi
 
-pgrep -U "$USER" thunderbird
+pgrep -U "$USER" '^thunderbird$'
 if [ $? -ne 0 ];then
     thunderbird&
 fi
@@ -42,7 +50,7 @@ fi
 
 which mattermost-desktop
 if [ $? -eq 0 ];then
-    pgrep -U "$USER" mattermost-desktop
+    pgrep -U "$USER" '^mattermost-desktop$'
     if [ $? -ne 0 ];then
          mattermost-desktop --proxy-server=socks5://127.0.0.1:10800 &
     fi

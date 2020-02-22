@@ -42,9 +42,6 @@ if [ ! -d ~/.tmux/plugins/tpm ] ; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 link _tmux.conf ~/.tmux.conf
-link _config/systemd/user/tmux@.service ~/.config/systemd/user/tmux@.service
-systemctl --user enable tmux@term.service
-systemctl --user enable tmux@work.service
 
 # zsh
 link _zshrc ~/.zshrc
@@ -72,3 +69,6 @@ link _config/termite/config ~/.config/termite/config
 
 # music
 systemctl --user enable xmms2d.service
+
+# bin
+link bin/pik ~/.local/bin/pik

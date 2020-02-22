@@ -54,13 +54,13 @@ keys = [
     Key([mod], "q", lazy.restart()),
     # 'win + shift + q' logout
     Key([mod, "shift"], "q", lazy.spawn(
-        'cinnamon-session-quit --logout --no-prompt')),
+        f'loginctl terminate-session {os.environ.get("XDG_SESSION_ID")}')),
     # 'win + shift + s' to suspend os
     Key([mod, "shift"], "s", lazy.spawn(
         'systemctl suspend -i')),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn(
-        "cinnamon-screensaver-command -l")),
+        "loginctl lock-session")),
 
     # 'alt + F2' to run command
     Key(["mod1"], "F2", lazy.spawncmd()),
@@ -93,7 +93,8 @@ keys = [
 groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox', 'firefox'])]),
           Group('e', layouts=[layout.max.Max()]),
-          Group('u', [Match(wm_class=['Wine'])]),
+          Group('u', [Match(wm_class=['zoom'])],
+                layouts=[layout.zoomy.Zoomy()]),
           Group('d', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', [Match(wm_class=['Thunderbird'])]),
@@ -205,7 +206,11 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating([{'wmclass': 'flameshot'}])
+floating_layout = layout.Floating(
+    [{'wmclass': 'flameshot'},
+     {'wname': 'Select a window or an application that you want to share',
+      'wmclass': 'zoom'}
+     ])
 
 auto_fullscreen = True
 
