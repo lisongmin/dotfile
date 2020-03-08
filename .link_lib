@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+link()
+{
+    local source_file="$_dir/$1"
+    if [ ! -e "$source_file" ];then
+        echo "<warn> source [$source_file] not exists"
+        return 1
+    fi
+
+    local target_link="$2"
+    if [ -e "$target_link" -a ! -L "$target_link" ]; then
+        rm -rf "$target_link"
+    fi
+
+    local target_dir
+    target_dir=$(dirname "$target_link")
+    if [ ! -e "$target_dir" ];then
+        mkdir -p "$target_dir"
+    fi
+
+    if [ ! -e "$target_link" ]; then
+        ln -sf "$source_file" "$target_link"
+    fi
+}
+

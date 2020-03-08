@@ -31,6 +31,11 @@ from libqtile import hook
 import subprocess
 import os
 
+
+session_name = 'cinnamon'
+if os.environ.get('XDG_SESSION_DESKTOP') == 'plasma-qtile':
+    session_name = 'plasma'
+
 mod = "mod4"
 
 keys = [
@@ -60,10 +65,7 @@ keys = [
         'systemctl suspend -i')),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn(
-        "loginctl lock-session")),
-
-    # 'alt + F2' to run command
-    Key(["mod1"], "F2", lazy.spawncmd()),
+        "loginctl lock-sessions")),
 
     # take a sreenshot
     Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 0.2')),
@@ -76,12 +78,13 @@ keys = [
     Key([mod], "Return", lazy.spawn("termite")),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
     Key([mod, "shift"], "f", lazy.spawn("nemo")),
+
     Key([mod, "shift"], "m", lazy.spawn("thunderbird")),
     Key([mod, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
 
-    Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer set Master 4%-')),
-    Key([], 'XF86AudioMute', lazy.spawn('amixer set Master toggle')),
-    Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer set Master 4%+')),
+    Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
+    Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
+    Key([], 'XF86AudioRaiseVolume', lazy.spawn('pactl set-sink-volume 0 +4%')),
     Key([], 'XF86AudioPlay', lazy.spawn('xmms2 toggle')),
     Key([], 'XF86AudioStop', lazy.spawn('xmms2 stop')),
     Key([], 'XF86AudioPrev', lazy.spawn('xmms2 prev')),
@@ -89,6 +92,12 @@ keys = [
     Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl s 10%-')),
     Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl s 10%+')),
 ]
+
+# 'alt + F2' to run command
+if session_name == 'plasma':
+    keys.append(Key(["mod1"], "F2", lazy.spawn('krunner')))
+else:
+    keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 
 groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox', 'firefox'])]),

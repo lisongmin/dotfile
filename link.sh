@@ -1,30 +1,7 @@
 #!/usr/bin/env bash
 
 _dir=$(realpath `dirname $0`)
-
-link()
-{
-    local source_file="$_dir/$1"
-    if [ ! -e "$source_file" ];then
-        echo "<warn> source [$source_file] not exists"
-        return 1
-    fi
-
-    local target_link="$2"
-    if [ -e "$target_link" -a ! -L "$target_link" ]; then
-        rm -rf "$target_link"
-    fi
-
-    local target_dir
-    target_dir=$(dirname "$target_link")
-    if [ ! -e "$target_dir" ];then
-        mkdir -p "$target_dir"
-    fi
-
-    if [ ! -e "$target_link" ]; then
-        ln -s "$source_file" "$target_link"
-    fi
-}
+source ${_dir}/.link_lib
 
 # windows manager
 link qtile ~/.config/qtile
@@ -70,5 +47,11 @@ link _config/termite/config ~/.config/termite/config
 # music
 systemctl --user enable xmms2d.service
 
+# gradle
+link {,~/}.gradle/init.gradle
+link {,~/}.gradle/gradle.properties
+
 # bin
-link bin/pik ~/.local/bin/pik
+link {,~/.local/}bin/pik
+link {,~/.local/}bin/.my_proxy
+

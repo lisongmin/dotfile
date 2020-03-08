@@ -264,8 +264,8 @@ let g:ale_fixers = {
 
 au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
 
-"神级插件，ZenCoding可以让你以一种神奇而无比爽快的感觉写HTML、CSS
-Plug 'vim-scripts/ZenCoding.vim'
+"神级插件，Emmet可以让你以一种神奇而无比爽快的感觉写HTML、CSS
+Plug 'vim-scripts/Emmet.vim'
 
 " typescript
 Plug 'leafgarland/typescript-vim'
