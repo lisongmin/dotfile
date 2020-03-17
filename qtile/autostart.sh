@@ -30,6 +30,11 @@ if [ $? -ne 0 ]; then
     firefox&
 fi
 
+pgrep -U "$USER" '^tor-browser$'
+if [ $? -ne 0 ]; then
+    tor-browser&
+fi
+
 pgrep -U "$USER" '^thunderbird$'
 if [ $? -ne 0 ];then
     thunderbird&

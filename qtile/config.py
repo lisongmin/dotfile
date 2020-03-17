@@ -100,7 +100,7 @@ else:
     keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 
 groups = [Group('a'),
-          Group('o', [Match(wm_class=['Firefox', 'firefox'])]),
+          Group('o', [Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
           Group('e', layouts=[layout.max.Max()]),
           Group('u', [Match(wm_class=['zoom'])],
                 layouts=[layout.zoomy.Zoomy()]),
