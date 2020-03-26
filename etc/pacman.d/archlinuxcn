@@ -1,0 +1,16 @@
+
+Server = https://mirrors.cloud.tencent.com/archlinuxcn/$arch
+
+Server = https://mirrors.163.com/archlinux-cn/$arch
+
+# University of Science and Technology of China
+Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+
+# TUNA mirror of Tsinghua University
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # both IPv4 & IPv6
+
+# main cdn
+Server = https://cdn.repo.archlinuxcn.org/$arch
+
+# 上海科技大学 Geek Pie 社团
+Server = https://mirrors.geekpie.org/archlinuxcn/$arch
