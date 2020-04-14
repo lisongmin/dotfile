@@ -2,7 +2,7 @@
 
 # alias of pikaur which support proxy.
 if [ -z "$http_proxy" ] ;then
-    export http_proxy=socks5://127.0.0.1:1080
+    export http_proxy=socks5h://127.0.0.1:1080
 fi
 export https_proxy=$http_proxy
 export no_proxy=".aliyun.com,.w.alikunlun.com,.cloud.tencent.com,.huaweicloud.com,.163.com,.utsc.edu.cn,.archlinux.org,.ustclug.org,.taobao.org,.ruby-china.com,downloads.gradle-dn.com"

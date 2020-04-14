@@ -13,6 +13,10 @@ if [ "$XDG_SESSION_DESKTOP" == "qtile" ]; then
     # xss-lock -- /usr/bin/sxlock&
 fi
 
+if [ "$XDG_SESSION_DESKTOP" != "plasma-qtile" ];then
+    systemctl --user start dunst
+fi
+
 # disable beep
 xset -b
 compton -b
@@ -53,10 +57,10 @@ if [ $? -eq 0 ];then
     fi
 fi
 
-which mattermost-desktop
-if [ $? -eq 0 ];then
-    pgrep -U "$USER" '^mattermost-desktop$'
-    if [ $? -ne 0 ];then
-         mattermost-desktop --proxy-server=socks5://127.0.0.1:10800 &
-    fi
-fi
+#which mattermost-desktop
+#if [ $? -eq 0 ];then
+#    pgrep -U "$USER" '^mattermost-desktop$'
+#    if [ $? -ne 0 ];then
+#         mattermost-desktop --proxy-server=socks5://127.0.0.1:10800 &
+#    fi
+#fi
