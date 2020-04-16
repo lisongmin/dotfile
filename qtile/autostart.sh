@@ -39,10 +39,10 @@ if [ $? -ne 0 ]; then
     tor-browser&
 fi
 
-pgrep -U "$USER" '^thunderbird$'
-if [ $? -ne 0 ];then
-    thunderbird&
-fi
+#pgrep -U "$USER" '^thunderbird$'
+#if [ $? -ne 0 ];then
+#    thunderbird&
+#fi
 
 # pgrep osdlyrics
 # if [ $? -ne 0 ]; then
