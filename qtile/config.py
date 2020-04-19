@@ -102,8 +102,8 @@ else:
 groups = [Group('a'),
           Group('o', [Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
           Group('e', layouts=[layout.max.Max()]),
-          Group('u', [Match(wm_class=['zoom'])],
-                layouts=[layout.zoomy.Zoomy()]),
+          Group('u', [Match(wm_class=['dia'])],
+                layouts=[layout.stack.Stack(margin=1)]),
           Group('d', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', [Match(wm_class=['Thunderbird'])]),
@@ -217,8 +217,6 @@ bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
     [{'wmclass': 'flameshot'},
-     {'wname': 'Select a window or an application that you want to share',
-      'wmclass': 'zoom'}
      ])
 
 auto_fullscreen = True

@@ -105,7 +105,7 @@ export JAVA_HOME=/usr/lib/jvm/default
 export LIBVIRT_DEFAULT_URI=qemu:///system
 export  GPG_TTY=$(tty)
 
-alias dia="dia --integrated"
+# alias dia="dia --integrated"
 alias ls="ls --color=auto"
 
 # added by travis gem
