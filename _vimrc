@@ -224,7 +224,6 @@ endif
 " alex: pacman -S alex
 " yamllint: pacman -S yamllint
 " xmllint: pacman -S libxml2 (already installed default)
-" tslint: yarn global add tslint
 " java: yay -S checkstyle
 let g:ale_linters = {
 \   'bash': ['shfmt'],
@@ -237,14 +236,13 @@ let g:ale_linters = {
 \   'markdown': ['alex'],
 \   'python': ['flake8', 'pylint'],
 \   'tex': ['chktex'],
-\   'typescript': ['eslint', 'tslint'],
+\   'typescript': ['eslint'],
 \   'xml': ['alex', 'xmllint'],
 \   'yaml': ['yamllint'],
 \   'java': ['checkstyle'],
 \}
 
 " \   'bash': ['shfmt'],
-" \   'typescript': ['eslint', 'tslint'],
 " \   'javascript': ['eslint'],
 " \   'markdown': ['prettier'],
 "\   'css': ['prettier'],
@@ -255,7 +253,7 @@ let g:ale_fixers = {
 \   'cpp': ['clang-format'],
 \   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
-\   'typescript': ['tslint'],
+\   'typescript': ['eslint'],
 \   'java': ['google-java-format'],
 \   'xml': ['xmllint'],
 \   'json': ['prettier'],

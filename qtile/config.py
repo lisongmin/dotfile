@@ -167,9 +167,12 @@ else:
 
     widgets.extend([
         widget.Net(interface=eth, update_interval=2),
-        widget.Sep(),
-        widget.Net(interface=wlan, update_interval=2),
         ])
+    if wlan:
+        widgets.extend([
+            widget.Sep(),
+            widget.Net(interface=wlan, update_interval=2),
+            ])
 
     widgets.extend([
         widget.CPUGraph(frequency=2),
