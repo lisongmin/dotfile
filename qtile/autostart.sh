@@ -7,7 +7,10 @@ if [ "$XDG_SESSION_DESKTOP" == "qtile" ]; then
         /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
     fi
 
-    fcitx&
+    ime=$(which fcitx5 || which fcitx)
+    if [ -e "$ime" ]; then
+        $ime&
+    fi
 
     xautolock -time 10 -locker sxlock -killtime 120 -killer "systemctl suspend"&
     # xss-lock -- /usr/bin/sxlock&

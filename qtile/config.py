@@ -74,7 +74,7 @@ keys = [
     # take a full screanshot to clipboard
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
-    Key([mod], "f", lazy.spawn("fcitx -r -d")),
+    Key([mod], "r", lazy.spawn("fcitx5 -r -d")),
     Key([mod], "Return", lazy.spawn("termite")),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
     Key([mod, "shift"], "f", lazy.spawn("nemo")),
@@ -100,11 +100,11 @@ else:
     keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 
 groups = [Group('a'),
-          Group('o', [Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
-          Group('e', layouts=[layout.max.Max()]),
-          Group('u', [Match(wm_class=['dia'])],
+          Group('s', [Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
+          Group('d', layouts=[layout.max.Max()]),
+          Group('f', [Match(wm_class=['dia'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('d', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
+          Group('g', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', [Match(wm_class=['Thunderbird'])]),
           ]
