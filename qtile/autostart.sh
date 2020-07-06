@@ -1,28 +1,26 @@
 #!/usr/bin/env bash
 
-if [ "$XDG_SESSION_DESKTOP" == "qtile" ]; then
-    if [ -e ~/dotfile/wallpaper/family.jpeg ];then
-        /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
-    else
-        /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
-    fi
-
-    ime=$(which fcitx5 || which fcitx)
-    if [ -e "$ime" ]; then
-        $ime&
-    fi
-
-    xautolock -time 10 -locker sxlock -killtime 120 -killer "systemctl suspend"&
-    # xss-lock -- /usr/bin/sxlock&
+if [ -e ~/dotfile/wallpaper/family.jpeg ];then
+    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
+else
+    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
 fi
 
-if [ "$XDG_SESSION_DESKTOP" != "plasma-qtile" ];then
-    systemctl --user start dunst
+ime=$(which fcitx5 || which fcitx)
+if [ -e "$ime" ]; then
+    $ime&
 fi
+
+pgrep -U "$USER" '^cinnamon-screensaver$'
+if [ $? -ne 0 ];then
+    cinnamon-screensaver&
+fi
+
+systemctl --user start dunst
 
 # disable beep
 xset -b
-compton -b
+picom -b
 
 pgrep -U "$USER" '^tmux$'
 if [ $? -ne 0 ];then

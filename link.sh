@@ -48,6 +48,10 @@ link _config/termite/config ~/.config/termite/config
 # music
 systemctl --user enable xmms2d.service
 
+# xidlehook
+link {_,~/.}config/systemd/user/xidlehook.service
+systemctl --user enable xidlehook
+
 # gradle
 link {,~/}.gradle/init.gradle
 link {,~/}.gradle/gradle.properties

@@ -24,17 +24,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
+import subprocess
+from logging import INFO
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.command import lazy
-from libqtile import layout, bar, widget
+from libqtile import layout, bar
 from libqtile import hook
-import subprocess
-import os
+from libqtile.widget.textbox import TextBox
+from libqtile.widget.net import Net
+from libqtile.widget.groupbox import GroupBox
+from libqtile.widget.prompt import Prompt
+from libqtile.widget.windowname import WindowName
+from libqtile.widget.systray import Systray
+from libqtile.widget.graph import CPUGraph
+from libqtile.widget.sensors import ThermalSensor
+from libqtile.widget.clock import Clock
+from local_qtile_utils import (first_of_excutable, first_of_sensor_tag, BatteryNerdIcon,
+                               first_of_wire_net, first_of_wireless_net)
 
+TOOLBAR_WIDTH = 32
+TOOLBAR_DEFAULT_FONT_SIZE = 18
+TOOLBAR_TEXT_FONT_SIZE = 14
+TOOLBAR_NET_FONT_SIZE = 10
 
-session_name = 'cinnamon'
-if os.environ.get('XDG_SESSION_DESKTOP') == 'plasma-qtile':
-    session_name = 'plasma'
+default_terminal = first_of_excutable(["termite", "xfce4-terminal", "gnome-terminal", "konsole"])
+default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
+default_fcitx = first_of_excutable(['fcitx5', 'fcitx'])
+sensor_tag = first_of_sensor_tag(['Tdie', 'Core 0'])
 
 mod = "mod4"
 
@@ -65,7 +82,7 @@ keys = [
         'systemctl suspend -i')),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn(
-        "loginctl lock-sessions")),
+        "loginctl lock-session")),
 
     # take a sreenshot
     Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 0.2')),
@@ -74,10 +91,10 @@ keys = [
     # take a full screanshot to clipboard
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
-    Key([mod], "r", lazy.spawn("fcitx5 -r -d")),
-    Key([mod], "Return", lazy.spawn("termite")),
+    Key([mod, "shift"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
+    Key([mod], "Return", lazy.spawn(default_terminal)),
     Key([mod, "shift"], "w", lazy.spawn("firefox")),
-    Key([mod, "shift"], "f", lazy.spawn("nemo")),
+    Key([mod, "shift"], "f", lazy.spawn(default_file_manager)),
 
     Key([mod, "shift"], "m", lazy.spawn("thunderbird")),
     Key([mod, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
@@ -93,20 +110,18 @@ keys = [
     Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl s 10%+')),
 ]
 
-# 'alt + F2' to run command
-if session_name == 'plasma':
-    keys.append(Key(["mod1"], "F2", lazy.spawn('krunner')))
-else:
-    keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
+# 'alt + F2' or 'win + r' to run command
+keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
+keys.append(Key([mod], "r", lazy.spawncmd()))
 
-groups = [Group('a'),
-          Group('s', [Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
-          Group('d', layouts=[layout.max.Max()]),
-          Group('f', [Match(wm_class=['dia'])],
+groups = [Group('a', label='\ue795'),
+          Group('s', label='\uf738', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
+          Group('d', label='\ue795'),
+          Group('f', label='\ue7b8', matches=[Match(wm_class=['dia'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('g', [Match(wm_class=['TelegramDesktop', 'Mattermost'])],
+          Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Mattermost'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('h', [Match(wm_class=['Thunderbird'])]),
+          Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird'])]),
           ]
 
 for i in groups:
@@ -126,82 +141,61 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    # font='Source Han Sans',
-    font='文泉驿正黑',
-    fontsize=14,
-    padding=1,
+    fontsize=TOOLBAR_DEFAULT_FONT_SIZE,
+    padding=4,
 )
 
 
-def get_sensor_tag():
-    p = subprocess.Popen(['sensors'], stdout=subprocess.PIPE)
-    out, dummy_err = p.communicate()
-    out = out.decode()
-    tags = ['Tdie', 'Core 0']
-    for tag in tags:
-        if tag in out:
-            return tag
+widgets = [TextBox('\uf303'),
+           GroupBox(),
+           Prompt(prompt='\uf120 '),
+           TextBox(' \uf02c '),
+           WindowName(fontsize=TOOLBAR_TEXT_FONT_SIZE),
+           Systray(),
+           ]
 
-    return None
-
-
-if os.environ.get('XDG_SESSION_DESKTOP') == 'plasma-qtile':
-    screens = [
-        Screen()
-    ]
-else:
-    widgets = [widget.GroupBox(), widget.Prompt(),
-               widget.WindowName(), widget.Sep(), ]
-
-    nets = os.listdir('/sys/class/net')
-    eth = ''
-    wlan = ''
-    if 'br0' in nets:
-        eth = 'br0'
-
-    for n in nets:
-        if not eth and n.startswith('enp'):
-            eth = n
-        elif not wlan and n.startswith('wl'):
-            wlan = n
-
+eth = first_of_wire_net()
+if eth:
     widgets.extend([
-        widget.Net(interface=eth, update_interval=2),
-        ])
-    if wlan:
-        widgets.extend([
-            widget.Sep(),
-            widget.Net(interface=wlan, update_interval=2),
-            ])
-
-    widgets.extend([
-        widget.CPUGraph(frequency=2),
-        widget.ThermalSensor(tag_sensor=get_sensor_tag()),
-        widget.Sep(),
+        TextBox('\uf6ff'),
+        Net(interface=eth, format='{up}\n{down}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
+        TextBox('\u21f5'),
         ])
 
-    battery_name = None
-    if os.path.exists('/sys/class/power_supply/BAT0/status'):
-        battery_name = "BAT0"
-        widgets.append(widget.Battery(battery_name=battery_name))
-
+wlan = first_of_wireless_net()
+if wlan:
     widgets.extend([
-        widget.Systray(),
-        widget.Clock(format='%a %H:%M %m-%d'),
+        TextBox('\uf1eb'),
+        Net(interface=wlan, format='{up}\n{down}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
+        TextBox('\u21f5'),
         ])
 
-    bar.Bar.defaults
-    top = bar.Bar(widgets,
-                  24,
-                  opacity=0.7
-                  )
+widgets.extend([
+    CPUGraph(frequency=2),
+    ])
 
-    screens = [
-        Screen(
-            top=top
-        ),
-        Screen()
-    ]
+if sensor_tag:
+    widgets.append(ThermalSensor(tag_sensor=sensor_tag, fontsize=TOOLBAR_TEXT_FONT_SIZE))
+
+if os.path.exists('/sys/class/power_supply/BAT0/status'):
+    widgets.append(BatteryNerdIcon(format="{char} {percent:2.0%}"))
+
+widgets.extend([
+    TextBox(text='\uf5ef'),
+    Clock(format='%a %H:%M %m-%d', fontsize=TOOLBAR_TEXT_FONT_SIZE),
+    ])
+
+top = bar.Bar(widgets,
+              TOOLBAR_WIDTH,
+              opacity=0.7
+              )
+
+screens = [
+    Screen(
+        top=top
+    ),
+    Screen()
+]
 
 # Drag floating layouts.
 mouse = [
@@ -224,7 +218,6 @@ floating_layout = layout.Floating(
 
 auto_fullscreen = True
 
-from logging import INFO
 log_level = INFO
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this

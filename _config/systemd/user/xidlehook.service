@@ -1,0 +1,12 @@
+[Unit]
+Description=Lock session via xidlehook
+
+[Service]
+Environment=DEFAULT_BRIGHTNESS=40%
+Environment=IDLE_BRIGHTNESS=10%
+ExecStart=/usr/bin/xidlehook --not-when-fullscreen --not-when-audio --timer 60 'brightnessctl set $IDLE_BRIGHTNESS' 'brightnessctl set $DEFAULT_BRIGHTNESS' --timer 240 'loginctl lock-session' 'brightnessctl set $DEFAULT_BRIGHTNESS' --timer 600 'systemctl suspend-then-hibernate' 'brightnessctl set $DEFAULT_BRIGHTNESS'
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target
