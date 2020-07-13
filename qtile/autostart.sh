@@ -11,9 +11,9 @@ if [ -e "$ime" ]; then
     $ime&
 fi
 
-pgrep -U "$USER" '^cinnamon-screensaver$'
+pgrep -U "$USER" '^gnome-screensaver$'
 if [ $? -ne 0 ];then
-    cinnamon-screensaver&
+    gnome-screensaver&
 fi
 
 systemctl --user start dunst

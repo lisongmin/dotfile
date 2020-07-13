@@ -18,7 +18,6 @@ sudo pacman -S --needed --noconfirm yarn \
 yarn global add bash-language-server \
     javascript-typescript-langserver \
     csslint \
-    tslint \
     vim-node-rpc
 
 
