@@ -96,6 +96,7 @@ install_language_tools()
 init_vim()
 {
     link _vimrc ~/.vimrc
+    link asynctask.ini ~/.vim/tasks.ini
 
     if [ ! -e ~/.vim/autoload/plug.vim ];then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -108,6 +109,7 @@ init_vim()
 init_nvim()
 {
     link _vimrc ~/.config/nvim/init.vim
+    link asynctask.ini ~/.config/nvim/tasks.ini
 
     if [ ! -e ~/.local/share/nvim/site/autoload/plug.vim ] ; then
         if [ -e ~/.vim/autoload/plug.vim ];then

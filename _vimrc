@@ -282,6 +282,12 @@ Plug 'Quramy/tsuquyomi'
 
 Plug 'pboettch/vim-cmake-syntax'
 
+Plug 'skywind3000/asynctasks.vim'
+Plug 'skywind3000/asyncrun.vim'
+let g:asyncrun_open = 6
+noremap <silent><f5> :AsyncTask file-run<cr>
+noremap <silent><f9> :AsyncTask file-build<cr>
+
 call plug#end()            " required
 " Enable file type plugin and indent
 filetype plugin indent on
@@ -300,18 +306,6 @@ nnoremap <leader>gd :Clap git_diff_files<cr>
 "----------------------------------------------------------->
 "<< Latex setting.
 "----------------------------------------------------------->
-if has('win32')
-    map <leader>xx :!xelatex -halt-on-error -shell-escape -output-directory=\%tmp\% "%:p"<CR>:!xelatex -halt-on-error -shell-escape -output-directory=\%tmp\% "%:p"<CR>
-    map <leader>xe :!evince \%tmp\%."/%:t:r.pdf"&<CR><CR>
-    map <leader>vz :!dot -Tps2 "%:t:r.dot" -o "%:t:r.eps" &<CR><CR>:!ps2pdf "%:t:r.eps" \%tmp\%."/%:t:r.pdf"& <CR><CR>
-    "map <leader>vz :!dot -Tpng "%:t:r.dot" -o \%tmp\% . "%:t:r.png" &<CR><CR>
-    "map <leader>ve :!eog \%tmp\% . "/%:t:r.png" &<CR><CR>
-else
-    map <leader>xx :!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>:!xelatex -halt-on-error -shell-escape -output-directory=/tmp "%:p"<CR>
-    map <leader>xe :!evince "/tmp/%:t:r.pdf"&<CR><CR>
-    map <leader>vz :!dot -Tps2 "%:t:r.dot" -o "/tmp/%:t:r.eps" &<CR><CR>:!ps2pdf "/tmp/%:t:r.eps" "/tmp/%:t:r.pdf"& <CR><CR>
-    let $TEXINPUTS = ':.:/tmp'
-endif
 let g:tlist_tex_settings   = 'latex;s:sections;g:graphics;l:labels'
 let g:tlist_make_settings  = 'make;m:makros;t:targets'
 
