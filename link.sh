@@ -9,10 +9,9 @@ link qtile ~/.config/qtile
 # vim relative
 link flake8 ~/.config/flake8
 link flake8 ~/.config/pycodestyle
-link _vimrc ~/.vimrc
 link _ctags ~/.ctags
-link coc-settings.json ~/.vim/coc-settings.json
-link coc-settings.json ~/.config/nvim/coc-settings.json
+# link coc-settings.json ~/.vim/coc-settings.json
+# link coc-settings.json ~/.config/nvim/coc-settings.json
 
 # tmux
 if [ ! -d ~/.tmux/plugins/tpm ] ; then

@@ -27,7 +27,9 @@ if &diff
 endif
 
 set noerrorbells vb t_vb=
-au GuiEnter * set t_vb=
+augroup NO_BELLS
+  au GuiEnter * set t_vb=
+augroup END
 
 " Not break line when line is out of the window.
 set nowrap
@@ -52,17 +54,22 @@ if has('gui_running')
     set guiheadroom=0
 endif
 
-" Put plugins and dictionaries in this dir (also on Windows)
-let g:vimDir = '$HOME/.vim'
-let &runtimepath .= ',' . g:vimDir
+if has('nvim')
+  let g:vim_cache_path = stdpath('cache')
+  let g:vim_data_path = stdpath('data')
+else
+  let g:vim_cache_path = expand('$HOME/.cache/nvim')
+  let g:vim_data_path = expand('$HOME/.local/share/nvim')
+  call mkdir(g:vim_cache_path, 'p', '0750')
+  call mkdir(g:vim_data_path, 'p', '0750')
+endif
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-    let g:myUndoDir = expand(g:vimDir . '/undodir')
     " Create dirs
-    call system('mkdir ' . g:vimDir)
-    call system('mkdir ' . g:myUndoDir)
-    let &undodir = g:myUndoDir
+    let g:undo_dir = g:vim_cache_path . '/undo'
+    call mkdir(g:undo_dir, 'p', '0750')
+    let &undodir = g:undo_dir
     set undofile
 endif
 
@@ -73,24 +80,14 @@ set autoindent
 set smartindent
 set cindent
 
-"set ambiwidth=double
-if has('gui_running')
-    if ! has('win32')
-        " set font
-        " set gfn=DejaVu\ Sans\ Mono\ 8
-        "set gfn=DejaVu\ Sans\ Mono\ 12
-        "colo morning
-        "set gfn=Fira\ Code
-    endif
-endif
-
 "------------------------------------------->
 " Bundle begin
 " ------------------------------------------>
 filetype off                   " required!
 
-set runtimepath+=~/.vim/vim-plug/plug.vim
-call plug#begin('~/.vim/bundle')
+let g:vim_plug_path = g:vim_data_path . '/plugged'
+call mkdir(g:vim_plug_path, 'p', '0750')
+call plug#begin(g:vim_plug_path)
 
 "--------------------------
 " begin color scheme setting
@@ -105,13 +102,17 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 " let g:airline_gitblame_enalbe = 1
 
-if (has("termguicolors"))
+if (has('termguicolors'))
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
+
 set t_Co=256
-set term=xterm-256color
+if !has('nvim')
+  set term=xterm-256color
+endif
+
 set background=dark
 let g:airline_theme='papercolor'
 "----------------------------
@@ -131,43 +132,33 @@ Plug 'tpope/vim-surround'
 " file explorer
 Plug 'tpope/vim-vinegar'
 
-" file / buffer search
-"   required for denite
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'Shougo/denite.nvim'
-
 " ctags
 " Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_cache_dir = '/tmp/tags-' . expand('$USER')
+let g:gutentags_cache_dir = g:vim_cache_path . '/tags'
 " let g:gutentags_trace = 1
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnips']
 let g:snips_author = 'Songmin Li (Li)'
-let g:snips_email = 'lsm@skybility.com'
+let g:snips_email = 'lisongmin9@gmail.com'
 let g:snips_github = ''
-let g:snips_company = 'Skybility Software Co.,Ltd.'
-" disable ultisnips's default key bind in favote of coc-ultisnips
-let g:UltiSnipsJumpForwardTrigger =          '<c-z><c-j>'
-let g:UltiSnipsJumpBackwardTrigger =         '<c-z><c-k>'
+let g:snips_company = ''
 
 " ============================
 " completions
 " ============================
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install() }}
-
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" file / buffer search
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 Plug 'vim-scripts/a.vim'
 let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,reg:|include/\([^/]\)|src/\1||'
@@ -205,14 +196,26 @@ Plug 'w0rp/ale'
 let g:ale_linters_explicit = 1
 let g:ale_fix_on_save = 1
 let g:ale_open_list = 1
+let g:ale_list_window_size = 5
+let g:ale_completion_enabled = 0
 let g:ale_warn_about_trailing_whitespace = 0
-"let g:ale_cpp_clangtidy_checks = ['*', '-cppcoreguidelines-pro-type-vararg', '-google-runtime-references', '-google-readability-todo', '-objc-*', '-mpi-*', '-fuchsia-*', '-android-*', '-llvm-*']
 let g:ale_c_clangformat_options = '-style=file'
 let g:ale_cpp_clangformat_options = '-style=file'
 if &diff
     let g:ale_fix_on_save = 0
 endif
-" shfmt: download from https://github.com/mvdan/sh/releases/download/v2.4.0/shfmt_v2.4.0_linux_amd64
+
+augroup CloseLoclistWindowGroup
+  autocmd!
+  autocmd QuitPre * if empty(&buftype) | lclose | endif
+augroup END
+
+nmap <silent> gd <Plug>(ale_go_to_definition)
+nmap <silent> gy <Plug>(ale_go_to_type_definition)
+nmap <silent> gr :ALEFindReferences -relative<Return>
+nmap <leader>rn :ALERename<Return>
+
+" shfmt: pacman -S shfmt
 " c/c++: pacman -S clang
 " \   'c': ['clang', 'clangtidy', 'clang-format', ],
 " \   'cpp': ['clang', 'clangtidy', 'clang-format'],
@@ -221,23 +224,22 @@ endif
 " prettier: pacman -S prettier
 " csslint: yarn global add csslint
 " tidy: pacman -S tidy
-" alex: pacman -S alex
 " yamllint: pacman -S yamllint
 " xmllint: pacman -S libxml2 (already installed default)
 " java: yay -S checkstyle
 let g:ale_linters = {
 \   'bash': ['shfmt'],
-\   'c': ['clangtidy'],
-\   'cpp': ['clangtidy'],
-\   'javascript': ['eslint'],
+\   'c': ['clangtidy', 'ccls'],
+\   'cpp': ['clangtidy', 'ccls'],
+\   'javascript': ['eslint', 'tsserver'],
 \   'vim': ['vint'],
 \   'css': ['csslint'],
-\   'html': ['alex', 'tidy'],
-\   'markdown': ['alex'],
-\   'python': ['flake8', 'pylint'],
+\   'html': ['tidy'],
+\   'python': ['flake8', 'pylint', 'pyls'],
+\   'rust': ['rls'],
 \   'tex': ['chktex'],
-\   'typescript': ['eslint'],
-\   'xml': ['alex', 'xmllint'],
+\   'typescript': ['eslint', 'tsserver'],
+\   'xml': ['xmllint'],
 \   'yaml': ['yamllint'],
 \   'java': ['checkstyle'],
 \}
@@ -260,17 +262,19 @@ let g:ale_fixers = {
 \   'bash': ['shfmt']
 \}
 
-au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
+augroup ALE_XMLLINT_INDENTSIZE
+  au BufEnter * let b:ale_xml_xmllint_indentsize = &softtabstop
+augroup END
 
 "神级插件，Emmet可以让你以一种神奇而无比爽快的感觉写HTML、CSS
-Plug 'vim-scripts/Emmet.vim'
+Plug 'mattn/emmet-vim'
 
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
-augroup typescript
-autocmd FileType typescript JsPreTmpl
-autocmd FileType typescript syn clear foldBraces
+augroup TYPESCRIPT
+  autocmd FileType typescript JsPreTmpl
+  autocmd FileType typescript syn clear foldBraces
 augroup END
 
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -284,32 +288,14 @@ filetype plugin indent on
 "-------------------------------------------<
 " Bundle end
 " ------------------------------------------<
-call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git'])
-call denite#custom#var('grep',     'command', ['rg'])
-call denite#custom#var('grep',     'default_opts', ['--hidden', '--vimgrep', '--no-heading', '-S'])
-call denite#custom#var('grep',     'recursive_opts', [])
-call denite#custom#var('grep',     'final_opts',   [])
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-nnoremap <leader>f :<C-u>Denite file_rec<cr>
-nnoremap <leader>s :<C-u>Denite grep<cr>
-nnoremap <leader>b :<C-u>Denite buffer<cr>
-nnoremap <leader>o :<C-u>Denite outline<cr>
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
+" search file paths
+nnoremap <leader>fp :Clap files<cr>
+" search file contents
+nnoremap <leader>fs :Clap grep *<cr>
+" search vim buffers
+nnoremap <leader>b :Clap buffers<cr>
+" filter git diff
+nnoremap <leader>gd :Clap git_diff_files<cr>
 
 "----------------------------------------------------------->
 "<< Latex setting.
