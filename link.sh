@@ -5,6 +5,7 @@ source ${_dir}/.link_lib
 
 # windows manager
 link qtile ~/.config/qtile
+link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
 
 # vim relative
 link flake8 ~/.config/flake8

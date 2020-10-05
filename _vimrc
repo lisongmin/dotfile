@@ -141,7 +141,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 let g:UltiSnipsSnippetDirectories=['UltiSnips', 'mysnips']
 let g:snips_author = 'Songmin Li (Li)'
-let g:snips_email = 'lisongmin9@gmail.com'
+let g:snips_email = 'lisongmin@protonmail.com'
 let g:snips_github = ''
 let g:snips_company = ''
 

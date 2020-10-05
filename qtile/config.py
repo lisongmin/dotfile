@@ -26,9 +26,9 @@
 
 import os
 import subprocess
-from logging import INFO
+import logging
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
-from libqtile.command import lazy
+from libqtile.lazy import lazy
 from libqtile import layout, bar
 from libqtile import hook
 from libqtile.widget.textbox import TextBox
@@ -53,32 +53,32 @@ default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
 default_fcitx = first_of_excutable(['fcitx5', 'fcitx'])
 sensor_tag = first_of_sensor_tag(['Tdie', 'Core 0'])
 
-mod = "mod4"
+MOD = "mod4"
 
 keys = [
     # Switch between windows in current stack pane
-    Key([mod], "j", lazy.layout.down()),
-    Key([mod], "k", lazy.layout.up()),
-    # Key([mod], "h", lazy.layout.grow()),
-    # Key([mod], "l", lazy.layout.shrink()),
-    Key([mod], "n", lazy.layout.next()),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-    Key([mod], "space", lazy.next_layout()),
-    Key([mod], "t", lazy.window.toggle_floating()),
+    Key([MOD], "j", lazy.layout.down()),
+    Key([MOD], "k", lazy.layout.up()),
+    # Key([MOD], "h", lazy.layout.grow()),
+    # Key([MOD], "l", lazy.layout.shrink()),
+    Key([MOD], "n", lazy.layout.next()),
+    Key([MOD, "shift"], "j", lazy.layout.shuffle_down()),
+    Key([MOD, "shift"], "k", lazy.layout.shuffle_up()),
+    Key([MOD], "space", lazy.next_layout()),
+    Key([MOD], "t", lazy.window.toggle_floating()),
 
     # 'win + w' switch to next screen
-    Key([mod], "w", lazy.next_screen()),
+    Key([MOD], "w", lazy.next_screen()),
 
-    Key([mod, "shift"], "c", lazy.window.kill()),
+    Key([MOD, "shift"], "c", lazy.window.kill()),
 
     # 'win + q' reload qtile config
-    Key([mod], "q", lazy.restart()),
+    Key([MOD], "q", lazy.restart()),
     # 'win + shift + q' logout
-    Key([mod, "shift"], "q", lazy.spawn(
+    Key([MOD, "shift"], "q", lazy.spawn(
         f'loginctl terminate-session {os.environ.get("XDG_SESSION_ID")}')),
     # 'win + shift + s' to suspend os
-    Key([mod, "shift"], "s", lazy.spawn(
+    Key([MOD, "shift"], "s", lazy.spawn(
         'systemctl suspend -i')),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn(
@@ -91,13 +91,13 @@ keys = [
     # take a full screanshot to clipboard
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
-    Key([mod, "shift"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
-    Key([mod], "Return", lazy.spawn(default_terminal)),
-    Key([mod, "shift"], "w", lazy.spawn("firefox")),
-    Key([mod, "shift"], "f", lazy.spawn(default_file_manager)),
+    Key([MOD, "shift"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
+    Key([MOD], "Return", lazy.spawn(default_terminal)),
+    Key([MOD, "shift"], "w", lazy.spawn("firefox")),
+    Key([MOD, "shift"], "f", lazy.spawn(default_file_manager)),
 
-    Key([mod, "shift"], "m", lazy.spawn("thunderbird")),
-    Key([mod, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
+    Key([MOD, "shift"], "m", lazy.spawn("thunderbird")),
+    Key([MOD, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
 
     Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
     Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
@@ -112,7 +112,7 @@ keys = [
 
 # 'alt + F2' or 'win + r' to run command
 keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
-keys.append(Key([mod], "r", lazy.spawncmd()))
+keys.append(Key([MOD], "r", lazy.spawncmd()))
 
 groups = [Group('a', label='\ue795'),
           Group('s', label='\uf738', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser'])]),
@@ -127,12 +127,12 @@ groups = [Group('a', label='\ue795'),
 for i in groups:
     # mod1 + letter of group = switch to group
     keys.append(
-        Key([mod], i.name, lazy.group[i.name].toscreen())
+        Key([MOD], i.name, lazy.group[i.name].toscreen())
     )
 
     # mod1 + shift + letter of group = switch to & move focused window to group
     keys.append(
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name))
+        Key([MOD, "shift"], i.name, lazy.window.togroup(i.name))
     )
 
 layouts = [
@@ -199,12 +199,15 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
+    Drag([MOD], "Button1", lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
+    Drag([MOD], "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([MOD], "Button2", lazy.window.bring_to_front())
 ]
+
+# pylint: disable=invalid-name
+# Disable warning for it is interface to qtile.
 
 dgroups_key_binder = None
 dgroups_app_rules = []
@@ -218,17 +221,8 @@ floating_layout = layout.Floating(
 
 auto_fullscreen = True
 
-log_level = INFO
+log_level = logging.DEBUG
 
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, github issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
-# wmname = "LG3D"
 wmname = "Qtile"
 
 
@@ -236,9 +230,3 @@ wmname = "Qtile"
 def autostart():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
-
-
-@hook.subscribe.screen_change
-def restart_on_screen_change(qtile, ev):
-    print(ev)
-    qtile.cmd_restart()
