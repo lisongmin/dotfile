@@ -1,0 +1,4 @@
+# notify user when battery is at 10%
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="10", RUN+="/usr/local/bin/notify-me.sh low_power $attr{capacity}"
+# suspend when battery is at 5%
+ACTION=="change", SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="5", RUN+="/usr/bin/systemctl suspend-then-hibernate"
