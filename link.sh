@@ -20,6 +20,7 @@ link _tmux.conf ~/.tmux.conf
 
 # zsh
 link _zshrc ~/.zshrc
+link {_,~/.}p10k.zsh
 
 # pip
 link pip.conf ~/.pip/pip.conf
