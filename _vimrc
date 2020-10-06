@@ -96,12 +96,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'NLKNguyen/papercolor-theme'
 " Plug 'rafi/awesome-vim-colorschemes'
 
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-let g:airline_powerline_fonts = 1
 set laststatus=2
-" let g:airline_gitblame_enalbe = 1
-
 if (has('termguicolors'))
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -114,7 +109,6 @@ if !has('nvim')
 endif
 
 set background=dark
-let g:airline_theme='papercolor'
 "----------------------------
 " end color scheme setting
 "---------------------------
