@@ -7,19 +7,22 @@ source ${_dir}/.link_lib
 link qtile ~/.config/qtile
 link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
 
+# python linters
+link {_,~/.}config/flake8
+link {_,~/.}config/pycodestyle
+link {_,~/.}pylintrc
+
 # vim relative
-link flake8 ~/.config/flake8
-link flake8 ~/.config/pycodestyle
-link _ctags ~/.ctags
+link {_,~/.}ctags
 
 # tmux
 if [ ! -d ~/.tmux/plugins/tpm ] ; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-link _tmux.conf ~/.tmux.conf
+link {_,~/.}tmux.conf
 
 # zsh
-link _zshrc ~/.zshrc
+link {_,~/.}zshrc
 link {_,~/.}p10k.zsh
 
 # pip
