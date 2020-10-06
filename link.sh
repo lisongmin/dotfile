@@ -33,16 +33,16 @@ link _cargo ~/.cargo/config
 link _npmrc ~/.npmrc
 
 # dunst
-link dunstrc ~/.config/dunst/dunstrc
+link {_,~/.}config/dunst/dunstrc
 
 # ccache
 link _ccache ~/.ccache
 
 # fontconfig
-link _config/fontconfig ~/.config/fontconfig
+link {_,~/.}config/fontconfig
 
 # terminal
-link _config/termite/config ~/.config/termite/config
+link {_,~/.}config/termite/config
 
 # music
 systemctl --user enable xmms2d.service
