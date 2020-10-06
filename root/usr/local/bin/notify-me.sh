@@ -3,14 +3,21 @@
 send-via-dbus()
 {
     local display=:0
+
     local current_user
+    local user_id
+
     current_user=$(who|grep -i "(${display})"|awk '{print $1}')
-    su - ${current_user} << EOF
-        set -x
-        user_id=\$(id -u)
-        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/\${user_id}/bus
-        notify-send $(printf "%q " "${@}")
+    user_id=$(id -u ${current_user})
+    if [ "$(id -u)" = "$user_id" ]; then
+        export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${user_id}/bus
+        notify-send "${@}"
+    else
+        su - ${current_user} << EOF
+            export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${user_id}/bus
+            notify-send $(printf "%q " "${@}")
 EOF
+    fi
 }
 
 notify()
