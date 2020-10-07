@@ -23,9 +23,9 @@ DISABLE_AUTO_UPDATE="true"
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 # install vivid via `pacman -S vivid` to support ls-colors
-which vivid
+which vivid &> /dev/null
 if [ $? -eq 0 ];then
-  export LS_COLORS=$(vivid generate molakai)
+  export LS_COLORS=$(vivid generate molokai 2>/dev/null)
 fi
 
 # Uncomment the following line to disable auto-setting terminal title.
