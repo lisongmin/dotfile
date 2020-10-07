@@ -22,10 +22,10 @@ DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
-
-# install lscolors-git via `yay -S lscolors-git`
-if [ -e /usr/share/LS_COLORS/dircolors.sh ];then
-    source /usr/share/LS_COLORS/dircolors.sh
+# install vivid via `pacman -S vivid` to support ls-colors
+which vivid
+if [ $? -eq 0 ];then
+  export LS_COLORS=$(vivid generate molakai)
 fi
 
 # Uncomment the following line to disable auto-setting terminal title.
