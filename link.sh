@@ -3,10 +3,6 @@
 _dir=$(realpath `dirname $0`)
 source ${_dir}/.link_lib
 
-# windows manager
-link qtile ~/.config/qtile
-link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
-
 # python linters
 link {_,~/.}config/flake8
 link {_,~/.}config/pycodestyle
@@ -44,16 +40,6 @@ link _ccache ~/.ccache
 # fontconfig
 link {_,~/.}config/fontconfig
 
-# terminal
-link {_,~/.}config/termite/config
-
-# music
-systemctl --user enable xmms2d.service
-
-# xidlehook
-link {_,~/.}config/systemd/user/xidlehook.service
-systemctl --user enable xidlehook
-
 # gradle
 link {,~/}.gradle/init.gradle
 link {,~/}.gradle/gradle.properties
@@ -62,3 +48,12 @@ link {,~/}.gradle/gradle.properties
 link {,~/.local/}bin/pik
 link {,~/.local/}bin/.my_proxy
 
+# windows manager
+link qtile ~/.config/qtile
+link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
+
+# xidlehook
+link {_,~/.}config/systemd/user/xidlehook.service
+
+# terminal
+link {_,~/.}config/termite/config
