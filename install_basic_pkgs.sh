@@ -10,3 +10,6 @@ sudo pacman -S --needed --noconfirm vivid
 
 # text editor
 sudo pacman -S --needed --noconfirm neovim vim
+
+# translate
+sudo pacman -S --needed --noconfirm translate-shell
