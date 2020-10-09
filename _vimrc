@@ -282,6 +282,8 @@ let g:asyncrun_open = 6
 noremap <silent><f5> :AsyncTask file-run<cr>
 noremap <silent><f9> :AsyncTask file-build<cr>
 
+Plug 'cespare/vim-toml'
+
 call plug#end()            " required
 " Enable file type plugin and indent
 filetype plugin indent on
