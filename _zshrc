@@ -98,6 +98,11 @@ if [ $? -eq 0 ]; then
     go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/
 fi
 alias java="java -Djava.net.useSystemProxies=true"
+alias ap="ansible-playbook -i ~/work/hosts/home --ask-vault-pass"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [ -z "$SSH_TTY" ]; then
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+else
+  [[ ! -f ~/.remote_p10k.zsh ]] || source ~/.remote_p10k.zsh
+fi
