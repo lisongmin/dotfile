@@ -45,10 +45,6 @@ link {_,~/.}config/fontconfig
 link {,~/}.gradle/init.gradle
 link {,~/}.gradle/gradle.properties
 
-# bin
-link {,~/.local/}bin/pik
-link {,~/.local/}bin/.my_proxy
-
 # windows manager
 link qtile ~/.config/qtile
 link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
