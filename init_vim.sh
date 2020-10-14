@@ -91,6 +91,12 @@ install_language_tools()
     pip install --user vim-vint
     # } vim script lint support
     # ======================
+
+    # ======================
+    # { go support
+    sudo pacman -S --needed --noconfirm gopls
+    # } go support
+    # ======================
 }
 
 init_vim()

@@ -236,6 +236,7 @@ let g:ale_linters = {
 \   'xml': ['xmllint'],
 \   'yaml': ['yamllint'],
 \   'java': ['checkstyle'],
+\   'go': ['gopls'],
 \}
 
 " \   'bash': ['shfmt'],
