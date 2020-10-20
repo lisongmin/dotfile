@@ -122,6 +122,10 @@ Plug 'lilydjwg/fcitx.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
+" highlight ex matching
+Plug 'markonm/traces.vim'
+" moving
+Plug 'easymotion/vim-easymotion'
 
 " file explorer
 Plug 'tpope/vim-vinegar'
@@ -263,17 +267,6 @@ augroup END
 
 "神级插件，Emmet可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'mattn/emmet-vim'
-
-" typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/vim-js-pretty-template'
-augroup TYPESCRIPT
-  autocmd FileType typescript JsPreTmpl
-  autocmd FileType typescript syn clear foldBraces
-augroup END
-
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'Quramy/tsuquyomi'
 
 Plug 'pboettch/vim-cmake-syntax'
 
