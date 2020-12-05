@@ -126,6 +126,7 @@ Plug 'tpope/vim-surround'
 Plug 'markonm/traces.vim'
 " moving
 Plug 'easymotion/vim-easymotion'
+map <Leader> <Plug>(easymotion-prefix)
 
 " file explorer
 Plug 'tpope/vim-vinegar'
