@@ -103,6 +103,7 @@ init_vim()
 {
     link _vimrc ~/.vimrc
     link asynctask.ini ~/.vim/tasks.ini
+    link /usr/bin/vim ~/.local/bin/vault-vim
 
     if [ ! -e ~/.vim/autoload/plug.vim ];then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -116,6 +117,7 @@ init_nvim()
 {
     link _vimrc ~/.config/nvim/init.vim
     link asynctask.ini ~/.config/nvim/tasks.ini
+    link /usr/bin/nvim ~/.local/bin/vault-nvim
 
     if [ ! -e ~/.local/share/nvim/site/autoload/plug.vim ] ; then
         if [ -e ~/.vim/autoload/plug.vim ];then

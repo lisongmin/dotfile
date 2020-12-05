@@ -306,3 +306,11 @@ let g:xml_syntax_folding=0
 
 " colorscheme tender
 colorscheme PaperColor
+
+if v:progname =~? 'vault-n\?vim'
+  set noswapfile
+  set nobackup
+  set nowritebackup
+  set viminfo=
+  set clipboard=
+endif

@@ -99,6 +99,7 @@ if [ $? -eq 0 ]; then
 fi
 alias java="java -Djava.net.useSystemProxies=true"
 alias ap="ansible-playbook -i ~/work/hosts/home --ask-vault-pass"
+alias ansible-vault="EDITOR='vault-vim' ansible-vault"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [ -z "$SSH_TTY" ]; then
