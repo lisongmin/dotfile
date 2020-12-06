@@ -169,6 +169,9 @@ let g:alternateSearchPath = 'wdr:src,wdr:include,reg:|src/\([^/]\)|include/\1||,
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'thosakwe/vim-flutter'
 
+" zig support
+Plug 'ziglang/zig.vim'
+
 " markdown support
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
@@ -247,6 +250,7 @@ let g:ale_linters = {
 \   'java': ['checkstyle'],
 \   'go': ['gopls'],
 \   'dart': ['language_server'],
+\   'zig': ['zls'],
 \}
 
 " \   'bash': ['shfmt'],

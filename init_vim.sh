@@ -101,8 +101,15 @@ install_language_tools()
     # =====================
     # { futter/dart support
     sudo pacman -S --needed --noconfirm android-sdk android-platform android-sdk-build-tools android-sdk-platform-tools jdk8-openjdk chromium
-    yay -S flutter
+    yay -Sy flutter
     link {_,~/.}local/bin/dart_language_server
+    # }
+    # =====================
+
+    # =====================
+    # { zig support
+    sudo pacman -S --needed --noconfirm zig
+    yay -Sy zls-git
     # }
     # =====================
 }
