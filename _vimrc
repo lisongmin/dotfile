@@ -262,6 +262,7 @@ let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
 \   'c': ['clang-format'],
 \   'cpp': ['clang-format'],
+\   'go': ['gofmt'],
 \   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['eslint'],
