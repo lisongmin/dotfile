@@ -9,6 +9,8 @@ scriptencoding utf-8
 "---------------------------------------------------------->
 "<< General option >>
 "---------------------------------------------------------->
+set modelines=0
+set nomodeline
 
 set shell=bash
 
@@ -221,6 +223,12 @@ nmap <silent> gy <Plug>(ale_go_to_type_definition)
 nmap <silent> gr :ALEFindReferences -relative<Return>
 nmap <leader>rn :ALERename<Return>
 
+let g:ale_rust_analyzer_config = {
+\ 'procMacro': {'enable': v:true},
+\ 'cargo': {'loadOutDirsFromCheck': v:true},
+\ 'diagnostics': {'disabled': ['unresolved-proc-macro']},
+\}
+
 " shfmt: pacman -S shfmt
 " c/c++: pacman -S clang
 " \   'c': ['clang', 'clangtidy', 'clang-format', ],
@@ -242,7 +250,7 @@ let g:ale_linters = {
 \   'css': ['csslint'],
 \   'html': ['tidy'],
 \   'python': ['flake8', 'pylint', 'pyls'],
-\   'rust': ['rls'],
+\   'rust': ['analyzer'],
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tsserver'],
 \   'xml': ['xmllint'],

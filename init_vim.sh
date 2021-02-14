@@ -67,7 +67,7 @@ install_language_tools()
     # ======================
     pacman -Q rustup
     if [ $? -ne 0 ];then
-        sudo pacman -S rustup rustfmt
+        sudo pacman -S rustup rustfmt rust-analyzer
     fi
 
     rustup update nightly && rustup default nightly
