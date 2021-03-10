@@ -2,7 +2,10 @@
 
 link()
 {
-    local source_file="$_dir/$1"
+    local source_file="$1"
+    if [[ "$source_file" != "/"* ]];then
+        source_file="$_dir/$source_file"
+    fi
     if [ ! -e "$source_file" ];then
         echo "<warn> source [$source_file] not exists"
         return 1
