@@ -119,7 +119,7 @@ groups = [Group('a', label='\ue795'),
           Group('d', label='\ue795'),
           Group('f', label='\ue7b8', matches=[Match(wm_class=['dia', 'metasync'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Mattermost'])],
+          Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird'])]),
           ]
