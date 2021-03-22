@@ -19,3 +19,6 @@ robbyrussell/oh-my-zsh path:lib/history.zsh
 robbyrussell/oh-my-zsh path:lib/key-bindings.zsh
 
 djui/alias-tips
+
+# always at the end so that we can ensure the zsh completions is loaded before
+3v1n0/zsh-bash-completions-fallback

@@ -4,7 +4,8 @@
 sudo pacman -S --needed --noconfirm pikaur
 
 # shell
-sudo pacman -S --needed --noconfirm zsh tmux
+# Install bash-completion for zsh-bash-completions-fallback
+sudo pacman -S --needed --noconfirm zsh tmux bash-completion
 # colorful the `ls` command
 sudo pacman -S --needed --noconfirm vivid
 
