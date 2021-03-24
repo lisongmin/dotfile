@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+CHROOT="${HOME}/containers/arch"
+
+if [ ! -e "$CHROOT" ]; then
+    echo "Step: prepare chroot directory"
+    mkdir -p "$CHROOT"
+fi
+
+if [ ! -e "$CHROOT/root" ]; then
+    echo "Step: prepare chroot system"
+    mkarchroot $CHROOT/root base-devel namcap
+fi
+
+arch-nspawn $CHROOT/root pacman -Syu
+makechrootpkg -c -r $CHROOT "$@"

@@ -54,3 +54,6 @@ link {_,~/.}config/systemd/user/xidlehook.service
 
 # terminal
 link {_,~/.}config/termite/config
+
+# build arch package in chroot
+link {_,~/.}local/bin/buildpkg
