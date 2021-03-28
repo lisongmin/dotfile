@@ -41,10 +41,6 @@ link _ccache ~/.ccache
 # fontconfig
 link {_,~/.}config/fontconfig
 
-# gradle
-link {,~/}.gradle/init.gradle
-link {,~/}.gradle/gradle.properties
-
 # windows manager
 link qtile ~/.config/qtile
 link {qtile,~/.config/autorandr/postswitch.d}/restart-qtile-on-screen-changed.sh
