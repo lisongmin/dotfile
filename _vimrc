@@ -179,6 +179,9 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
 
+" kotlin support
+Plug 'udalov/kotlin-vim'
+
 " ================================
 " indent config
 " ================================
@@ -259,6 +262,7 @@ let g:ale_linters = {
 \   'go': ['gopls'],
 \   'dart': ['language_server'],
 \   'zig': ['zls'],
+\   'kotlin': ['languageserver'],
 \}
 
 " \   'bash': ['shfmt'],
