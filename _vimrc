@@ -270,6 +270,7 @@ let g:ale_linters = {
 " \   'markdown': ['prettier'],
 "\   'css': ['prettier'],
 "\   'scss': ['prettier'],
+"\   'xml': ['xmllint'],
 let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
 \   'c': ['clang-format'],
@@ -279,7 +280,6 @@ let g:ale_fixers = {
 \   'rust': ['rustfmt'],
 \   'typescript': ['eslint'],
 \   'java': ['google-java-format'],
-\   'xml': ['xmllint'],
 \   'json': ['prettier'],
 \   'bash': ['shfmt']
 \}
