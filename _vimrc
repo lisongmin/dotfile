@@ -179,8 +179,13 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 let g:vim_markdown_folding_disabled = 1
 
-" kotlin support
+" android support
 Plug 'udalov/kotlin-vim'
+Plug 'hsanson/vim-android'
+let g:gradle_path = '/usr/bin/gradle'
+let g:android_sdk_path = '/opt/android-sdk'
+let g:gradle_loclist_show = 0
+let g:gradle_show_signs = 0
 
 " ================================
 " indent config
@@ -215,6 +220,9 @@ let g:ale_cpp_clangformat_options = '-style=file'
 if &diff
     let g:ale_fix_on_save = 0
 endif
+
+let g:ale_java_javalsp_executable = '/usr/bin/java-language-server'
+let g:ale_kotlin_languageserver_executable = '/usr/bin/kotlin-language-server'
 
 augroup CloseLoclistWindowGroup
   autocmd!
@@ -256,13 +264,13 @@ let g:ale_linters = {
 \   'rust': ['analyzer'],
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tsserver'],
-\   'xml': ['xmllint'],
+\   'xml': ['android', 'xmllint'],
 \   'yaml': ['yamllint'],
-\   'java': ['checkstyle'],
+\   'java': ['android', 'javalsp'],
 \   'go': ['gopls'],
 \   'dart': ['language_server'],
 \   'zig': ['zls'],
-\   'kotlin': ['languageserver'],
+\   'kotlin': ['android', 'languageserver'],
 \}
 
 " \   'bash': ['shfmt'],

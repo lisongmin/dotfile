@@ -97,7 +97,7 @@ if [ $? -eq 0 ]; then
     go env -w GO111MODULE=on
     # go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/
 fi
-alias java="java -Djava.net.useSystemProxies=true"
+
 alias ap="ansible-playbook -i ~/work/hosts/home --ask-vault-pass"
 alias ansible-vault="EDITOR='vault-vim' ansible-vault"
 
