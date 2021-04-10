@@ -45,10 +45,10 @@ if [ $? -ne 0 ]; then
     chromium&
 fi
 
-#pgrep -U "$USER" '^thunderbird$'
-#if [ $? -ne 0 ];then
-#    thunderbird&
-#fi
+pgrep -U "$USER" '^thunderbird$'
+if [ $? -ne 0 ];then
+    thunderbird&
+fi
 
 # pgrep osdlyrics
 # if [ $? -ne 0 ]; then

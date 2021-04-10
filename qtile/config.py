@@ -121,7 +121,7 @@ groups = [Group('a', label='\ue795'),
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('j', label='\uf6ed', matches=[Match(wm_class=['Thunderbird', 'dingtalk'])]),
+          Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird', 'dingtalk'])]),
           ]
 
 for i in groups:
