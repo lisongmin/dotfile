@@ -287,7 +287,7 @@ let g:ale_fixers = {
 \   'python': ['autopep8'],
 \   'rust': ['rustfmt'],
 \   'typescript': ['eslint'],
-\   'java': ['google-java-format'],
+\   'java': ['google_java_format'],
 \   'json': ['prettier'],
 \   'bash': ['shfmt']
 \}
