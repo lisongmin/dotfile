@@ -194,6 +194,9 @@ let g:gradle_show_signs = 0
 " jump begin xml/tex tag
 Plug 'vim-scripts/matchit.zip'
 
+" navigate via zip
+"Plug 'lbrayner/vim-rzip'
+
 " load indent by .editorconfig.
 Plug 'editorconfig/editorconfig-vim'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
@@ -215,13 +218,18 @@ let g:ale_open_list = 1
 let g:ale_list_window_size = 5
 let g:ale_completion_enabled = 0
 let g:ale_warn_about_trailing_whitespace = 0
-let g:ale_c_clangformat_options = '-style=file'
-let g:ale_cpp_clangformat_options = '-style=file'
+let g:ale_completion_autoimport = 1
 if &diff
     let g:ale_fix_on_save = 0
 endif
 
+" for debug
+" let g:ale_command_wrapper = '~/.local/bin/ale_command_wrapper.sh'
+
+let g:ale_c_clangformat_options = '-style=file'
+let g:ale_cpp_clangformat_options = '-style=file'
 let g:ale_java_javalsp_executable = '/usr/bin/java-language-server'
+let g:ale_java_javalsp_prefer_root_at_cwd = 1
 let g:ale_kotlin_languageserver_executable = '/usr/bin/kotlin-language-server'
 
 augroup CloseLoclistWindowGroup
@@ -231,8 +239,9 @@ augroup END
 
 nmap <silent> gd <Plug>(ale_go_to_definition)
 nmap <silent> gy <Plug>(ale_go_to_type_definition)
+nmap <silent> gs :execute 'ALESymbolSearch <c-r><c-w>'<Return>
 nmap <silent> gr :ALEFindReferences -relative<Return>
-nmap <leader>rn :ALERename<Return>
+nmap <leader>rn  :ALERename<Return>
 
 let g:ale_rust_analyzer_config = {
 \ 'procMacro': {'enable': v:true},
