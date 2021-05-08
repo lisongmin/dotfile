@@ -109,3 +109,4 @@ else
 fi
 
 export CHROME_EXECUTABLE=/usr/bin/chromium
+export VAGRANT_DEFAULT_PROVIDER=libvirt
