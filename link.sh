@@ -52,3 +52,6 @@ link {_,~/.}config/systemd/user/xidlehook.service
 
 # build arch package in chroot
 link {_,~/.}local/bin/buildpkg
+
+# flameshot
+link {_,~/.}config/flameshot
