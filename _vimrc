@@ -105,11 +105,6 @@ if (has('termguicolors'))
     set termguicolors
 endif
 
-set t_Co=256
-if !has('nvim')
-  set term=xterm-256color
-endif
-
 set background=dark
 "----------------------------
 " end color scheme setting
