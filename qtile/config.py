@@ -232,6 +232,6 @@ def autostart():
 
 
 @hook.subscribe.screen_change
-def restart_on_randr(qtile, ev):
+def restart_on_randr(qtile):
     subprocess.call(['autorandr', '-c'])
     qtile.cmd_restart()
