@@ -27,6 +27,7 @@
 import os
 import subprocess
 import logging
+from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
 from libqtile import layout, bar
@@ -232,6 +233,6 @@ def autostart():
 
 
 @hook.subscribe.screen_change
-def restart_on_randr(qtile):
+def restart_on_randr(ev):
     subprocess.call(['autorandr', '-c'])
     qtile.cmd_restart()
