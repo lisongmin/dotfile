@@ -216,7 +216,7 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
-    [{'wmclass': 'flameshot'},
+    [Match(wm_class='flameshot'),
      ])
 
 auto_fullscreen = True
