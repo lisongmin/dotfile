@@ -76,8 +76,7 @@ keys = [
     # 'win + q' reload qtile config
     Key([MOD], "q", lazy.restart()),
     # 'win + shift + q' logout
-    Key([MOD, "shift"], "q", lazy.spawn(
-        f'loginctl terminate-session {os.environ.get("XDG_SESSION_ID")}')),
+    Key([MOD, "shift"], "q", lazy.shutdown()),
     # 'win + shift + s' to suspend os
     Key([MOD, "shift"], "s", lazy.spawn(
         'systemctl suspend -i')),
