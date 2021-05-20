@@ -35,9 +35,6 @@ link _npmrc ~/.npmrc
 # dunst
 link {_,~/.}config/dunst/dunstrc
 
-# ccache
-link _ccache ~/.ccache
-
 # fontconfig
 link {_,~/.}config/fontconfig
 
