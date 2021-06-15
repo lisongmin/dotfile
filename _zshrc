@@ -66,6 +66,9 @@ export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
 # fi
+if [ -z "$SSH_AUTH_SOCK" ]; then
+  export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
