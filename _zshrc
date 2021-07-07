@@ -113,3 +113,7 @@ fi
 
 export CHROME_EXECUTABLE=/usr/bin/chromium
 export VAGRANT_DEFAULT_PROVIDER=libvirt
+
+export AUTHOR_EMAIL='lisongmin@protonmail.com'
+
+eval "$(direnv hook zsh)"
