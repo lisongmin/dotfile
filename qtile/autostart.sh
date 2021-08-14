@@ -70,11 +70,3 @@ if [ $? -eq 0 ];then
         element-desktop&
     fi
 fi
-
-which dingtalk
-if [ $? -eq 0 ];then
-    pgrep -U "$USER" '^dingtalk$'
-    if [ $? -ne 0 ];then
-        dingtalk&
-    fi
-fi
