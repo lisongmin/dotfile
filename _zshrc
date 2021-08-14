@@ -116,4 +116,7 @@ export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 export AUTHOR_EMAIL='lisongmin@protonmail.com'
 
-eval "$(direnv hook zsh)"
+which direnv &> /dev/null
+if [ $? -eq 0 ]; then
+  eval "$(direnv hook zsh)"
+fi
