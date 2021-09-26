@@ -118,5 +118,5 @@ export AUTHOR_EMAIL='lisongmin@protonmail.com'
 
 which direnv &> /dev/null
 if [ $? -eq 0 ]; then
-  eval "$(direnv hook zsh)"
+  eval "$(direnv hook zsh)" &>/dev/null
 fi
