@@ -337,6 +337,8 @@ let g:xml_syntax_folding=0
 
 " colorscheme tender
 colorscheme PaperColor
+" set vim background transparent
+hi Normal guibg=NONE ctermbg=NONE
 
 if v:progname =~? 'vault-n\?vim'
   set noswapfile

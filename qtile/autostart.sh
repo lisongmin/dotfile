@@ -26,8 +26,9 @@ pgrep -U "$USER" '^tmux$'
 if [ $? -ne 0 ];then
     tmux new-session -d
     tmux new-session -s term -d
-    tmux new-session -s work -c /work -d
+    tmux new-session -s work -c ~/work -d
     xfce4-terminal -e "tmux attach-session -t term"&
+    alacritty -e tmux attach-session -t work
 fi
 
 pgrep -U "$USER" '^firefox$'

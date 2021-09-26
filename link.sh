@@ -45,7 +45,7 @@ link qtile ~/.config/qtile
 link {_,~/.}config/systemd/user/xidlehook.service
 
 # terminal
-# link {_,~/.}config/alacritty
+link {_,~/.}config/alacritty
 
 # build arch package in chroot
 link {_,~/.}local/bin/buildpkg

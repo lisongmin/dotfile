@@ -27,7 +27,6 @@
 import os
 import subprocess
 import logging
-from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
 from libqtile import layout, bar
@@ -114,13 +113,14 @@ keys = [
 keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 keys.append(Key([MOD], "r", lazy.spawncmd()))
 
-groups = [Group('a', label='\ue795'),
+groups = [Group('a', label='\ue7c5'),
           Group('s', label='\uf738', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
-          Group('d', label='\ue795'),
+          Group('d', label='\ue795', matches=[Match(wm_class=['Alacritty'])]),
           Group('f', label='\ue7b8', matches=[Match(wm_class=['dia', 'metasync'])]),
           Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird', 'dingtalk'])]),
+          Group('u', label='\ue287', matches=[Match(wm_class=['Logseq'])]),
           ]
 
 for i in groups:
