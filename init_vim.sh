@@ -81,7 +81,7 @@ install_language_tools()
     # ======================
     # { python support.
     # ======================
-    sudo pacman -S --needed --noconfirm python-language-server python-pip flake8 autopep8 python-pylint
+    sudo pacman -S --needed --noconfirm python-lsp-server python-pip flake8 autopep8 python-pylint
     # ======================
     # } python support end.
     # ======================

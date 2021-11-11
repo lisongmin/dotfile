@@ -260,7 +260,7 @@ let g:ale_linters = {
 \   'vim': ['vint'],
 \   'css': ['csslint'],
 \   'html': ['tidy'],
-\   'python': ['flake8', 'pylint', 'pyls'],
+\   'python': ['flake8', 'pylint', 'pylsp'],
 \   'rust': ['analyzer'],
 \   'tex': ['chktex'],
 \   'typescript': ['eslint', 'tsserver'],
