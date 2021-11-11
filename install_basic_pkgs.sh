@@ -22,7 +22,7 @@ if [ "$1" = "gui" ]; then
     sudo pacman -S --needed --noconfirm firefox
 
     # window manager
-    sudo pacman -S --needed --noconfirm qtile
+    sudo pacman -S --needed --noconfirm qtile python-pywlroots
 
     # Since I use wm without DE, I need
     # some utils to perform the functions of DE
