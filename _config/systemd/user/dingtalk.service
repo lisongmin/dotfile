@@ -1,0 +1,12 @@
+[Unit]
+Description=Dingtalk
+
+[Service]
+ExecStartPre=/usr/bin/mkdir -p ${HOME}/Downloads/dingtalk
+ExecStartPre=/usr/bin/mkdir -p ${HOME}/Downloads/shares
+ExecStart=/usr/bin/x11docker --backend=podman --nxagent --home --share=~/Downloads/dingtalk --share=~/Downloads/shares --clipboard --pulseaudio --dbus=system registry.homelab.credible.dev/mirrors/docker/dingtalk:2.1.12
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

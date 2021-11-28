@@ -43,6 +43,8 @@ link qtile ~/.config/qtile
 
 # xidlehook
 link {_,~/.}config/systemd/user/xidlehook.service
+# dingtalk
+link {_,~/.}config/systemd/user/dingtalk.service
 
 # terminal
 link {_,~/.}config/alacritty
