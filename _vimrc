@@ -60,8 +60,8 @@ if has('nvim')
   let g:vim_cache_path = stdpath('cache')
   let g:vim_data_path = stdpath('data')
 else
-  let g:vim_cache_path = expand('$HOME/.cache/nvim')
-  let g:vim_data_path = expand('$HOME/.local/share/nvim')
+  let g:vim_cache_path = expand('$HOME/.cache/vim')
+  let g:vim_data_path = expand('$HOME/.local/share/vim')
   call mkdir(g:vim_cache_path, 'p', '0750')
   call mkdir(g:vim_data_path, 'p', '0750')
 endif

@@ -57,7 +57,7 @@ install_language_tools()
     # ======================
     # { c/c++ support.
     # ======================
-    sudo pacman -S --needed --noconfirm clang ccls-git flawfinder cppcheck
+    sudo pacman -S --needed --noconfirm clang ccls
     # ======================
     # } c/c++ support.
     # ======================
@@ -130,20 +130,14 @@ init_vim()
 
 init_nvim()
 {
-    link _vimrc ~/.config/nvim/init.vim
-    link asynctask.ini ~/.config/nvim/tasks.ini
-    link /usr/bin/nvim ~/.local/bin/vault-nvim
+    link _config/nvim ~/.config/nvim
 
-    if [ ! -e ~/.local/share/nvim/site/autoload/plug.vim ] ; then
-        if [ -e ~/.vim/autoload/plug.vim ];then
-            link ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
-        else
-            curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        fi
+    if [ ! -e ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
+        git clone --depth 1 https://github.com/wbthomason/packer.nvim \
+            ~/.local/share/nvim/site/pack/packer/start/packer.nvim
     fi
 
-    nvim +PlugInstall +qall
+    vim +PackerInstall +qall
 }
 
 install_language_tools
