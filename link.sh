@@ -24,7 +24,6 @@ link {_,~/.}remote_p10k.zsh
 
 # pip
 link pip.conf ~/.pip/pip.conf
-link {_,~/.}pydistutils.cfg
 
 # cargo
 link _cargo ~/.cargo/config
