@@ -27,6 +27,7 @@
 import os
 import subprocess
 import logging
+from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
 from libqtile import layout, bar
@@ -150,8 +151,10 @@ widgets = [TextBox('\uf303'),
            Prompt(prompt='\uf120 '),
            TextBox(' \uf02c '),
            WindowName(fontsize=TOOLBAR_TEXT_FONT_SIZE),
-           Systray(),
            ]
+
+if qtile.core.name == 'x11':
+    widgets.append(Systray())
 
 eth = first_of_wire_net()
 if eth:
