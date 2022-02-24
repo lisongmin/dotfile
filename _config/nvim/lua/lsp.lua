@@ -44,6 +44,12 @@ require('lspconfig').rust_analyzer.setup({
   capabilities = capabilities
 })
 
+-- go
+require('lspconfig').gopls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities
+})
+
 -- python
 require('lspconfig').pylsp.setup({
   on_attach = on_attach,
