@@ -105,11 +105,6 @@ _G.packer_plugins = {
     path = "/home/lsm/.local/share/nvim/site/pack/packer/start/lightspeed.nvim",
     url = "https://github.com/ggandor/lightspeed.nvim"
   },
-  ["lspsaga.nvim"] = {
-    loaded = true,
-    path = "/home/lsm/.local/share/nvim/site/pack/packer/start/lspsaga.nvim",
-    url = "https://github.com/glepnir/lspsaga.nvim"
-  },
   ["matchindent.vim"] = {
     loaded = true,
     path = "/home/lsm/.local/share/nvim/site/pack/packer/start/matchindent.vim",
@@ -169,6 +164,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/lsm/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    loaded = true,
+    path = "/home/lsm/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
   },
   ["telescope.nvim"] = {
     loaded = true,

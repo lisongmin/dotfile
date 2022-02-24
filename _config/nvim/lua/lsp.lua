@@ -43,3 +43,23 @@ require('lspconfig').rust_analyzer.setup({
   on_attach = on_attach,
   capabilities = capabilities
 })
+
+-- python
+require('lspconfig').pylsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    configurationSources = {'flake8', 'pycodestyle'},
+    plugins = {
+      flake8 = { enabled = true },
+      mypy = {enabled = false},
+      isort = {enabled = false},
+      yapf = {enabled = false},
+      pylint = {enabled = true},
+      pydocstyle = {enabled = false},
+      mccabe = {enabled = false},
+      preload = {enabled = false},
+      rope_completion = {enabled = false}
+    }
+  }
+})

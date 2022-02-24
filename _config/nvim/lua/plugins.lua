@@ -52,7 +52,6 @@ return require('packer').startup(function()
 
   -- lsp plugins
   use 'neovim/nvim-lspconfig'
-  use 'glepnir/lspsaga.nvim'
   use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
 
   -- auto completion
@@ -62,6 +61,9 @@ return require('packer').startup(function()
 
   -- snippets
   use 'L3MON4D3/LuaSnip'
+
+  -- fixer
+  use 'w0rp/ale'
 
   -- Highlight, edit, and navigate code using a fast incremental parsing library
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
