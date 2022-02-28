@@ -85,7 +85,7 @@ keys = [
         "loginctl lock-session")),
 
     # take a sreenshot
-    Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 0.2')),
+    Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 1')),
     # take a full screanshot and save to file
     Key(['shift'], "Print", lazy.spawn('flameshot full -p /tmp')),
     # take a full screanshot to clipboard
