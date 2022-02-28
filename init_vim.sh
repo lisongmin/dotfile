@@ -15,7 +15,7 @@ install_language_tools()
     # ======================
     sudo pacman -S --needed --noconfirm yarn eslint tidy
     # install typescript for tsserver
-    yarn global add typescript csslint
+    yarn global add typescript csslint rome typescript-language-server
     # ======================
     # } html/css/js/ts support.
     # ======================
@@ -65,15 +65,10 @@ install_language_tools()
     # ======================
     # { rust support.
     # ======================
-    pacman -Q rustup
+    pacman -Q rust-analyzer
     if [ $? -ne 0 ];then
-        sudo pacman -S rustup rustfmt rust-analyzer
+        sudo pacman -S --needed --noconfirm rust-analyzer
     fi
-
-    rustup update nightly && rustup default nightly
-    rustup component add rls-preview --toolchain nightly
-    rustup component add rust-analysis --toolchain nightly
-    rustup component add rust-src --toolchain nightly
     # ======================
     # } rust support end.
     # ======================
@@ -100,8 +95,7 @@ install_language_tools()
 
     # =====================
     # { futter/dart support
-    sudo pacman -S --needed --noconfirm android-sdk android-platform android-sdk-build-tools android-sdk-platform-tools jdk8-openjdk chromium
-    yay -Sy flutter
+    sudo pacman -S --needed --noconfirm android-sdk android-platform android-sdk-build-tools android-sdk-platform-tools jdk8-openjdk chromium flutter
     link {_,~/.}local/bin/dart_language_server
     # }
     # =====================
