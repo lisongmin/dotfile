@@ -91,13 +91,13 @@ keys = [
     # take a full screanshot to clipboard
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
-    Key([MOD, "shift"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
     Key([MOD], "Return", lazy.spawn(default_terminal)),
-    Key([MOD, "shift"], "w", lazy.spawn("firefox")),
-    Key([MOD, "shift"], "f", lazy.spawn(default_file_manager)),
 
-    Key([MOD, "shift"], "m", lazy.spawn("thunderbird")),
-    Key([MOD, "shift"], "v", lazy.spawn("virt-viewer -c qemu:///system win10")),
+    Key([MOD, "mod1"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
+    Key([MOD, "mod1"], "w", lazy.spawn("firefox")),
+    Key([MOD, "mod1"], "f", lazy.spawn(default_file_manager)),
+    Key([MOD, "mod1"], "m", lazy.spawn("thunderbird")),
+    Key([MOD, "mod1"], "v", lazy.spawn("virt-viewer -c qemu:///system --hotkeys=release-cursor=ctrl+alt -f win10")),
 
     Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
     Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
@@ -122,6 +122,7 @@ groups = [Group('a', label='\ue7c5'),
                 layouts=[layout.stack.Stack(margin=1)]),
           Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird', 'dingtalk'])]),
           Group('u', label='\ue287', matches=[Match(wm_class=['Logseq'])]),
+          Group('i', label='\ufab2', matches=[Match(wm_class=['virt-viewer'])]),
           ]
 
 for i in groups:
