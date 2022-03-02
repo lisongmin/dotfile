@@ -126,12 +126,18 @@ init_nvim()
 {
     link _config/nvim ~/.config/nvim
 
+    if [ ! -e ~/.local/share/nvim/site/autoload/plug.vim ];then
+        curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
+
     if [ ! -e ~/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then
         git clone --depth 1 https://github.com/wbthomason/packer.nvim \
             ~/.local/share/nvim/site/pack/packer/start/packer.nvim
     fi
 
-    vim +PackerInstall +qall
+    nvim -u vscode.vim +PlugInstall +qall
+    nvim +PackerInstall +qall
 }
 
 install_language_tools
