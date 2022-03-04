@@ -48,32 +48,22 @@ call mkdir(g:vim_plug_path, 'p', '0750')
 call plug#begin(g:vim_plug_path)
 
 Plug 'will133/vim-dirdiff'
-Plug 'lilydjwg/fcitx.vim'
 
 " git manager
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
-" highlight ex matching
-Plug 'markonm/traces.vim'
 " moving
 Plug 'asvetliakov/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 
-" zig support
-Plug 'ziglang/zig.vim'
-
 " markdown support
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_disabled = 1
 
 " jump begin xml/tex tag
 Plug 'vim-scripts/matchit.zip'
 
 "神级插件，Emmet可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'mattn/emmet-vim'
-
-Plug 'cespare/vim-toml'
 
 call plug#end()            " required
