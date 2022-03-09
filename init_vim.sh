@@ -55,6 +55,14 @@ install_language_tools()
     # ======================
 
     # ======================
+    # { ansible support.
+    # ======================
+    yarn global add @ansible/ansible-language-server
+    # ======================
+    # } ansible support.
+    # ======================
+
+    # ======================
     # { c/c++ support.
     # ======================
     sudo pacman -S --needed --noconfirm clang ccls

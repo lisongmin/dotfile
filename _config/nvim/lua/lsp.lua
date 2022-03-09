@@ -76,3 +76,9 @@ require('lspconfig').tsserver.setup({
   on_attach = on_attach,
   capabilities = capabilities
 })
+
+-- ansible
+require('lspconfig').ansiblels.setup({
+  on_attach = on_attach,
+  capabilities = capabilities
+})
