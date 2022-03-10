@@ -26,8 +26,15 @@ set nowrap
 " Set map leader
 let g:mapleader = ','
 
-let g:vim_cache_path = stdpath('cache')
-let g:vim_data_path = stdpath('data')
+if has('nvim')
+  let g:vim_cache_path = stdpath('cache')
+  let g:vim_data_path = stdpath('data')
+else
+  let g:vim_cache_path = expand('$HOME/.cache/vim')
+  let g:vim_data_path = expand('$HOME/.local/share/vim')
+  call mkdir(g:vim_cache_path, 'p', '0750')
+  call mkdir(g:vim_data_path, 'p', '0750')
+endif
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
@@ -54,16 +61,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 
 " moving
-Plug 'asvetliakov/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 
 " markdown support
 Plug 'godlygeek/tabular'
 
 " jump begin xml/tex tag
-Plug 'vim-scripts/matchit.zip'
+Plug 'chrisbra/matchit.zip'
 
 "神级插件，Emmet可以让你以一种神奇而无比爽快的感觉写HTML、CSS
 Plug 'mattn/emmet-vim'
 
 call plug#end()            " required
+
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotToDeclaration<CR>
+nnoremap gp :action GotToSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gr :action FindUsages<CR>

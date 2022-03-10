@@ -119,6 +119,7 @@ install_language_tools()
 init_vim()
 {
     link _vimrc ~/.vimrc
+    link _ideavimrc ~/.ideavimrc
     link asynctask.ini ~/.vim/tasks.ini
     link /usr/bin/vim ~/.local/bin/vault-vim
 
@@ -144,7 +145,6 @@ init_nvim()
             ~/.local/share/nvim/site/pack/packer/start/packer.nvim
     fi
 
-    nvim -u vscode.vim +PlugInstall +qall
     nvim +PackerInstall +qall
 }
 
