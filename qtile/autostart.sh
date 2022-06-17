@@ -1,22 +1,26 @@
 #!/usr/bin/env bash
 
+
 if [ -e ~/dotfile/wallpaper/family.jpeg ];then
-    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/family.jpeg&
+    background_image=~/dotfile/wallpaper/family.jpeg
 else
-    /usr/bin/feh --bg-scale ~/dotfile/wallpaper/jzbq.jpeg&
+    background_image=~/dotfile/wallpaper/jzbq.jpeg
 fi
+
+/usr/bin/feh --bg-scale $background_image &
 
 ime=$(which fcitx5 || which fcitx)
 if [ -e "$ime" ]; then
     $ime&
 fi
 
-pgrep -U "$USER" '^gnome-screensaver$'
+pgrep -U "$USER" '^xfce4-screensaver$'
 if [ $? -ne 0 ];then
-    gnome-screensaver&
+    xfce4-screensaver&
 fi
 
 systemctl --user start dunst
+systemctl --user start xidlehook
 
 # disable beep
 xset -b
@@ -28,7 +32,7 @@ if [ $? -ne 0 ];then
     tmux new-session -s term -d
     tmux new-session -s work -c ~/work -d
     xfce4-terminal -e "tmux attach-session -t term"&
-    alacritty -e tmux attach-session -t work&
+    xfce4-termnal -e "tmux attach-session -t work"&
 fi
 
 pgrep -U "$USER" '^firefox$'

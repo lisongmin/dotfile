@@ -1,11 +1,13 @@
+#! /usr/bin/zsh
+
+export GPG_TTY=$(tty)
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-#! /usr/bin/zsh
 
 autoload -U compinit && compinit
 source <(antibody init)
@@ -87,7 +89,6 @@ export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 export JAVA_HOME=/usr/lib/jvm/default
 export LIBVIRT_DEFAULT_URI=qemu:///system
-export  GPG_TTY=$(tty)
 
 # alias dia="dia --integrated"
 alias ls="ls --color=auto"
@@ -103,6 +104,16 @@ fi
 
 alias ap="ansible-playbook -i ~/work/hosts/home --ask-vault-pass"
 alias ansible-vault="EDITOR='vault-vim' ansible-vault"
+
+if [ ! -e $HOME/.cargo/cross-registry/x86_64 ]; then
+  mkdir -p $HOME/.cargo/cross-registry/x86_64
+fi
+alias rust-build='docker run --rm -it -v "$HOME/.cargo/cross-registry/x86_64":/root/.cargo/registry -v "$(pwd)":/home/rust/src messense/rust-musl-cross:x86_64-musl'
+alias butane='podman run --rm --interactive       \
+              --security-opt label=disable        \
+              --volume ${PWD}:/pwd --workdir /pwd \
+              quay.io/coreos/butane:release'
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 if [ -z "$SSH_TTY" ]; then

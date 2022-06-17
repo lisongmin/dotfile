@@ -41,7 +41,22 @@ require("flutter-tools").setup{
 -- rust
 require('lspconfig').rust_analyzer.setup({
   on_attach = on_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+        ["rust-analyzer"] = {
+            assist = {
+                importGranularity = "module",
+                importPrefix = "self",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true,
+                allFeatures = true
+            },
+            procMacro = {
+                enable = true
+            }
+        }
+    }
 })
 
 -- go
@@ -79,6 +94,12 @@ require('lspconfig').tsserver.setup({
 
 -- ansible
 require('lspconfig').ansiblels.setup({
+  on_attach = on_attach,
+  capabilities = capabilities
+})
+
+--
+require('lspconfig').ccls.setup({
   on_attach = on_attach,
   capabilities = capabilities
 })

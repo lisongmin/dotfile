@@ -50,6 +50,11 @@ return require('packer').startup(function()
   use 'tpope/vim-eunuch' -- wrappers UNIX commands
   use 'tpope/vim-surround' -- surround characters shortcuts
 
+  -- Debug
+  use 'mfussenegger/nvim-dap'
+  -- debug for golang
+  use 'leoluz/nvim-dap-go'
+
   -- lsp plugins
   use 'neovim/nvim-lspconfig'
   use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' }
@@ -58,6 +63,7 @@ return require('packer').startup(function()
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'saadparwaiz1/cmp_luasnip'
+  use {'hrsh7th/cmp-path', after = 'nvim-cmp'}
 
   -- snippets
   use 'L3MON4D3/LuaSnip'

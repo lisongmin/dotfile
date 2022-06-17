@@ -7,6 +7,7 @@ source ${_dir}/.link_lib
 link {_,~/.}config/flake8
 link {_,~/.}config/pycodestyle
 link {_,~/.}pylintrc
+link {_,~/.}xprofile
 
 # vim relative
 link {_,~/.}ctags
@@ -43,7 +44,7 @@ link qtile ~/.config/qtile
 # xidlehook
 link {_,~/.}config/systemd/user/xidlehook.service
 # dingtalk
-link {_,~/.}config/systemd/user/dingtalk.service
+# link {_,~/.}config/systemd/user/dingtalk.service
 
 # terminal
 link {_,~/.}config/alacritty

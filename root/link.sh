@@ -6,6 +6,3 @@ source ${_dir}/../.link_lib
 link {,/}etc/udev/rules.d/50-suspend-on-low-power.rules
 link {,/}usr/local/bin/notify-me.sh
 link {,/}usr/local/bin/notify-sound.sh
-
-link {,/}etc/pacman.d/mirrorlist
-link {,/}etc/pacman.d/archlinuxcn
