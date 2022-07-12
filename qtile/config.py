@@ -85,9 +85,9 @@ keys = [
         "loginctl lock-session")),
 
     # take a sreenshot
-    Key([], "Print", lazy.spawn('flameshot gui -p /tmp/ -d 1')),
+    Key([], "Print", lazy.spawn('flameshot gui -d 1')),
     # take a full screanshot and save to file
-    Key(['shift'], "Print", lazy.spawn('flameshot full -p /tmp')),
+    Key(['shift'], "Print", lazy.spawn('flameshot full')),
     # take a full screanshot to clipboard
     Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
 
@@ -97,7 +97,7 @@ keys = [
     Key([MOD, "mod1"], "w", lazy.spawn("firefox")),
     Key([MOD, "mod1"], "f", lazy.spawn(default_file_manager)),
     Key([MOD, "mod1"], "m", lazy.spawn("thunderbird")),
-    Key([MOD, "mod1"], "v", lazy.spawn("virt-viewer -c qemu:///system --hotkeys=release-cursor=ctrl+alt -f win10")),
+    Key([MOD, "mod1"], "v", lazy.spawn("virt-viewer -c qemu:///system --hotkeys=release-cursor=ctrl+alt -f win11")),
 
     Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
     Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
@@ -194,10 +194,8 @@ top = bar.Bar(widgets,
               )
 
 screens = [
-    Screen(
-        top=top
-    ),
-    Screen()
+    Screen(top=top),
+    Screen(top=top),
 ]
 
 # Drag floating layouts.
