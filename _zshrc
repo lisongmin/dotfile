@@ -108,11 +108,18 @@ alias ansible-vault="EDITOR='vault-vim' ansible-vault"
 if [ ! -e $HOME/.cargo/cross-registry/x86_64 ]; then
   mkdir -p $HOME/.cargo/cross-registry/x86_64
 fi
-alias rust-build='docker run --rm -it -v "$HOME/.cargo/cross-registry/x86_64":/root/.cargo/registry -v "$(pwd)":/home/rust/src messense/rust-musl-cross:x86_64-musl'
+alias rust-x86_64='podman run --rm -it -v "$HOME/.cargo/cross-registry/x86_64":/root/.cargo/registry -v "$(pwd)":/home/rust/src docker.io/messense/rust-musl-cross:x86_64-musl'
+if [ ! -e $HOME/.cargo/cross-registry/mips ]; then
+  mkdir -p $HOME/.cargo/cross-registry/mips
+fi
+alias rust-mips='podman run --rm -it -v "$HOME/.cargo/cross-registry/mips":/root/.cargo/registry -v "$(pwd)":/home/rust/src docker.io/messense/rust-musl-cross:mips-musl'
+
 alias butane='podman run --rm --interactive       \
               --security-opt label=disable        \
               --volume ${PWD}:/pwd --workdir /pwd \
               quay.io/coreos/butane:release'
+
+alias egrep='grep -E'
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
