@@ -19,16 +19,32 @@ local on_attach = function(_, bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
+vim.opt.completeopt = "menu,menuone,noinsert"
+
 -- completion
-require'cmp'.setup {
-  sources = {
-    { name = 'nvim_lsp' }
-  }
+local cmp = require('cmp')
+cmp.setup {
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lua' },
+    { name = 'vsnip' },
+    { name = 'path' },
+  }, {
+    { name = 'buffer', keyword_length = 3 }
+  }),
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({select = true}),
+  }),
 }
 
 -- lsp capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- flutter/dart language server
 require("flutter-tools").setup{
