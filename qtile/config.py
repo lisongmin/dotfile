@@ -120,7 +120,7 @@ groups = [Group('a', label='\ue7c5'),
           Group('f', label='\ue7b8', matches=[Match(wm_class=['dia', 'metasync', 'code-oss', 'jetbrains-idea-ce'])]),
           Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('h', label='\uf6ed', matches=[Match(wm_class=['Thunderbird', 'dingtalk'])]),
+          Group('h', label='\uf6ed', matches=[Match(wm_class=['Mail', 'thunderbird', 'dingtalk'])]),
           Group('u', label='\ue287', matches=[Match(wm_class=['Logseq'])]),
           Group('i', label='\ufab2', matches=[Match(wm_class=['virt-viewer'])]),
           ]
@@ -195,7 +195,7 @@ top = bar.Bar(widgets,
 
 screens = [
     Screen(top=top),
-    Screen(top=top),
+    Screen(),
 ]
 
 # Drag floating layouts.
