@@ -21,6 +21,7 @@ fi
 
 systemctl --user start dunst
 systemctl --user start xidlehook
+systemctl --user start autorandr
 
 # disable beep
 xset -b
