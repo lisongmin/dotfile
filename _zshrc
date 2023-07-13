@@ -136,15 +136,34 @@ export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 export AUTHOR_EMAIL='lisongmin@protonmail.com'
 
-# { Config flutter env
+# { Config flutter with rust environment
 export ANDROID_HOME="$HOME/Android/Sdk"
 mkdir -p ~/.gradle
 if [ ! -e ~/.gradle/gradle.properties ] || ! grep -q "ANDROID_NDK" ~/.gradle/gradle.properties ; then
   echo "ANDROID_NDK=$ANDROID_HOME/ndk" >> ~/.gradle/gradle.properties
 fi
-if ! which cargo-ndk &>/dev/null ; then
+
+if ! pacman -Q cargo-ndk &>/dev/null ; then
   echo "Install cargo-ndk ..."
   sudo pacman -S --noconfirm cargo-ndk
+fi
+
+if ! pacman -Q rustup &>/dev/null ; then
+  sudo pacman -S --noconfirm rustup
+
+  rustup toolchain install stable &>/dev/null
+
+  # android and ios support
+  rustup target add aarch64-linux-android \
+    x86_64-linux-android \
+    aarch64-apple-ios \
+    x86_64-apple-ios \
+    aarch64-apple-ios-sim &>/dev/null
+fi
+
+# windows and linux desktop support
+if ! pacman -Q corrosion &>/dev/null ; then
+  sudo pacman -S --noconfirm corrosion
 fi
 # }
 
