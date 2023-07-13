@@ -115,14 +115,14 @@ keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 keys.append(Key([MOD], "r", lazy.spawncmd()))
 
 groups = [Group('a', label='\ue7c5'),
-          Group('s', label='\uf738', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
+          Group('s', label='\U000f0239', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
           Group('d', label='\ue795', matches=[Match(wm_class=['Alacritty'])]),
           Group('f', label='\ue7b8', matches=[Match(wm_class=['dia', 'metasync', 'code-oss', 'jetbrains-idea-ce'])]),
           Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
                 layouts=[layout.stack.Stack(margin=1)]),
-          Group('h', label='\uf6ed', matches=[Match(wm_class=['Mail', 'thunderbird', 'dingtalk'])]),
+          Group('h', label='\U000f01ee', matches=[Match(wm_class=['Mail', 'thunderbird', 'dingtalk'])]),
           Group('u', label='\ue287', matches=[Match(wm_class=['Logseq'])]),
-          Group('i', label='\ufab2', matches=[Match(wm_class=['virt-viewer'])]),
+          Group('i', label='\U000f05b3', matches=[Match(wm_class=['virt-viewer'])]),
           ]
 
 for i in groups:
@@ -160,7 +160,7 @@ if qtile.core.name == 'x11':
 eth = first_of_wire_net()
 if eth:
     widgets.extend([
-        TextBox('\uf6ff'),
+        TextBox('\U000f0200'),
         Net(interface=eth, format='{up}\n{down}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
         TextBox('\u21f5'),
         ])
@@ -184,7 +184,7 @@ if os.path.exists('/sys/class/power_supply/BAT0/status'):
     widgets.append(BatteryNerdIcon(format="{char} {percent:2.0%}"))
 
 widgets.extend([
-    TextBox(text='\uf5ef'),
+    TextBox(text='\U000f00f0'),
     Clock(format='%a %H:%M %m-%d', fontsize=TOOLBAR_TEXT_FONT_SIZE),
     ])
 

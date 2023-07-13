@@ -10,8 +10,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 autoload -U compinit && compinit
-source <(antibody init)
-antibody bundle < ~/dotfile/zsh_plugins.txt
+
+# yay -S zsh-antidote to install antidote on archlinux
+source '/usr/share/zsh-antidote/antidote.zsh'
+antidote load ~/dotfile/zsh_plugins.txt
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -57,6 +59,7 @@ HIST_STAMPS="yyyy-mm-dd"
 export NPM_PACKAGES="$HOME/.local"
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH:/usr/lib/emscripten
+export PATH=$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH:/opt/flutter/bin
 export MANPATH="$HOME/.local/share/man:/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -99,7 +102,6 @@ alias ls="ls --color=auto"
 which go &> /dev/null
 if [ $? -eq 0 ]; then
     go env -w GO111MODULE=on
-    # go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/
 fi
 
 alias ap="ansible-playbook -i ~/work/hosts/home --ask-vault-pass"
@@ -134,7 +136,20 @@ export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 export AUTHOR_EMAIL='lisongmin@protonmail.com'
 
+# { Config flutter env
+export ANDROID_HOME="$HOME/Android/Sdk"
+mkdir -p ~/.gradle
+if [ ! -e ~/.gradle/gradle.properties ] || ! grep -q "ANDROID_NDK" ~/.gradle/gradle.properties ; then
+  echo "ANDROID_NDK=$ANDROID_HOME/ndk" >> ~/.gradle/gradle.properties
+fi
+if ! which cargo-ndk &>/dev/null ; then
+  echo "Install cargo-ndk ..."
+  sudo pacman -S --noconfirm cargo-ndk
+fi
+# }
+
 which direnv &> /dev/null
 if [ $? -eq 0 ]; then
   eval "$(direnv hook zsh)" &>/dev/null
 fi
+

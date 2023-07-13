@@ -1,6 +1,3 @@
-require('plugins')
-require('settings')
-require('lsp')
-require('formatter')
-require('search')
-require('dap-config')
+-- bootstrap lazy.nvim, LazyVim and your plugins
+
+require("config.lazy")

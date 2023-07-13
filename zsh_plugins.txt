@@ -1,5 +1,5 @@
 
-# install antibody via `yay -S antibody-bin` first.
+# install antidote via `yay -S zsh-antidote` first.
 
 chrissicool/zsh-256color
 

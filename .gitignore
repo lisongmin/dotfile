@@ -4,4 +4,10 @@ __pycache__/
 *.swp
 tags
 
+node_modules/
+package.json
+package-lock.json
+
 wallpaper/family.png
+
+zsh_plugins.zsh
