@@ -76,3 +76,9 @@ if [ $? -eq 0 ]; then
 		element-desktop &
 	fi
 fi
+
+if which nextcloud; then
+	if ! pgrep -U "$USER" nextcloud; then
+		nextcloud &
+	fi
+fi
