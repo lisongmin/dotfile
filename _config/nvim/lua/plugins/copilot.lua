@@ -39,7 +39,11 @@ end
 local function should_attach_copilot()
   local current_file = vim.fn.expand("%:p")
   if current_file == "" then
-    return false, "Disallow copilot for no current file"
+    return false, nil
+  end
+  -- Ignore directory
+  if vim.fn.isdirectory(current_file) == 1 then
+    return false, nil
   end
 
   local current_dir = vim.fn.fnamemodify(current_file, ":h")
@@ -54,8 +58,9 @@ local function should_attach_copilot()
     if is_match_pattern(current_file, copilotignore) then
       return false, "Disallow copilot by " .. copilotignore
     end
+    local old_current_dir = current_dir
     current_dir = vim.fn.fnamemodify(current_dir, ":h")
-  until current_dir == "" or current_dir == "/"
+  until current_dir == "" or old_current_dir == current_dir
 
   return true, "Allow copilot by default"
 end
@@ -79,6 +84,7 @@ return {
             "css",
             "typescript",
             "javascript",
+            "jinja2",
           }
 
           local buf = vim.api.nvim_get_current_buf()
@@ -92,7 +98,9 @@ return {
                 reason = reason .. "\nDisallow copilot by the filetype " .. vim.bo.filetype
               end
             end
-            log_it(reason)
+            if reason ~= nil then
+              log_it(reason)
+            end
             vim.b[buf].should_attach_copilot_flag = allow_attach
           end
 
