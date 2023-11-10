@@ -71,20 +71,8 @@ return {
     opts = {
       filetypes = {
         ["*"] = function()
-          local enabled_filetypes = {
-            "markdown",
-            "help",
-            "python",
-            "go",
-            "rust",
-            "lua",
-            "yaml",
-            "ansible.yaml",
-            "html",
-            "css",
-            "typescript",
-            "javascript",
-            "jinja2",
+          local disabled_filetypes = {
+            "netrw",
           }
 
           local buf = vim.api.nvim_get_current_buf()
@@ -93,7 +81,7 @@ return {
             -- and filetype matched in list enabled_filetypes
             local allow_attach, reason = should_attach_copilot()
             if allow_attach then
-              allow_attach = vim.tbl_contains(enabled_filetypes, vim.bo.filetype)
+              allow_attach = not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
               if not allow_attach then
                 reason = reason .. "\nDisallow copilot by the filetype " .. vim.bo.filetype
               end
