@@ -7,7 +7,7 @@ import subprocess
 from libqtile.widget.battery import Battery, BatteryState, BatteryStatus
 
 
-def first_of_excutable(candidates: list, abs_path=False) -> str:
+def first_of_excutable(candidates: list, abs_path=False) -> str | None:
     for candidate in candidates:
         path = shutil.which(candidate)
         if path:
@@ -17,9 +17,9 @@ def first_of_excutable(candidates: list, abs_path=False) -> str:
     return None
 
 
-def first_of_sensor_tag(candidates: list) -> str:
+def first_of_sensor_tag(candidates: list) -> str | None:
     p = subprocess.Popen(['sensors'], stdout=subprocess.PIPE)
-    out, dummy_err = p.communicate()
+    out, _ = p.communicate()
     out = out.decode()
     for tag in candidates:
         if tag in out:
@@ -28,7 +28,7 @@ def first_of_sensor_tag(candidates: list) -> str:
     return None
 
 
-def first_of_net(candidates: list) -> str:
+def first_of_net(candidates: list) -> str | None:
     nets = os.listdir('/sys/class/net')
 
     for candidate in candidates:
@@ -39,11 +39,11 @@ def first_of_net(candidates: list) -> str:
     return None
 
 
-def first_of_wire_net() -> str:
+def first_of_wire_net() -> str | None:
     return first_of_net(['br', 'bridge', 'bond', 'en', 'eth'])
 
 
-def first_of_wireless_net() -> str:
+def first_of_wireless_net() -> str | None:
     return first_of_net(['wl'])
 
 
@@ -92,7 +92,9 @@ class BatteryNerdIcon(Battery):
             char = self.FULL_ICON
 
         if self.layout is not None:
-            if status.state == BatteryState.DISCHARGING and status.percent < self.low_percentage:
+            if status.state == BatteryState.DISCHARGING \
+                    and self.low_percentage is not None \
+                    and status.percent < self.low_percentage:
                 self.layout.colour = self.low_foreground
                 char = self.LOW_POWER_ALERT_ICON
             else:

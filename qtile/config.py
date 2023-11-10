@@ -49,7 +49,8 @@ TOOLBAR_DEFAULT_FONT_SIZE = 18
 TOOLBAR_TEXT_FONT_SIZE = 14
 TOOLBAR_NET_FONT_SIZE = 10
 
-default_terminal = first_of_excutable(["xfce4-terminal", "alacritty", "gnome-terminal", "konsole"])
+default_terminal = first_of_excutable(["xfce4-terminal", "alacritty", "gnome-terminal",
+                                       "konsole"])
 default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
 default_fcitx = first_of_excutable(['fcitx5', 'fcitx'])
 sensor_tag = first_of_sensor_tag(['Tdie', 'Core 0'])
@@ -97,7 +98,6 @@ keys = [
     Key([MOD, "mod1"], "w", lazy.spawn("firefox")),
     Key([MOD, "mod1"], "f", lazy.spawn(default_file_manager)),
     Key([MOD, "mod1"], "m", lazy.spawn("thunderbird")),
-    Key([MOD, "mod1"], "v", lazy.spawn("virt-viewer -c qemu:///system --hotkeys=release-cursor=ctrl+alt -f win11")),
 
     Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
     Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
@@ -115,14 +115,20 @@ keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 keys.append(Key([MOD], "r", lazy.spawncmd()))
 
 groups = [Group('a', label='\ue7c5'),
-          Group('s', label='\U000f0239', matches=[Match(wm_class=['Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
-          Group('d', label='\ue795', matches=[Match(wm_class=['Alacritty'])]),
-          Group('f', label='\ue7b8', matches=[Match(wm_class=['dia', 'metasync', 'code-oss', 'jetbrains-idea-ce'])]),
-          Group('g', label='\ue217', matches=[Match(wm_class=['TelegramDesktop', 'Element'])],
-                layouts=[layout.stack.Stack(margin=1)]),
-          Group('h', label='\U000f01ee', matches=[Match(wm_class=['Mail', 'thunderbird', 'dingtalk'])]),
-          Group('u', label='\ue287', matches=[Match(wm_class=['Logseq'])]),
-          Group('i', label='\U000f05b3', matches=[Match(wm_class=['virt-viewer'])]),
+          Group('s', label='\U000f0239', matches=[Match(wm_class=[
+              'Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
+          Group('d', label='\ue795', matches=[Match(wm_class=[
+              'Alacritty'])]),
+          Group('f', label='\ue7b8', matches=[Match(wm_class=[
+              'dia', 'metasync', 'code-oss', 'jetbrains-idea-ce'])]),
+          Group('g', label='\ue217', matches=[Match(wm_class=[
+              'TelegramDesktop', 'Element'])], layouts=[layout.stack.Stack(margin=1)]),
+          Group('h', label='\U000f01ee', matches=[Match(wm_class=[
+              'Mail', 'thunderbird', 'dingtalk'])]),
+          Group('u', label='\ue287', matches=[Match(wm_class=[
+              'Logseq'])]),
+          Group('i', label='\U000f05b3', matches=[Match(wm_class=[
+              'virt-viewer'])]),
           ]
 
 for i in groups:
@@ -161,7 +167,7 @@ eth = first_of_wire_net()
 if eth:
     widgets.extend([
         TextBox('\U000f0200'),
-        Net(interface=eth, format='{up}\n{down}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
+        Net(interface=eth, format='{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
         TextBox('\u21f5'),
         ])
 
@@ -169,7 +175,7 @@ wlan = first_of_wireless_net()
 if wlan:
     widgets.extend([
         TextBox('\uf1eb'),
-        Net(interface=wlan, format='{up}\n{down}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
+        Net(interface=wlan, format='{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
         TextBox('\u21f5'),
         ])
 
