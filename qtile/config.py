@@ -41,19 +41,25 @@ from libqtile.widget.systray import Systray
 from libqtile.widget.graph import CPUGraph
 from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
-from local_qtile_utils import (first_of_excutable, first_of_sensor_tag, BatteryNerdIcon,
-                               first_of_wire_net, first_of_wireless_net)
+from local_qtile_utils import (
+    first_of_excutable,
+    first_of_sensor_tag,
+    BatteryNerdIcon,
+    first_of_wire_net,
+    first_of_wireless_net,
+)
 
 TOOLBAR_WIDTH = 32
 TOOLBAR_DEFAULT_FONT_SIZE = 18
 TOOLBAR_TEXT_FONT_SIZE = 14
 TOOLBAR_NET_FONT_SIZE = 10
 
-default_terminal = first_of_excutable(["xfce4-terminal", "alacritty", "gnome-terminal",
-                                       "konsole"])
+default_terminal = first_of_excutable(
+    ["xfce4-terminal", "alacritty", "gnome-terminal", "konsole"]
+)
 default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
-default_fcitx = first_of_excutable(['fcitx5', 'fcitx'])
-sensor_tag = first_of_sensor_tag(['Tdie', 'Core 0'])
+default_fcitx = first_of_excutable(["fcitx5", "fcitx"])
+sensor_tag = first_of_sensor_tag(["Tdie", "Core 0"])
 
 MOD = "mod4"
 
@@ -68,84 +74,77 @@ keys = [
     Key([MOD, "shift"], "k", lazy.layout.shuffle_up()),
     Key([MOD], "space", lazy.next_layout()),
     Key([MOD], "t", lazy.window.toggle_floating()),
-
     # 'win + w' switch to next screen
     Key([MOD], "w", lazy.next_screen()),
-
     Key([MOD, "shift"], "c", lazy.window.kill()),
-
     # 'win + q' reload qtile config
     Key([MOD], "q", lazy.restart()),
     # 'win + shift + q' logout
     Key([MOD, "shift"], "q", lazy.shutdown()),
-    # 'win + shift + s' to suspend os
-    Key([MOD, "shift"], "s", lazy.spawn(
-        'systemctl suspend -i')),
     # 'ctrl + alt + l' to  lock screan
-    Key(["control", "mod1"], "l", lazy.spawn(
-        "loginctl lock-session")),
-
+    Key(["control", "mod1"], "l", lazy.spawn("loginctl lock-session")),
     # take a sreenshot
-    Key([], "Print", lazy.spawn('flameshot gui -d 1')),
+    Key([], "Print", lazy.spawn("flameshot gui -d 1")),
     # take a full screanshot and save to file
-    Key(['shift'], "Print", lazy.spawn('flameshot full')),
+    Key(["shift"], "Print", lazy.spawn("flameshot full")),
     # take a full screanshot to clipboard
-    Key(['control', 'shift'], "Print", lazy.spawn('flameshot full -c')),
-
+    Key(["control", "shift"], "Print", lazy.spawn("flameshot full -c")),
     Key([MOD], "Return", lazy.spawn(default_terminal)),
-
     Key([MOD, "mod1"], "r", lazy.spawn(f"{default_fcitx} -r -d")),
     Key([MOD, "mod1"], "w", lazy.spawn("firefox")),
     Key([MOD, "mod1"], "f", lazy.spawn(default_file_manager)),
     Key([MOD, "mod1"], "m", lazy.spawn("thunderbird")),
-
-    Key([], 'XF86AudioLowerVolume', lazy.spawn('pactl set-sink-volume 0 -4%')),
-    Key([], 'XF86AudioMute', lazy.spawn('pactl set-sink-mute 0 toggle')),
-    Key([], 'XF86AudioRaiseVolume', lazy.spawn('pactl set-sink-volume 0 +4%')),
-    Key([], 'XF86AudioPlay', lazy.spawn('xmms2 toggle')),
-    Key([], 'XF86AudioStop', lazy.spawn('xmms2 stop')),
-    Key([], 'XF86AudioPrev', lazy.spawn('xmms2 prev')),
-    Key([], 'XF86AudioNext', lazy.spawn('xmms2 next')),
-    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl s 10%-')),
-    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl s 10%+')),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -4%")),
+    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute 0 toggle")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +4%")),
+    Key([], "XF86AudioPlay", lazy.spawn("xmms2 toggle")),
+    Key([], "XF86AudioStop", lazy.spawn("xmms2 stop")),
+    Key([], "XF86AudioPrev", lazy.spawn("xmms2 prev")),
+    Key([], "XF86AudioNext", lazy.spawn("xmms2 next")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl s 10%-")),
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl s 10%+")),
 ]
 
 # 'alt + F2' or 'win + r' to run command
 keys.append(Key(["mod1"], "F2", lazy.spawncmd()))
 keys.append(Key([MOD], "r", lazy.spawncmd()))
 
-groups = [Group('a', label='\ue7c5'),
-          Group('s', label='\U000f0239', matches=[Match(wm_class=[
-              'Firefox', 'firefox', 'Tor Browser', 'Chromium'])]),
-          Group('d', label='\ue795', matches=[Match(wm_class=[
-              'Alacritty'])]),
-          Group('f', label='\ue7b8', matches=[Match(wm_class=[
-              'dia', 'metasync', 'code-oss', 'jetbrains-idea-ce'])]),
-          Group('g', label='\ue217', matches=[Match(wm_class=[
-              'TelegramDesktop', 'Element'])], layouts=[layout.stack.Stack(margin=1)]),
-          Group('h', label='\U000f01ee', matches=[Match(wm_class=[
-              'Mail', 'thunderbird', 'dingtalk'])]),
-          Group('u', label='\ue287', matches=[Match(wm_class=[
-              'Logseq'])]),
-          Group('i', label='\U000f05b3', matches=[Match(wm_class=[
-              'virt-viewer'])]),
-          ]
+groups = [
+    Group("a", label="\ue7c5"),
+    Group(
+        "s",
+        label="\U000f0239",
+        matches=[Match(wm_class=["Firefox", "firefox", "Tor Browser", "Chromium"])],
+    ),
+    Group("d", label="\ue795", matches=[Match(wm_class=["Alacritty"])]),
+    Group(
+        "f",
+        label="\ue7b8",
+        matches=[Match(wm_class=["dia", "metasync", "code-oss", "jetbrains-idea-ce"])],
+    ),
+    Group(
+        "g",
+        label="\ue217",
+        matches=[Match(wm_class=["TelegramDesktop", "Element"])],
+        layouts=[layout.stack.Stack(margin=1)],
+    ),
+    Group(
+        "h",
+        label="\U000f01ee",
+        matches=[Match(wm_class=["Mail", "thunderbird", "dingtalk"])],
+    ),
+    Group("u", label="\ue287", matches=[Match(wm_class=["Logseq"])]),
+    Group("i", label="\U000f05b3", matches=[Match(wm_class=["virt-viewer"])]),
+]
 
 for i in groups:
     # mod1 + letter of group = switch to group
-    keys.append(
-        Key([MOD], i.name, lazy.group[i.name].toscreen())
-    )
+    keys.append(Key([MOD], i.name, lazy.group[i.name].toscreen()))
 
     # mod1 + shift + letter of group = switch to & move focused window to group
-    keys.append(
-        Key([MOD, "shift"], i.name, lazy.window.togroup(i.name))
-    )
+    keys.append(Key([MOD, "shift"], i.name, lazy.window.togroup(i.name)))
 
-layouts = [
-    layout.max.Max(),
-    layout.xmonad.MonadTall()
-]
+layouts = [layout.max.Max(), layout.xmonad.MonadTall()]
 
 widget_defaults = dict(
     fontsize=TOOLBAR_DEFAULT_FONT_SIZE,
@@ -153,51 +152,69 @@ widget_defaults = dict(
 )
 
 
-widgets = [TextBox('\uf303'),
-           GroupBox(),
-           Prompt(prompt='\uf120 '),
-           TextBox(' \uf02c '),
-           WindowName(fontsize=TOOLBAR_TEXT_FONT_SIZE),
-           ]
+widgets = [
+    TextBox("\uf303"),
+    GroupBox(),
+    Prompt(prompt="\uf120 "),
+    TextBox(" \uf02c "),
+    WindowName(fontsize=TOOLBAR_TEXT_FONT_SIZE),
+]
 
-if qtile.core.name == 'x11':
+if qtile.core.name == "x11":
     widgets.append(Systray())
 
 eth = first_of_wire_net()
 if eth:
-    widgets.extend([
-        TextBox('\U000f0200'),
-        Net(interface=eth, format='{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
-        TextBox('\u21f5'),
-        ])
+    widgets.extend(
+        [
+            TextBox("\U000f0200"),
+            Net(
+                interface=eth,
+                format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
+                fontsize=TOOLBAR_NET_FONT_SIZE,
+                update_interval=2,
+            ),
+            TextBox("\u21f5"),
+        ]
+    )
 
 wlan = first_of_wireless_net()
 if wlan:
-    widgets.extend([
-        TextBox('\uf1eb'),
-        Net(interface=wlan, format='{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}', fontsize=TOOLBAR_NET_FONT_SIZE, update_interval=2),
-        TextBox('\u21f5'),
-        ])
+    widgets.extend(
+        [
+            TextBox("\uf1eb"),
+            Net(
+                interface=wlan,
+                format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
+                fontsize=TOOLBAR_NET_FONT_SIZE,
+                update_interval=2,
+            ),
+            TextBox("\u21f5"),
+        ]
+    )
 
-widgets.extend([
-    CPUGraph(frequency=2),
-    ])
+widgets.extend(
+    [
+        CPUGraph(frequency=2),
+    ]
+)
 
 if sensor_tag:
-    widgets.append(ThermalSensor(tag_sensor=sensor_tag, fontsize=TOOLBAR_TEXT_FONT_SIZE))
+    widgets.append(
+        ThermalSensor(tag_sensor=sensor_tag, fontsize=TOOLBAR_TEXT_FONT_SIZE)
+    )
 
-if os.path.exists('/sys/class/power_supply/BAT0/status'):
+if os.path.exists("/sys/class/power_supply/BAT0/status"):
     widgets.append(BatteryNerdIcon(format="{char} {percent:2.0%}"))
 
-widgets.extend([
-    TextBox(text='\U000f00f0'),
-    Clock(format='%a %H:%M %m-%d', fontsize=TOOLBAR_TEXT_FONT_SIZE),
-    ])
+widgets.extend(
+    [
+        TextBox(text="\U000f00f0"),
+        Clock(format="%a %H:%M %m-%d", fontsize=TOOLBAR_TEXT_FONT_SIZE),
+    ]
+)
 
-top = bar.Bar(widgets,
-              TOOLBAR_WIDTH,
-              opacity=0.7
-              )
+top = bar.Bar(widgets, TOOLBAR_WIDTH, opacity=0.7)
 
 screens = [
     Screen(top=top),
@@ -206,11 +223,16 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([MOD], "Button1", lazy.window.set_position_floating(),
-         start=lazy.window.get_position()),
-    Drag([MOD], "Button3", lazy.window.set_size_floating(),
-         start=lazy.window.get_size()),
-    Click([MOD], "Button2", lazy.window.bring_to_front())
+    Drag(
+        [MOD],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [MOD], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
+    Click([MOD], "Button2", lazy.window.bring_to_front()),
 ]
 
 # pylint: disable=invalid-name
@@ -223,8 +245,10 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
-    [Match(wm_class='flameshot'),
-     ])
+    [
+        Match(wm_class="flameshot"),
+    ]
+)
 
 auto_fullscreen = True
 
@@ -235,8 +259,8 @@ wmname = "Qtile"
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
+    home = os.path.expanduser("~")
+    subprocess.call([home + "/.config/qtile/autostart.sh"])
 
 
 # @hook.subscribe.screen_change
