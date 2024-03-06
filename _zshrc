@@ -67,7 +67,7 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='vim'
+export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -167,8 +167,19 @@ if ! pacman -Q corrosion &>/dev/null ; then
 fi
 # }
 
+# Provide z command
+eval "$(zoxide init zsh)" &>/dev/null
+
 which direnv &> /dev/null
 if [ $? -eq 0 ]; then
   eval "$(direnv hook zsh)" &>/dev/null
 fi
 
+attach_poetry_shell() {
+  if [ -e "$PWD/poetry.lock" ]; then
+    poetry shell -q
+    return 0 
+  fi
+}
+
+add-zsh-hook chpwd attach_poetry_shell
