@@ -25,13 +25,18 @@
 # SOFTWARE.
 
 import os
+import re
 import subprocess
 import logging
 from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
-from libqtile import layout, bar
+from libqtile import bar
 from libqtile import hook
+from libqtile.layout.stack import Stack
+from libqtile.layout.max import Max
+from libqtile.layout.xmonad import MonadTall
+from libqtile.layout.floating import Floating
 from libqtile.widget.textbox import TextBox
 from libqtile.widget.net import Net
 from libqtile.widget.groupbox import GroupBox
@@ -114,27 +119,27 @@ groups = [
     Group(
         "s",
         label="\U000f0239",
-        matches=[Match(wm_class=["Firefox", "firefox", "Tor Browser", "Chromium"])],
+        matches=[Match(wm_class=re.compile(r"^(firefox|Chromium)$"))],
     ),
-    Group("d", label="\ue795", matches=[Match(wm_class=["Alacritty"])]),
+    Group("d", label="\ue795", matches=[Match(wm_class="Alacritty")]),
     Group(
         "f",
         label="\ue7b8",
-        matches=[Match(wm_class=["dia", "metasync", "code-oss", "jetbrains-idea-ce"])],
+        matches=[Match(wm_class=re.compile(r"^(dia|metasync)$"))],
     ),
     Group(
         "g",
         label="\ue217",
-        matches=[Match(wm_class=["TelegramDesktop", "Element"])],
-        layouts=[layout.stack.Stack(margin=1)],
+        matches=[Match(wm_class=re.compile(r"^(TelegramDesktop|Element)"))],
+        layouts=[Stack(margin=1)],
     ),
     Group(
         "h",
         label="\U000f01ee",
-        matches=[Match(wm_class=["Mail", "thunderbird", "dingtalk"])],
+        matches=[Match(wm_class=re.compile(r"^(Mail|thunderbird)$"))],
     ),
-    Group("u", label="\ue287", matches=[Match(wm_class=["Logseq"])]),
-    Group("i", label="\U000f05b3", matches=[Match(wm_class=["virt-viewer"])]),
+    Group("u", label="\ue287", matches=[Match(wm_class="Logseq")]),
+    Group("i", label="\U000f05b3", matches=[Match(wm_class="virt-viewer")]),
 ]
 
 for i in groups:
@@ -144,7 +149,7 @@ for i in groups:
     # mod1 + shift + letter of group = switch to & move focused window to group
     keys.append(Key([MOD, "shift"], i.name, lazy.window.togroup(i.name)))
 
-layouts = [layout.max.Max(), layout.xmonad.MonadTall()]
+layouts = [Max(), MonadTall()]
 
 widget_defaults = dict(
     fontsize=TOOLBAR_DEFAULT_FONT_SIZE,
@@ -244,7 +249,7 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(
+floating_layout = Floating(
     [
         Match(wm_class="flameshot"),
     ]
