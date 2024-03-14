@@ -65,35 +65,37 @@ local function should_attach_copilot()
   return true, "Allow copilot by default"
 end
 
+local function enabled_filter()
+  local disabled_filetypes = {
+    "netrw",
+  }
+  local buf = vim.api.nvim_get_current_buf()
+  if vim.b[buf].should_attach_copilot_flag == nil then
+    -- Only attach to copilot if the current file is not ignored
+    -- and filetype matched in list enabled_filetypes
+    local allow_attach, reason = should_attach_copilot()
+    if allow_attach then
+      allow_attach = not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
+      if not allow_attach then
+        reason = reason .. "\nDisallow copilot by the filetype " .. vim.bo.filetype
+      end
+    end
+    if reason ~= nil then
+      log_it(reason)
+    end
+    vim.b[buf].should_attach_copilot_flag = allow_attach
+  end
+
+  return vim.b[buf].should_attach_copilot_flag
+end
+
 return {
   {
     "zbirenbaum/copilot.lua",
     opts = {
       filetypes = {
-        ["*"] = function()
-          local disabled_filetypes = {
-            "netrw",
-          }
-
-          local buf = vim.api.nvim_get_current_buf()
-          if vim.b[buf].should_attach_copilot_flag == nil then
-            -- Only attach to copilot if the current file is not ignored
-            -- and filetype matched in list enabled_filetypes
-            local allow_attach, reason = should_attach_copilot()
-            if allow_attach then
-              allow_attach = not vim.tbl_contains(disabled_filetypes, vim.bo.filetype)
-              if not allow_attach then
-                reason = reason .. "\nDisallow copilot by the filetype " .. vim.bo.filetype
-              end
-            end
-            if reason ~= nil then
-              log_it(reason)
-            end
-            vim.b[buf].should_attach_copilot_flag = allow_attach
-          end
-
-          return vim.b[buf].should_attach_copilot_flag
-        end,
+        ["*"] = enabled_filter,
+        markdown = enabled_filter,
       },
     },
   },
