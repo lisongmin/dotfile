@@ -5,6 +5,9 @@ return {
     "nvim-lua/plenary.nvim",
   },
   event = "VeryLazy",
+  config = function(_, opts)
+    require("yazi").setup(opts)
+  end,
   keys = {
     {
       "-",
