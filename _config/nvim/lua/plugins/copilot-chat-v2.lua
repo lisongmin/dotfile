@@ -91,11 +91,11 @@ return {
 
       -- Override the git prompts message
       opts.prompts.Commit = {
-        prompt = "Write commit message for the change with commitizen convention and limit the line to 80 chars",
+        prompt = "Write commit message for the change with commitizen convention and limit each line to 80 characters",
         selection = select.gitdiff,
       }
       opts.prompts.CommitStaged = {
-        prompt = "Write commit message for the change with commitizen convention and break the line on 80 chars",
+        prompt = "Write commit message for the change with commitizen convention and limit each line to 80 characters",
         selection = function(source)
           return select.gitdiff(source, true)
         end,
