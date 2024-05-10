@@ -23,12 +23,16 @@ music playlist="all": (mount family_mount_point)
 self-install:
   #!/usr/bin/env bash
 
-  grep -q "alias [.]j=" ~/.zshrc
-  if [ $? -ne 0 ]; then
-    echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.zshrc
+  if [ -e ~/.zshrc ]; then
+    grep -q "alias [.]j=" ~/.zshrc
+    if [ $? -ne 0 ]; then
+      echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.zshrc
+    fi
   fi
 
-  grep -q "alias [.]j=" ~/.bashrc
-  if [ $? -ne 0 ]; then
-    echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.bashrc
+  if [ -e ~/.bashrc ]; then
+    grep -q "alias [.]j=" ~/.bashrc
+    if [ $? -ne 0 ]; then
+      echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.bashrc
+    fi
   fi
