@@ -183,3 +183,4 @@ attach_poetry_shell() {
 }
 
 add-zsh-hook chpwd attach_poetry_shell
+alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
