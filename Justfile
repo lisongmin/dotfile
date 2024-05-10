@@ -1,5 +1,5 @@
 
-family_mount_point := env_var("HOME") + "/Family"
+family_mount_point := env_var("HOME") / "Family"
 
 [no-cd, private]
 @mount_point mountpoint:
@@ -23,16 +23,17 @@ music playlist="all": (mount family_mount_point)
 self-install:
   #!/usr/bin/env bash
 
+  justfile="{{ invocation_directory() / "Justfile" }}"
   if [ -e ~/.zshrc ]; then
     grep -q "alias [.]j=" ~/.zshrc
     if [ $? -ne 0 ]; then
-      echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.zshrc
+      echo "alias .j='just --justfile ${justfile} --working-directory .'" >> ~/.zshrc
     fi
   fi
 
   if [ -e ~/.bashrc ]; then
     grep -q "alias [.]j=" ~/.bashrc
     if [ $? -ne 0 ]; then
-      echo "alias .j='just --justfile {{ invocation_directory() }}/Justfile --working-directory .'" >> ~/.bashrc
+      echo "alias .j='just --justfile ${justfile} --working-directory .'" >> ~/.bashrc
     fi
   fi
