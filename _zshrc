@@ -57,9 +57,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # User configuration
 
 export NPM_PACKAGES="$HOME/.local"
-export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH=$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH:/usr/lib/emscripten
-export PATH=$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH:/opt/flutter/bin
+export PATH=$PATH:/opt/flutter/bin
+export PATH=$PATH:$HOME/go/bin
 export MANPATH="$HOME/.local/share/man:/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
