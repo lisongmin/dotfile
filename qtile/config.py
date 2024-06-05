@@ -108,6 +108,8 @@ keys = [
     Key([], "XF86AudioNext", lazy.spawn("xmms2 next")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl s 10%-")),
     Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl s 10%+")),
+    # TODO toogle the display
+    # Key([], "XF86Display", lazy.spawn("autorandr -c")),
 ]
 
 # 'alt + F2' or 'win + r' to run command
