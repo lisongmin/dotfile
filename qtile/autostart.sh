@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -e ~/dotfile/wallpaper/family.jpeg ]; then
-	background_image=~/dotfile/wallpaper/family.jpeg
-else
-	background_image=~/dotfile/wallpaper/jzbq.jpeg
-fi
-
-/usr/bin/feh --bg-scale $background_image &
-
 ime=$(which fcitx5 || which fcitx)
 if [ -e "$ime" ]; then
 	$ime &

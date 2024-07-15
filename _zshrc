@@ -186,3 +186,4 @@ add-zsh-hook chpwd attach_poetry_shell
 alias just='just --unstable'
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias rgi='rg --no-ignore'
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"

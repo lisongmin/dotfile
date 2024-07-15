@@ -2,6 +2,7 @@
 
 import os
 import shutil
+import pathlib
 import logging
 import subprocess
 from libqtile.widget.battery import Battery, BatteryState, BatteryStatus
@@ -17,8 +18,16 @@ def first_of_excutable(candidates: list, abs_path=False) -> str | None:
     return None
 
 
+def first_exists(candidates: list) -> str | None:
+    for candidate in candidates:
+        if pathlib.Path(candidate).expanduser().exists():
+            return candidate
+
+    return None
+
+
 def first_of_sensor_tag(candidates: list) -> str | None:
-    p = subprocess.Popen(['sensors'], stdout=subprocess.PIPE)
+    p = subprocess.Popen(["sensors"], stdout=subprocess.PIPE)
     out, _ = p.communicate()
     out = out.decode()
     for tag in candidates:
@@ -29,7 +38,7 @@ def first_of_sensor_tag(candidates: list) -> str | None:
 
 
 def first_of_net(candidates: list) -> str | None:
-    nets = os.listdir('/sys/class/net')
+    nets = os.listdir("/sys/class/net")
 
     for candidate in candidates:
         for net in nets:
@@ -40,15 +49,14 @@ def first_of_net(candidates: list) -> str | None:
 
 
 def first_of_wire_net() -> str | None:
-    return first_of_net(['br', 'bridge', 'bond', 'en', 'eth'])
+    return first_of_net(["br", "bridge", "bond", "en", "eth"])
 
 
 def first_of_wireless_net() -> str | None:
-    return first_of_net(['wl'])
+    return first_of_net(["wl"])
 
 
 class BatteryNerdIcon(Battery):
-
     # symbol from ttf-nerd-fonts-symbols
     DISCHARGING_ICONS = {
         0: "\U000f008e",  # 0%
@@ -62,7 +70,7 @@ class BatteryNerdIcon(Battery):
         8: "\U000f0081",  # 80%
         9: "\U000f0082",  # 90%
         10: "\U000f0079",  # 100%
-        }
+    }
 
     CHARGING_ICONS = {
         0: "\U000f089f",  # 0%
@@ -76,7 +84,7 @@ class BatteryNerdIcon(Battery):
         8: "\U000f008a",  # 80%
         9: "\U000f008b",  # 90%
         10: "\U000f0085",  # 100%
-        }
+    }
 
     UNKNOWN_ICON = "\U000f0091"
     FULL_ICON = "\U000f0079"
@@ -92,9 +100,11 @@ class BatteryNerdIcon(Battery):
             char = self.FULL_ICON
 
         if self.layout is not None:
-            if status.state == BatteryState.DISCHARGING \
-                    and self.low_percentage is not None \
-                    and status.percent < self.low_percentage:
+            if (
+                status.state == BatteryState.DISCHARGING
+                and self.low_percentage is not None
+                and status.percent < self.low_percentage
+            ):
                 self.layout.colour = self.low_foreground
                 char = self.LOW_POWER_ALERT_ICON
             else:
@@ -104,9 +114,5 @@ class BatteryNerdIcon(Battery):
         minute = (status.time // 60) % 60
 
         return self.format.format(
-            char=char,
-            percent=status.percent,
-            watt=status.power,
-            hour=hour,
-            min=minute
+            char=char, percent=status.percent, watt=status.power, hour=hour, min=minute
         )

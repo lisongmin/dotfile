@@ -47,6 +47,7 @@ from libqtile.widget.graph import CPUGraph
 from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
 from local_qtile_utils import (
+    first_exists,
     first_of_excutable,
     first_of_sensor_tag,
     BatteryNerdIcon,
@@ -60,11 +61,16 @@ TOOLBAR_TEXT_FONT_SIZE = 14
 TOOLBAR_NET_FONT_SIZE = 10
 
 default_terminal = first_of_excutable(
-    ["xfce4-terminal", "alacritty", "gnome-terminal", "konsole"]
+    ["kitty", "alacritty"]
+    if qtile.core.name == "x11"
+    else ["foot", "kitty", "alacritty"]
 )
 default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
 default_fcitx = first_of_excutable(["fcitx5", "fcitx"])
 sensor_tag = first_of_sensor_tag(["Tdie", "Core 0"])
+wallpaper = first_exists(
+    ["~/dotfile/wallpaper/family.jpeg", "~/dotfile/wallpaper/jzbq.jpeg"]
+)
 
 MOD = "mod4"
 
@@ -224,7 +230,7 @@ widgets.extend(
 top = bar.Bar(widgets, TOOLBAR_WIDTH, opacity=0.7)
 
 screens = [
-    Screen(top=top),
+    Screen(top=top, wallpaper=wallpaper, wallpaper_mode="fill"),
     Screen(),
 ]
 
@@ -267,7 +273,8 @@ wmname = "Qtile"
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser("~")
-    subprocess.call([home + "/.config/qtile/autostart.sh"])
+    if qtile.core.name == "x11":
+        subprocess.call([home + "/.config/qtile/autostart.sh"])
 
 
 SINK_MATCH = re.compile(r"^\s*(?P<number>\d+)\s+(?P<name>\S+).*(?P<state>\S+)$")
