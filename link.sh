@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_dir=$(realpath `dirname $0`)
+_dir=$(realpath $(dirname $0))
 source ${_dir}/.link_lib
 
 # python linters
@@ -13,7 +13,7 @@ link {_,~/.}xprofile
 link {_,~/.}ctags
 
 # tmux
-if [ ! -d ~/.tmux/plugins/tpm ] ; then
+if [ ! -d ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 link {_,~/.}tmux.conf
@@ -41,8 +41,6 @@ link {_,~/.}config/fontconfig
 # windows manager
 link qtile ~/.config/qtile
 
-# xidlehook
-link {_,~/.}config/systemd/user/xidlehook.service
 # dingtalk
 # link {_,~/.}config/systemd/user/dingtalk.service
 

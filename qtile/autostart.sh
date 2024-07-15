@@ -19,7 +19,6 @@ if [ $? -ne 0 ]; then
 fi
 
 systemctl --user start dunst
-systemctl --user start xidlehook
 
 autorandr --change
 
