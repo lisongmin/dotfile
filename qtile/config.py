@@ -230,8 +230,8 @@ widgets.extend(
 top = bar.Bar(widgets, TOOLBAR_WIDTH, opacity=0.7)
 
 screens = [
-    Screen(top=top, wallpaper=wallpaper, wallpaper_mode="fill"),
-    Screen(),
+    Screen(top=top, wallpaper=wallpaper, wallpaper_mode="stretch"),
+    Screen(wallpaper=wallpaper, wallpaper_mode="stretch"),
 ]
 
 # Drag floating layouts.
