@@ -184,6 +184,10 @@ widgets.extend(
     ]
 )
 
+
+net_format = (
+    "{up:6.2f}{up_suffix:<2} \U0000f062\n{down:6.2f}{down_suffix:<2} \U0000f063"
+)
 eth = first_of_wire_net()
 if eth:
     widgets.extend(
@@ -194,7 +198,7 @@ if eth:
             ),
             Net(
                 interface=eth,
-                format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
+                format=net_format,
                 fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
                 update_interval=2,
             ),
@@ -211,7 +215,7 @@ if wlan:
             ),
             Net(
                 interface=wlan,
-                format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
+                format=net_format,
                 fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
                 update_interval=2,
             ),
