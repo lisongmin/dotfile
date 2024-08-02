@@ -5,7 +5,9 @@ import shutil
 import pathlib
 import logging
 import subprocess
+from datetime import datetime
 from libqtile.widget.battery import Battery, BatteryState, BatteryStatus
+from libqtile.widget.clock import Clock
 
 
 def first_of_excutable(candidates: list, abs_path=False) -> str | None:
@@ -116,3 +118,18 @@ class BatteryNerdIcon(Battery):
         return self.format.format(
             char=char, percent=status.percent, watt=status.power, hour=hour, min=minute
         )
+
+
+class WeekDay(Clock):
+    WEEKDAY = [
+        "\U000f0f0f",  # Mon
+        "\U000f0f10",  # Tue
+        "\U000f0f11",  # Wed
+        "\U000f0f12",  # Thu
+        "\U000f0f13",  # Fri
+        "\U000f0f14",  # Sat
+        "\U000f0f15",  # Sun
+    ]
+
+    def poll(self):
+        return self.WEEKDAY[(datetime.now() + self.DELTA).weekday()]

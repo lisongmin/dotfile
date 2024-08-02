@@ -50,15 +50,17 @@ from local_qtile_utils import (
     first_exists,
     first_of_excutable,
     first_of_sensor_tag,
-    BatteryNerdIcon,
     first_of_wire_net,
     first_of_wireless_net,
+    BatteryNerdIcon,
+    WeekDay,
 )
 
 TOOLBAR_WIDTH = 32
+TOOLBAR_ICON_SIZE = 22
 TOOLBAR_DEFAULT_FONT_SIZE = 18
 TOOLBAR_TEXT_FONT_SIZE = 14
-TOOLBAR_NET_FONT_SIZE = 10
+TOOLBAR_DOUBLE_LINE_FONT_SIZE = 11
 
 default_terminal = first_of_excutable(
     ["kitty", "alacritty"]
@@ -67,7 +69,7 @@ default_terminal = first_of_excutable(
 )
 default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
 default_fcitx = first_of_excutable(["fcitx5", "fcitx"])
-sensor_tag = first_of_sensor_tag(["Tdie", "Core 0"])
+sensor_tag = first_of_sensor_tag(["Tdie", "Core 0", "Tctl"])
 wallpaper = first_exists(
     ["~/dotfile/wallpaper/family.jpeg", "~/dotfile/wallpaper/jzbq.jpeg"]
 )
@@ -176,18 +178,26 @@ widgets = [
 if qtile.core.name == "x11":
     widgets.append(Systray())
 
+widgets.extend(
+    [
+        CPUGraph(frequency=2),
+    ]
+)
+
 eth = first_of_wire_net()
 if eth:
     widgets.extend(
         [
-            TextBox("\U000f0200"),
+            TextBox(
+                "\U000f0200",
+                fontsize=TOOLBAR_ICON_SIZE,
+            ),
             Net(
                 interface=eth,
                 format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
-                fontsize=TOOLBAR_NET_FONT_SIZE,
+                fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
                 update_interval=2,
             ),
-            TextBox("\u21f5"),
         ]
     )
 
@@ -195,35 +205,61 @@ wlan = first_of_wireless_net()
 if wlan:
     widgets.extend(
         [
-            TextBox("\uf1eb"),
+            TextBox(
+                "\uf1eb",
+                fontsize=TOOLBAR_ICON_SIZE,
+            ),
             Net(
                 interface=wlan,
                 format="{up:6.2f}{up_suffix:<2}\n{down:6.2f}{down_suffix:<2}",
-                fontsize=TOOLBAR_NET_FONT_SIZE,
+                fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
                 update_interval=2,
             ),
-            TextBox("\u21f5"),
+        ]
+    )
+
+if sensor_tag:
+    widgets.extend(
+        [
+            TextBox(
+                "\uef2b",
+                fontsize=TOOLBAR_ICON_SIZE,
+            ),
+            ThermalSensor(
+                tag_sensor=sensor_tag,
+                fontsize=TOOLBAR_TEXT_FONT_SIZE,
+            ),
+        ]
+    )
+
+if os.path.exists("/sys/class/power_supply/BAT0/status"):
+    widgets.extend(
+        [
+            BatteryNerdIcon(
+                format="{char}",
+                fontsize=TOOLBAR_ICON_SIZE,
+            ),
+            BatteryNerdIcon(
+                format="{percent:2.0%}\n{hour:02}:{min:02}",
+                fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
+            ),
         ]
     )
 
 widgets.extend(
     [
-        CPUGraph(frequency=2),
-    ]
-)
-
-if sensor_tag:
-    widgets.append(
-        ThermalSensor(tag_sensor=sensor_tag, fontsize=TOOLBAR_TEXT_FONT_SIZE)
-    )
-
-if os.path.exists("/sys/class/power_supply/BAT0/status"):
-    widgets.append(BatteryNerdIcon(format="{char} {percent:2.0%}"))
-
-widgets.extend(
-    [
-        TextBox(text="\U000f00f0"),
-        Clock(format="%a %H:%M %m-%d", fontsize=TOOLBAR_TEXT_FONT_SIZE),
+        TextBox(
+            text="\U000f00f0",
+            fontsize=TOOLBAR_ICON_SIZE,
+        ),
+        WeekDay(
+            update_interval=60,
+            fontsize=TOOLBAR_ICON_SIZE,
+        ),
+        Clock(
+            format="%m-%d\n%H:%M",
+            fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
+        ),
     ]
 )
 
