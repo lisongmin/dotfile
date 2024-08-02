@@ -184,6 +184,20 @@ widgets.extend(
     ]
 )
 
+if sensor_tag:
+    widgets.extend(
+        [
+            TextBox(
+                "\uef2b",
+                fontsize=TOOLBAR_ICON_SIZE,
+            ),
+            ThermalSensor(
+                tag_sensor=sensor_tag,
+                fontsize=TOOLBAR_TEXT_FONT_SIZE,
+            ),
+        ]
+    )
+
 
 net_format = (
     "{up:6.2f}{up_suffix:<2} \U0000f062\n{down:6.2f}{down_suffix:<2} \U0000f063"
@@ -218,20 +232,6 @@ if wlan:
                 format=net_format,
                 fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
                 update_interval=2,
-            ),
-        ]
-    )
-
-if sensor_tag:
-    widgets.extend(
-        [
-            TextBox(
-                "\uef2b",
-                fontsize=TOOLBAR_ICON_SIZE,
-            ),
-            ThermalSensor(
-                tag_sensor=sensor_tag,
-                fontsize=TOOLBAR_TEXT_FONT_SIZE,
             ),
         ]
     )
