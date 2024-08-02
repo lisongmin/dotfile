@@ -55,6 +55,7 @@ from local_qtile_utils import (
     BatteryNerdIcon,
     WeekDay,
 )
+from pactl_volume import PactlVolume
 
 TOOLBAR_WIDTH = 32
 TOOLBAR_ICON_SIZE = 22
@@ -73,6 +74,8 @@ sensor_tag = first_of_sensor_tag(["Tdie", "Core 0", "Tctl"])
 wallpaper = first_exists(
     ["~/dotfile/wallpaper/family.jpeg", "~/dotfile/wallpaper/jzbq.jpeg"]
 )
+
+volume = PactlVolume(emoji=True, step=4, fontsize=TOOLBAR_ICON_SIZE)
 
 MOD = "mod4"
 
@@ -107,9 +110,9 @@ keys = [
     Key([MOD, "mod1"], "w", lazy.spawn("firefox")),
     Key([MOD, "mod1"], "f", lazy.spawn(default_file_manager)),
     Key([MOD, "mod1"], "m", lazy.spawn("thunderbird")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("pactl set-sink-volume 0 -4%")),
-    Key([], "XF86AudioMute", lazy.spawn("pactl set-sink-mute 0 toggle")),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("pactl set-sink-volume 0 +4%")),
+    Key([], "XF86AudioLowerVolume", lazy.function(lambda _: volume.decrease_vol())),
+    Key([], "XF86AudioRaiseVolume", lazy.function(lambda _: volume.increase_vol())),
+    Key([], "XF86AudioMute", lazy.function(lambda _: volume.mute())),
     Key([], "XF86AudioPlay", lazy.spawn("xmms2 toggle")),
     Key([], "XF86AudioStop", lazy.spawn("xmms2 stop")),
     Key([], "XF86AudioPrev", lazy.spawn("xmms2 prev")),
@@ -235,6 +238,8 @@ if wlan:
             ),
         ]
     )
+
+widgets.append(volume)
 
 if os.path.exists("/sys/class/power_supply/BAT0/status"):
     widgets.extend(
