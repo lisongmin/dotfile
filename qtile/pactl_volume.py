@@ -3,6 +3,7 @@ from subprocess import check_output, list2cmdline
 import json
 from libqtile.widget.volume import Volume
 from libqtile.command.base import expose_command
+from libqtile.utils import send_notification
 
 
 class PactlVolume(Volume):
@@ -108,16 +109,21 @@ class PactlVolume(Volume):
             return
 
         sinks = sorted(sinks, key=lambda x: self.priority_of_sink(x))
-        preferred_sink = sinks[0]["name"]
-        if self._default_sink == preferred_sink:
+        preferred_sink = sinks[0]
+        if self._default_sink == preferred_sink["name"]:
             return
 
         check_output(
-            ["pactl", "set-default-sink", preferred_sink],
+            ["pactl", "set-default-sink", preferred_sink["name"]],
             text=True,
         )
-        # TODO: notify the sink change
-        self._default_sink = preferred_sink
+        self._default_sink = preferred_sink["name"]
+
+        send_notification(
+            "Volume sink switched",
+            f"The volume sink switched to {preferred_sink['node.nick']}",
+            timeout=5000,
+        )
 
     def priority_of_sink(self, sink: dict) -> int:
         if "headphones" in sink["active_port"]:
