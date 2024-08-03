@@ -47,6 +47,7 @@ from libqtile.widget.graph import CPUGraph
 from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
 from libqtile.widget.generic_poll_text import GenPollText
+from libqtile.widget.do_not_disturb import DoNotDisturb
 from local_qtile_utils import (
     first_exists,
     first_of_excutable,
@@ -267,6 +268,19 @@ if os.path.exists("/sys/class/power_supply/BAT0/status"):
         ]
     )
 
+# Do not disturb
+widgets.extend(
+    [
+        DoNotDisturb(
+            fontsize=TOOLBAR_ICON_SIZE,
+            update_interval=1,
+            enabled_icon="\U000f116e",
+            disabled_icon="\U000f0361",
+        ),
+    ]
+)
+
+# Calendar and datetime
 widgets.extend(
     [
         TextBox(
