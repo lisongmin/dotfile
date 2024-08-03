@@ -334,17 +334,6 @@ def autostart():
         subprocess.call([home + "/.config/qtile/autostart.sh"])
 
 
-SINK_MATCH = re.compile(r"^\s*(?P<number>\d+)\s+(?P<name>\S+).*(?P<state>\S+)$")
-
-
 @hook.subscribe.screen_change
 def change_sink(ev):
-    output = subprocess.check_output(["pactl", "list", "sinks", "short"])
-    for line in output.decode().split("\n"):
-        sink = SINK_MATCH.match(line)
-        if sink is None:
-            continue
-
-        if "hdmi-stereo" in sink.group("name") and "RUNNING" not in sink.group("state"):
-            logging.info("Set default sink to %s", sink.group("name"))
-            subprocess.call(["pactl", "set-default-sink", sink.group("name")])
+    volume.switch_sink()

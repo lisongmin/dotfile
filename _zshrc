@@ -183,6 +183,18 @@ attach_poetry_shell() {
 }
 
 add-zsh-hook chpwd attach_poetry_shell
+
+update_tmux_env() {
+  if [ -z "$TMUX" ]; then
+    return
+  fi
+
+  export $(tmux show-environment XAUTHORITY)
+  export $(tmux show-environment DISPLAY)
+}
+
+add-zsh-hook preexec update_tmux_env
+
 alias just='just --unstable'
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias rgi='rg --no-ignore'
