@@ -248,6 +248,7 @@ widgets.extend(
             func=lambda: f"{volume.volume or 0}%",
             update_interval=1,
             fontsize=TOOLBAR_TEXT_FONT_SIZE,
+            padding=0,
         ),
     ]
 )
