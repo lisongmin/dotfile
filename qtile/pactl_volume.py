@@ -100,7 +100,6 @@ class PactlVolume(Volume):
     @expose_command()
     def switch_sink(self):
         self.switch_to_preferred_sink()
-        self.update()
 
     def switch_to_preferred_sink(self):
         output = check_output(["pactl", "-f", "json", "list", "sinks"], text=True)
