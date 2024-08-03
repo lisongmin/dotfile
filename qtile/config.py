@@ -46,6 +46,7 @@ from libqtile.widget.systray import Systray
 from libqtile.widget.graph import CPUGraph
 from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
+from libqtile.widget.generic_poll_text import GenPollText
 from local_qtile_utils import (
     first_exists,
     first_of_excutable,
@@ -75,7 +76,7 @@ wallpaper = first_exists(
     ["~/dotfile/wallpaper/family.jpeg", "~/dotfile/wallpaper/jzbq.jpeg"]
 )
 
-volume = PactlVolume(emoji=True, step=4, fontsize=TOOLBAR_ICON_SIZE)
+volume = PactlVolume(emoji=True, step=4, update_interval=1, fontsize=TOOLBAR_ICON_SIZE)
 
 MOD = "mod4"
 
@@ -239,7 +240,17 @@ if wlan:
         ]
     )
 
-widgets.append(volume)
+widgets.extend(
+    [
+        volume,
+        GenPollText(
+            name="volume",
+            func=lambda: f"{volume.volume or 0}%",
+            update_interval=1,
+            fontsize=TOOLBAR_TEXT_FONT_SIZE,
+        ),
+    ]
+)
 
 if os.path.exists("/sys/class/power_supply/BAT0/status"):
     widgets.extend(
