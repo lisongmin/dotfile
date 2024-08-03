@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from subprocess import check_output, list2cmdline
+import json
 from libqtile.widget.volume import Volume
+from libqtile.command.base import expose_command
 
 
 class PactlVolume(Volume):
@@ -17,7 +19,9 @@ class PactlVolume(Volume):
             config.pop(key, None)
 
         self._default_sink = ""
-
+        self.mouse_callbacks = {
+            "Button3": self.switch_sink,
+        }
         Volume.__init__(self, **config)
 
     @property
@@ -91,3 +95,34 @@ class PactlVolume(Volume):
     @property
     def volume_app(self):
         return "qpwgraph"
+
+    @expose_command()
+    def switch_sink(self):
+        self.switch_to_preferred_sink()
+        self.update()
+
+    def switch_to_preferred_sink(self):
+        output = check_output(["pactl", "-f", "json", "list", "sinks"], text=True)
+        sinks = json.loads(output)
+        if len(sinks) == 0:
+            return
+
+        sinks = sorted(sinks, key=lambda x: self.priority_of_sink(x))
+        preferred_sink = sinks[0]["name"]
+        if self._default_sink == preferred_sink:
+            return
+
+        check_output(
+            ["pactl", "set-default-sink", preferred_sink],
+            text=True,
+        )
+        # TODO: notify the sink change
+        self._default_sink = preferred_sink
+
+    def priority_of_sink(self, sink: dict) -> int:
+        if "headphones" in sink["active_port"]:
+            return 100
+        elif "hdmi" in sink["active_port"]:
+            return 200
+        else:
+            return 500
