@@ -120,7 +120,7 @@ class PactlVolume(Volume):
 
         send_notification(
             "Volume sink switched",
-            f"The volume sink switched to {preferred_sink['node.nick']}",
+            f"The volume sink switched to {preferred_sink['properties']['node.nick']}",
             timeout=5000,
         )
 
