@@ -9,8 +9,8 @@
     # Size of message window and its position.
     origin = top-right
     width = 600
-    height = 5
-    offset = -32x32
+    height = 600
+    offset = 32x48
     notification_limit = 8
 
     # Show how many messages are currently hidden (because of geometry).
