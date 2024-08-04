@@ -19,7 +19,7 @@ class PactlVolume(Volume):
         ]:
             config.pop(key, None)
 
-        self._default_sink = ""
+        self._current_sink = ""
         self.mouse_callbacks = {
             "Button3": self.switch_sink,
         }
@@ -27,14 +27,7 @@ class PactlVolume(Volume):
 
     @property
     def default_sink(self) -> str:
-        if not self._default_sink:
-            try:
-                stdout = check_output(["pactl", "get-default-sink"], text=True)
-                self._default_sink = stdout.strip()
-            except Exception:
-                pass
-
-        return self._default_sink
+        return "@DEFAULT_SINK@"
 
     @property
     def get_volume_command(self):
@@ -109,18 +102,20 @@ class PactlVolume(Volume):
 
         sinks = sorted(sinks, key=lambda x: self.priority_of_sink(x))
         preferred_sink = sinks[0]
-        if self._default_sink == preferred_sink["name"]:
+        name = preferred_sink["name"]
+        if self._current_sink == name:
             return
 
         check_output(
-            ["pactl", "set-default-sink", preferred_sink["name"]],
+            ["pactl", "set-default-sink", name],
             text=True,
         )
-        self._default_sink = preferred_sink["name"]
+        self._current_sink = name
 
+        nick = preferred_sink["properties"]["node.nick"]
         send_notification(
             "Volume sink switched",
-            f"The volume sink switched to {preferred_sink['properties']['node.nick']}",
+            f"The volume sink switched to {nick}",
             timeout=5000,
         )
 
