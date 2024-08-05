@@ -195,7 +195,8 @@ update_tmux_env() {
 
 add-zsh-hook preexec update_tmux_env
 
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
 alias just='just --unstable'
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias rgi='rg --no-ignore'
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
