@@ -48,6 +48,7 @@ from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
 from libqtile.widget.generic_poll_text import GenPollText
 from libqtile.widget.do_not_disturb import DoNotDisturb
+from libqtile.widget.battery import Battery
 from local_qtile_utils import (
     first_exists,
     first_of_excutable,
@@ -261,9 +262,11 @@ if os.path.exists("/sys/class/power_supply/BAT0/status"):
                 format="{char}",
                 fontsize=TOOLBAR_ICON_SIZE,
             ),
-            BatteryNerdIcon(
+            Battery(
                 format="{percent:2.0%}\n{hour:02}:{min:02}",
                 fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
+                notify_below=0.1,
+                notification_timeout=15,
             ),
         ]
     )
