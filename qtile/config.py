@@ -265,7 +265,7 @@ if os.path.exists("/sys/class/power_supply/BAT0/status"):
             Battery(
                 format="{percent:2.0%}\n{hour:02}:{min:02}",
                 fontsize=TOOLBAR_DOUBLE_LINE_FONT_SIZE,
-                notify_below=0.1,
+                notify_below=10,
                 notification_timeout=15,
             ),
         ]
