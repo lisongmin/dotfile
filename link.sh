@@ -4,8 +4,6 @@ _dir=$(realpath $(dirname $0))
 source ${_dir}/.link_lib
 
 # python linters
-link {_,~/.}config/flake8
-link {_,~/.}config/pycodestyle
 link {_,~/.}pylintrc
 link {_,~/.}xprofile
 
@@ -32,23 +30,5 @@ link _cargo ~/.cargo/config
 # npm
 link _npmrc ~/.npmrc
 
-# dunst
-link {_,~/.}config/dunst/dunstrc
-
-# fontconfig
-link {_,~/.}config/fontconfig
-
-# windows manager
-link qtile ~/.config/qtile
-
-# dingtalk
-# link {_,~/.}config/systemd/user/dingtalk.service
-
-# terminal
-link {_,~/.}config/alacritty
-
 # build arch package in chroot
 link {_,~/.}local/bin/buildpkg
-
-# flameshot
-link {_,~/.}config/flameshot
