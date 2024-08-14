@@ -189,8 +189,13 @@ update_tmux_env() {
     return
   fi
 
-  export $(tmux show-environment XAUTHORITY)
-  export $(tmux show-environment DISPLAY)
+  envs=$(tmux show-environment)
+  for e in $envs ; do
+    echo "$e" | grep -q "^-"
+    if [ $? -ne 0 ]; then
+      export "$e"
+    fi
+  done
 }
 
 add-zsh-hook preexec update_tmux_env
