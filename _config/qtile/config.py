@@ -46,7 +46,6 @@ from libqtile.widget.systray import Systray
 from libqtile.widget.graph import CPUGraph
 from libqtile.widget.sensors import ThermalSensor
 from libqtile.widget.clock import Clock
-from libqtile.widget.generic_poll_text import GenPollText
 from libqtile.widget.do_not_disturb import DoNotDisturb
 from libqtile.widget.battery import Battery
 from local_qtile_utils import (
@@ -78,7 +77,13 @@ wallpaper = first_exists(
     ["~/dotfile/wallpaper/family.jpeg", "~/dotfile/wallpaper/jzbq.jpeg"]
 )
 
-volume = PactlVolume(emoji=True, step=4, update_interval=1, fontsize=TOOLBAR_ICON_SIZE)
+volume = PactlVolume(
+    TextBox(fontsize=TOOLBAR_TEXT_FONT_SIZE, pedding=0),
+    emoji=True,
+    step=4,
+    update_interval=1,
+    fontsize=TOOLBAR_ICON_SIZE,
+)
 
 MOD = "mod4"
 
@@ -245,13 +250,7 @@ if wlan:
 widgets.extend(
     [
         volume,
-        GenPollText(
-            name="volume",
-            func=lambda: f"{volume.volume or 0}%",
-            update_interval=1,
-            fontsize=TOOLBAR_TEXT_FONT_SIZE,
-            padding=0,
-        ),
+        volume.percent_box,
     ]
 )
 
@@ -353,4 +352,4 @@ def autostart():
 
 @hook.subscribe.screen_change
 def change_sink(ev):
-    volume.switch_sink()
+    volume.switch_to_preferred_sink()
