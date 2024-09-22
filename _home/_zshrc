@@ -180,6 +180,10 @@ attach_poetry_shell() {
     poetry shell -q
     return 0 
   fi
+  if [ -e "$PWD/uv.lock" ]; then
+    source "$PWD/.venv/bin/activate"
+    return 0
+  fi
 }
 
 add-zsh-hook chpwd attach_poetry_shell
@@ -203,4 +207,5 @@ add-zsh-hook preexec update_tmux_env
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
+alias b='just --justfile /workspace/a-light.win/builder/justfile --working-directory .'
 alias rgi='rg --no-ignore'
