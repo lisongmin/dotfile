@@ -1,3 +1,0 @@
-return {
-  "conormcd/matchindent.vim",
-}
