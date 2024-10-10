@@ -209,3 +209,14 @@ add-zsh-hook preexec update_tmux_env
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias b='just --justfile /workspace/a-light.win/builder/justfile --working-directory .'
 alias rgi='rg --no-ignore'
+
+# bun completions
+[ -s "/home/lsm/.local/share/reflex/bun/_bun" ] && source "/home/lsm/.local/share/reflex/bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.local/share/reflex/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+zstyle ':completion:*' menu select
