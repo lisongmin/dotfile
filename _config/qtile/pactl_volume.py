@@ -185,9 +185,11 @@ class PactlVolume(Volume):
         )
 
     def priority_of_sink(self, sink: dict) -> int:
-        if "headphones" in sink["active_port"]:
+        _active_port = sink.get("active_port", "")
+
+        if "headphones" in _active_port:
             return 100
-        elif "hdmi" in sink["active_port"]:
+        elif "hdmi" in _active_port:
             return 200
         else:
             return 500
