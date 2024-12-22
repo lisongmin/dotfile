@@ -65,11 +65,7 @@ TOOLBAR_DEFAULT_FONT_SIZE = 18
 TOOLBAR_TEXT_FONT_SIZE = 14
 TOOLBAR_DOUBLE_LINE_FONT_SIZE = 11
 
-default_terminal = first_of_excutable(
-    ["kitty", "alacritty"]
-    if qtile.core.name == "x11"
-    else ["foot", "kitty", "alacritty"]
-)
+default_terminal = first_of_excutable(["kitty", "alacritty"])
 default_file_manager = first_of_excutable(["nemo", "nautilus", "dolphin"])
 default_fcitx = first_of_excutable(["fcitx5", "fcitx"])
 sensor_tag = first_of_sensor_tag(["Tdie", "Core 0", "Tctl"])
