@@ -2,12 +2,12 @@
 
 ime=$(which fcitx5 || which fcitx)
 if [ -e "$ime" ]; then
-	$ime &
+  $ime &
 fi
 
 pgrep -U "$USER" '^xfce4-screensaver$'
 if [ $? -ne 0 ]; then
-	xfce4-screensaver &
+  xfce4-screensaver &
 fi
 
 systemctl --user start dunst
@@ -20,26 +20,26 @@ picom -b
 
 pgrep -U "$USER" '^tmux$'
 if [ $? -ne 0 ]; then
-	tmux new-session -d
-	tmux new-session -s term -d
-	tmux new-session -s work -c ~/work -d
-	xfce4-terminal -e "tmux attach-session -t term" &
-	xfce4-termnal -e "tmux attach-session -t work" &
+  tmux new-session -d
+  tmux new-session -s term -d
+  tmux new-session -s work -c ~/work -d
+  xfce4-terminal -e "tmux attach-session -t term" &
+  xfce4-termnal -e "tmux attach-session -t work" &
 fi
 
 pgrep -U "$USER" '^firefox$'
 if [ $? -ne 0 ]; then
-	firefox &
+  firefox &
 fi
 
 pgrep -U "$USER" '^tor-browser$'
 if [ $? -ne 0 ]; then
-	tor-browser &
+  tor-browser &
 fi
 
 pgrep -U "$USER" '^chromium$'
 if [ $? -ne 0 ]; then
-	chromium &
+  chromium &
 fi
 
 # pgrep -U "$USER" '^thunderbird$'
@@ -54,22 +54,22 @@ fi
 
 which telegram-desktop
 if [ $? -eq 0 ]; then
-	pgrep -U "$USER" telegram
-	if [ $? -ne 0 ]; then
-		telegram-desktop &
-	fi
+  pgrep -U "$USER" telegram
+  if [ $? -ne 0 ]; then
+    telegram-desktop &
+  fi
 fi
 
 which element-desktop
 if [ $? -eq 0 ]; then
-	pgrep -U "$USER" element-desktop
-	if [ $? -ne 0 ]; then
-		element-desktop &
-	fi
+  pgrep -U "$USER" element-desktop
+  if [ $? -ne 0 ]; then
+    element-desktop &
+  fi
 fi
 
 if which nextcloud; then
-	if ! pgrep -U "$USER" nextcloud; then
-		nextcloud &
-	fi
+  if ! pgrep -U "$USER" nextcloud; then
+    nextcloud &
+  fi
 fi
