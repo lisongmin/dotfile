@@ -177,12 +177,17 @@ class PactlVolume(Volume):
 
         self.update_volume()
 
-        nick = sink["properties"]["node.nick"]
+        nick = self._get_nick(sink)
         send_notification(
             "Volume sink switched",
             f"The volume sink switched to {nick}",
             timeout=5000,
         )
+
+    def _get_nick(self, sink: dict) -> str:
+        properties = sink.get("properties") or {}
+        nick = properties.get("node.nick") or sink.get("name", "Unknown")
+        return nick
 
     def priority_of_sink(self, sink: dict) -> int:
         _active_port = sink.get("active_port") or ""
