@@ -79,7 +79,7 @@ fi
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-export SSH_KEY_PATH="~/.ssh/dsa_id"
+export SSH_KEY_PATH="~/.ssh/lisongmin@protonmail.com.pub"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -203,8 +203,6 @@ update_tmux_env() {
 }
 
 add-zsh-hook preexec update_tmux_env
-
-[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
 
 alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias b='just --justfile /workspace/a-light.win/builder/justfile --working-directory .'
