@@ -48,7 +48,7 @@ return {
             optional = true,
           },
         },
-        func = function(params)
+        func = function(params, on_log, on_complete)
           local manager = params.manager
           if manager ~= "uv" and manager ~= "poetry" then
             return nil, string.format("Invalid package manager '%s'. Only 'uv' or 'poetry' are supported.", manager)
@@ -85,7 +85,7 @@ return {
             optional = true,
           },
         },
-        func = function(params, on_log)
+        func = function(params, on_log, on_complete)
           local workflow_name = params.workflow_name
           on_log("Starting to load workflow: " .. workflow_name)
 
