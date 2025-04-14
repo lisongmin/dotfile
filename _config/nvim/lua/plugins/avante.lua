@@ -7,13 +7,13 @@ return {
     provider = "copilot",
     copilot = {
       endpoint = "https://api.githubcopilot.com/",
-      model = "claude-3.7-sonnet",
+      model = "claude-3.5-sonnet",
       -- model = "claude-3.5-sonnet",
       -- model = "gpt-4o-2024-08-06",
     },
     gemini = {
       endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
-      model = "gemini-2.0-flash",
+      model = "gemini-2.5-pro-exp-03-25",
     },
     vendors = {
       openrouter = {
