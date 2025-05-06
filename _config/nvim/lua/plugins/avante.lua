@@ -6,13 +6,13 @@ return {
   opts = {
     provider = "copilot",
     copilot = {
-      endpoint = "https://api.githubcopilot.com/",
+      -- endpoint = "https://api.githubcopilot.com/",
+      -- model = "claude-3.7-sonnet",
       model = "claude-3.5-sonnet",
-      -- model = "claude-3.5-sonnet",
       -- model = "gpt-4o-2024-08-06",
     },
     gemini = {
-      endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
+      -- endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
       model = "gemini-2.5-pro-exp-03-25",
     },
     vendors = {
@@ -27,134 +27,45 @@ return {
       ask = "<leader>ab", -- ask
     },
     system_prompt = function()
-      local hub = require("mcphub").get_hub_instance()
-      return hub:get_active_servers_prompt()
+      local ok, hub = pcall(require, "mcphub")
+      if not ok then
+        -- Return a default prompt if mcphub is not available
+        return [[You are a helpful AI assistant for programming. Help the user write and understand code.]]
+      end
+
+      local hub_instance = hub.get_hub_instance()
+      if not hub_instance then
+        -- Return a default prompt if hub instance is not available
+        return [[You are a helpful AI assistant for programming. Help the user write and understand code.]]
+      end
+
+      -- Get the active servers prompt, with error handling
+      local success, prompt = pcall(function()
+        return hub_instance:get_active_servers_prompt()
+      end)
+
+      if not success then
+        -- Return a default prompt if getting servers prompt fails
+        return [[You are a helpful AI assistant for programming. Help the user write and understand code.]]
+      end
+
+      return prompt
     end,
-    disable_tools = { "fetch" },
+    disabled_tools = {
+      "fetch",
+      "list_files",
+      "search_files",
+      "read_file",
+      "create_file",
+      "rename_file",
+      "delete_file",
+      "create_dir",
+      "rename_dir",
+      "delete_dir",
+      "bash",
+    },
     custom_tools = function()
-      return {
-        require("mcphub.extensions.avante").mcp_tool(),
-        {
-          name = "run_pytest",
-          description = "Run python unittest and return results",
-          param = {
-            type = "table",
-            fields = {
-              {
-                name = "manager",
-                description = "The python package manager to use, e.g. 'uv', 'poetry'. Read the ./pyproject.toml to set it.",
-                type = "string",
-                optional = false,
-              },
-              {
-                name = "target",
-                description = "The testcase to run, should be the a relative path of file in ./tests",
-                type = "string",
-                optional = true,
-              },
-            },
-          },
-          returns = {
-            {
-              name = "result",
-              description = "Result of the fetch",
-              type = "string",
-            },
-            {
-              name = "error",
-              description = "Error message if the fetch was not successful",
-              type = "string",
-              optional = true,
-            },
-          },
-          func = function(params, on_log, on_complete)
-            local manager = params.manager
-            if manager ~= "uv" and manager ~= "poetry" then
-              return nil, string.format("Invalid package manager '%s'. Only 'uv' or 'poetry' are supported.", manager)
-            end
-            local target = params.target or ""
-            local cmd = string.format("%s run pytest %s", manager, target)
-            return vim.fn.system(cmd)
-          end,
-        },
-        {
-          name = "load_workflow",
-          description = "When the user input contains a format '!{workflow_name}', and the workflow_file exist in one of ['workflows/{workflow_name}.md', '~/.config/nvim/workflows/{workflow_name}.md'], then trigger the workflow.",
-          param = {
-            type = "table",
-            fields = {
-              {
-                name = "workflow_name",
-                description = "The workflow name to load",
-                type = "string",
-                optional = false,
-              },
-            },
-          },
-          returns = {
-            {
-              name = "result",
-              description = "The workflow content, You should do what the workflow says.",
-              type = "string",
-            },
-            {
-              name = "error",
-              description = "Error message if the workflow file read failed",
-              type = "string",
-              optional = true,
-            },
-          },
-          func = function(params, on_log, on_complete)
-            local workflow_name = params.workflow_name
-            on_log("Starting to load workflow: " .. workflow_name)
-
-            -- Sanitize workflow name
-            -- Remove any directory traversal attempts and special characters
-            -- Only allow alphanumeric characters, hyphens, and underscores
-            local sanitized_name = workflow_name:gsub("[^%w%-_]", "")
-
-            -- Check if the name was modified during sanitization
-            if sanitized_name ~= workflow_name then
-              local error_msg = string.format(
-                "Invalid workflow name '%s'. Only alphanumeric characters, hyphens, and underscores are allowed.",
-                workflow_name
-              )
-              on_log("Error: " .. error_msg)
-              return nil, error_msg
-            end
-
-            -- Check for empty name after sanitization
-            if sanitized_name == "" then
-              on_log("Error: Workflow name cannot be empty")
-              return nil, "Workflow name cannot be empty"
-            end
-
-            -- Define possible workflow file paths
-            local paths = {
-              string.format("workflows/%s.md", sanitized_name),
-              string.format("%s/.config/nvim/workflows/%s.md", os.getenv("HOME"), sanitized_name),
-            }
-
-            -- Try to read from either path
-            for _, path in ipairs(paths) do
-              on_log("Trying to read from: " .. path)
-              local file = io.open(path, "r")
-              if file then
-                local content = file:read("*all")
-                file:close()
-                on_log("Successfully loaded workflow from: " .. path)
-                return content
-              end
-            end
-
-            -- If no file was found, return an error
-            local error_msg =
-              string.format("Workflow '%s' not found in either workflows/ or ~/.config/nvim/workflows/", sanitized_name)
-            on_log("Error: " .. error_msg)
-            return nil, error_msg
-          end,
-        },
-      }
+      return require("mcphub.extensions.avante").mcp_tool()
     end,
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -168,6 +79,7 @@ return {
     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
     "zbirenbaum/copilot.lua", -- for providers='copilot'
+    "williamboman/mcphub.nvim", -- Add this line
     {
       -- support for image pasting
       "HakonHarnes/img-clip.nvim",

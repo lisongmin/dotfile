@@ -57,9 +57,10 @@ HIST_STAMPS="yyyy-mm-dd"
 # User configuration
 
 export NPM_PACKAGES="$HOME/.local"
-export PATH=$HOME/.local/bin:$HOME/.cargo/bin:/usr/local/bin:$PATH:/usr/lib/emscripten
-export PATH=$PATH:/opt/flutter/bin
-export PATH=$PATH:$HOME/go/bin
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH # local commands
+export PATH="$HOME/.cargo/bin:$PATH"              # rust
+export PATH="/$HOME/fvm/default/bin:$PATH"        # flutter
+export PATH="$HOME/go/bin:$PATH"                  # golang
 export MANPATH="$HOME/.local/share/man:/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -208,13 +209,12 @@ alias .j='just --justfile /home/lsm/dotfile/Justfile --working-directory .'
 alias b='just --justfile /workspace/a-light.win/builder/justfile --working-directory .'
 alias rgi='rg --no-ignore'
 
-# bun completions
-[ -s "/home/lsm/.local/share/reflex/bun/_bun" ] && source "/home/lsm/.local/share/reflex/bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.local/share/reflex/bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
 
 zstyle ':completion:*' menu select
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/lsm/.dart-cli-completion/zsh-config.zsh ]] && . /home/lsm/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
