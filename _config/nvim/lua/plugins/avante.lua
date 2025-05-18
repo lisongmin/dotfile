@@ -4,12 +4,14 @@ return {
   lazy = false,
   version = false, -- set this if you want to always pull the latest change
   opts = {
+    -- provider = "openrouter",
     provider = "copilot",
     copilot = {
       -- endpoint = "https://api.githubcopilot.com/",
       -- model = "claude-3.7-sonnet",
       model = "claude-3.5-sonnet",
       -- model = "gpt-4o-2024-08-06",
+      -- model = "gemini-2.5-pro",
     },
     gemini = {
       -- endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
@@ -20,7 +22,8 @@ return {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
         api_key_name = "OPENROUTER_API_KEY",
-        model = "deepseek/deepseek-r1",
+        -- model = "google/gemini-2.5-pro-preview",
+        model = "anthropic/claude-3.7-sonnet",
       },
     },
     mappings = {
@@ -51,19 +54,7 @@ return {
 
       return prompt
     end,
-    disabled_tools = {
-      "fetch",
-      "list_files",
-      "search_files",
-      "read_file",
-      "create_file",
-      "rename_file",
-      "delete_file",
-      "create_dir",
-      "rename_dir",
-      "delete_dir",
-      "bash",
-    },
+    disabled_tools = {},
     custom_tools = function()
       return require("mcphub.extensions.avante").mcp_tool()
     end,
