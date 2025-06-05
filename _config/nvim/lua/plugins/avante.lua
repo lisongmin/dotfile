@@ -6,18 +6,18 @@ return {
   opts = {
     -- provider = "openrouter",
     provider = "copilot",
-    copilot = {
-      -- endpoint = "https://api.githubcopilot.com/",
-      -- model = "claude-3.7-sonnet",
-      model = "claude-3.5-sonnet",
-      -- model = "gpt-4o-2024-08-06",
-      -- model = "gemini-2.5-pro",
-    },
-    gemini = {
-      -- endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
-      model = "gemini-2.5-pro-exp-03-25",
-    },
-    vendors = {
+    providers = {
+      copilot = {
+        -- endpoint = "https://api.githubcopilot.com/",
+        -- model = "claude-3.7-sonnet",
+        model = "claude-3.5-sonnet",
+        -- model = "gpt-4o-2024-08-06",
+        -- model = "gemini-2.5-pro",
+      },
+      gemini = {
+        -- endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
+        model = "gemini-2.5-pro-exp-03-25",
+      },
       openrouter = {
         __inherited_from = "openai",
         endpoint = "https://openrouter.ai/api/v1",
