@@ -1,66 +1,37 @@
 #!/usr/bin/env bash
 
-ime=$(which fcitx5 || which fcitx)
-if [ -e "$ime" ]; then
-  $ime &
-fi
+echo "$(date -Is) Starting user autostart script ..."
 
-pgrep -U "$USER" '^xfce4-screensaver$'
-if [ $? -ne 0 ]; then
-  xfce4-screensaver &
-fi
+run-daemon() {
+  program="$1"
+  shift # Remove first argument (program name)
+  exec_path=$(which "$program")
+  if [ -e "$exec_path" ]; then
+    pgrep -U "$USER" "^$program$"
+    if [ $? -ne 0 ]; then
+      echo "$(date -Is) Running daemon $program ..."
+      "$exec_path" "$@" &
+    fi
+  fi
+}
 
-systemctl --user start dunst
-
-autorandr --change
+systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 # disable beep
 xset -b
-picom -b
 
-pgrep -U "$USER" '^firefox$'
-if [ $? -ne 0 ]; then
-  firefox &
-fi
+# autorandr do not support wayland yet
+autorandr --change
 
-pgrep -U "$USER" '^tor-browser$'
-if [ $? -ne 0 ]; then
-  tor-browser &
-fi
+systemctl --user start dunst
 
-pgrep -U "$USER" '^chromium$'
-if [ $? -ne 0 ]; then
-  chromium &
-fi
+run-daemon picom -b
+run-daemon fcitx5
+run-daemon firefox
+run-daemon chromium
+run-daemon Telegram
+# run-daemon thunderbird
+# run-daemon osdlyrics
+# run-daemon element-desktop
 
-# pgrep -U "$USER" '^thunderbird$'
-# if [ $? -ne 0 ];then
-#     thunderbird&
-# fi
-
-# pgrep osdlyrics
-# if [ $? -ne 0 ]; then
-#    osdlyrics&
-# fi
-
-which telegram-desktop
-if [ $? -eq 0 ]; then
-  pgrep -U "$USER" telegram
-  if [ $? -ne 0 ]; then
-    telegram-desktop &
-  fi
-fi
-
-which element-desktop
-if [ $? -eq 0 ]; then
-  pgrep -U "$USER" element-desktop
-  if [ $? -ne 0 ]; then
-    element-desktop &
-  fi
-fi
-
-if which nextcloud; then
-  if ! pgrep -U "$USER" nextcloud; then
-    nextcloud &
-  fi
-fi
+echo "$(date -Is) User autostart script finished."

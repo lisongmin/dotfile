@@ -24,10 +24,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
 import re
 import subprocess
 import logging
+import shutil
+from pathlib import Path
 from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
@@ -58,6 +59,9 @@ from local_qtile_utils import (
     WeekDay,
 )
 from pactl_volume import PactlVolume
+
+if qtile.core.name == "wayland":
+    from wayland import wl_input_rules
 
 TOOLBAR_WIDTH = 32
 TOOLBAR_ICON_SIZE = 22
@@ -100,7 +104,7 @@ keys = [
     # 'win + q' reload qtile config
     Key([MOD], "q", lazy.restart()),
     # 'win + shift + q' logout
-    Key([MOD, "shift"], "q", lazy.shutdown()),
+    Key([MOD, "shift"], "q", lazy.spawn("loginctl kill-session self")),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn("loginctl lock-session")),
     # take a sreenshot
@@ -250,7 +254,9 @@ widgets.extend(
     ]
 )
 
-if os.path.exists("/sys/class/power_supply/BAT0/status"):
+battery_path = Path("/sys/class/power_supply/BAT0")
+battery_status_file = battery_path / "status"
+if battery_path.exists():
     widgets.extend(
         [
             BatteryNerdIcon(
@@ -266,17 +272,18 @@ if os.path.exists("/sys/class/power_supply/BAT0/status"):
         ]
     )
 
-# Do not disturb
-widgets.extend(
-    [
-        DoNotDisturb(
-            fontsize=TOOLBAR_ICON_SIZE,
-            update_interval=1,
-            enabled_icon="\U000f116e",
-            disabled_icon="\U000f0361",
-        ),
-    ]
-)
+if qtile.core.name == "x11":
+    # Do not disturb
+    widgets.extend(
+        [
+            DoNotDisturb(
+                fontsize=TOOLBAR_ICON_SIZE,
+                update_interval=1,
+                enabled_icon="\U000f116e",
+                disabled_icon="\U000f0361",
+            ),
+        ]
+    )
 
 # Calendar and datetime
 widgets.extend(
@@ -341,9 +348,17 @@ wmname = "Qtile"
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser("~")
-    if qtile.core.name == "x11":
-        subprocess.call([home + "/.config/qtile/autostart.sh"])
+    home = Path("~").expanduser()
+    auto_start_script = home / ".config/qtile/autostart.sh"
+    auto_start_log = home / ".local/share/qtile/autostart.log"
+
+    if auto_start_log.exists():
+        # backup auto_start_log before running the script
+        backup_file = auto_start_log.with_suffix(".log.old")
+        shutil.move(auto_start_log, backup_file)
+
+    with open(auto_start_log, "w") as log_file:
+        subprocess.Popen(["bash", auto_start_script], stdout=log_file, stderr=log_file)
 
 
 @hook.subscribe.screen_change
