@@ -151,7 +151,7 @@ groups = [
     Group(
         "g",
         label="\ue217",
-        matches=[Match(wm_class=re.compile(r"^(TelegramDesktop|Element)"))],
+        matches=[Match(wm_class=re.compile(r"^(Telegram|Element)"))],
         layouts=[Stack(margin=1)],
     ),
     Group(
