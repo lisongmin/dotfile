@@ -10,7 +10,8 @@ return {
       copilot = {
         -- endpoint = "https://api.githubcopilot.com/",
         -- model = "claude-3.7-sonnet",
-        model = "claude-3.5-sonnet",
+        -- model = "claude-3.5-sonnet",
+        model = "claude-sonnet-4",
         -- model = "gpt-4o-2024-08-06",
         -- model = "gemini-2.5-pro",
       },
@@ -23,7 +24,7 @@ return {
         endpoint = "https://openrouter.ai/api/v1",
         api_key_name = "OPENROUTER_API_KEY",
         -- model = "google/gemini-2.5-pro-preview",
-        model = "anthropic/claude-3.7-sonnet",
+        model = "anthropic/claude-sonnet-4",
       },
     },
     mappings = {
