@@ -35,7 +35,7 @@ keepassxc: backup_credential
         # Create backup of existing backup file
         echo "Merging changes for $filename"
         cp -a "$backup_file" "$backup_file.old"
-        keepassxc-cli merge -s "$backup_file" "$kdbx_file" 
+        keepassxc-cli merge -s "$backup_file" "$kdbx_file"  || exit $?
       fi
     fi
   done
