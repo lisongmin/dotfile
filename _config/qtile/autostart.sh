@@ -27,8 +27,10 @@ systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 # disable beep
 xset -b
 
-# autorandr do not support wayland yet
-# autorandr --change
+if [ -z "$WAYLAND_DISPLAY" ]; then
+  # autorandr do not support wayland yet
+  autorandr --change
+fi
 
 systemctl --user start dunst
 
