@@ -1,52 +1,59 @@
 {
-  "nativeMCPServers": {
-    "neovim": {
-      "disabled": true
-    }
-  },
   "mcpServers": {
-    "markitdown": {
-      "disabled": false,
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "markitdown-mcp:latest"
-      ],
-      "command": "podman"
-    },
     "blender": {
-      "name": "github.com/ahujasid/blender-mcp",
       "args": [
         "blender-mcp"
       ],
-      "command": "uvx"
+      "command": "uvx",
+      "name": "github.com/ahujasid/blender-mcp"
     },
-    "tavily": {
-      "disabled": true,
-      "name": "tavily",
-      "args": [
-        "-y",
-        "tavily-mcp@0.1.3"
-      ],
-      "command": "npx"
+    "context7": {
+      "type": "streamable-http",
+      "url": "https://mcp.context7.com/mcp"
     },
     "fetch": {
-      "disabled": true,
-      "name": "github.com/modelcontextprotocol/servers/tree/main/src/fetch",
       "args": [
         "mcp-server-fetch"
       ],
       "command": "uvx"
     },
     "git": {
-      "name": "github.com/modelcontextprotocol/servers/tree/main/src/git",
       "args": [
         "mcp-server-git",
         "--repository",
-        "/workspace/a-light.win/corner-vault"
+        "${REPOSITORY_PATH}"
       ],
       "command": "uvx"
+    },
+    "markitdown": {
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "markitdown-mcp:latest"
+      ],
+      "command": "podman",
+      "disabled": false
+    },
+    "playwright": {
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "command": "npx"
+    },
+    "tavily": {
+      "args": [
+        "-y",
+        "tavily-mcp@0.1.3"
+      ],
+      "command": "npx",
+      "disabled": true,
+      "name": "tavily"
+    }
+  },
+  "nativeMCPServers": {
+    "neovim": {
+      "disabled": false
     }
   }
 }
