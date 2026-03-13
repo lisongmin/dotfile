@@ -144,12 +144,6 @@ if [ ! -e ~/.gradle/gradle.properties ] || ! grep -q "ANDROID_NDK" ~/.gradle/gra
   echo "ANDROID_NDK=$ANDROID_HOME/ndk" >> ~/.gradle/gradle.properties
 fi
 
-# windows and linux desktop support
-if ! pacman -Q corrosion &>/dev/null ; then
-  sudo pacman -S --noconfirm corrosion
-fi
-# }
-
 # Provide z command
 eval "$(zoxide init zsh)" &>/dev/null
 
