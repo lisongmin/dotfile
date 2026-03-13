@@ -144,24 +144,6 @@ if [ ! -e ~/.gradle/gradle.properties ] || ! grep -q "ANDROID_NDK" ~/.gradle/gra
   echo "ANDROID_NDK=$ANDROID_HOME/ndk" >> ~/.gradle/gradle.properties
 fi
 
-if ! pacman -Q cargo-ndk &>/dev/null ; then
-  echo "Install cargo-ndk ..."
-  sudo pacman -S --noconfirm cargo-ndk
-fi
-
-if ! pacman -Q rustup &>/dev/null ; then
-  sudo pacman -S --noconfirm rustup
-
-  rustup toolchain install stable &>/dev/null
-
-  # android and ios support
-  rustup target add aarch64-linux-android \
-    x86_64-linux-android \
-    aarch64-apple-ios \
-    x86_64-apple-ios \
-    aarch64-apple-ios-sim &>/dev/null
-fi
-
 # windows and linux desktop support
 if ! pacman -Q corrosion &>/dev/null ; then
   sudo pacman -S --noconfirm corrosion
