@@ -150,7 +150,7 @@ groups = [
     ),
     Group(
         "g",
-        label="\ue217",
+        label="\U000f0b7b",
         matches=[Match(wm_class=re.compile(r"^(Telegram|Element)"))],
         layouts=[Stack(margin=1)],
     ),
@@ -159,7 +159,7 @@ groups = [
         label="\U000f01ee",
         matches=[Match(wm_class=re.compile(r"^(Mail|thunderbird)$"))],
     ),
-    Group("u", label="\ue287", matches=[Match(wm_class="Logseq")]),
+    Group("u", label="\U000f0ebf", matches=[Match(wm_class="Logseq")]),
     Group("i", label="\U000f05b3", matches=[Match(wm_class="virt-viewer")]),
 ]
 
