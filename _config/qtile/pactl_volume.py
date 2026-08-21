@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import asyncio
 from subprocess import check_output, call, list2cmdline
 import json
 from threading import Lock
@@ -107,26 +108,16 @@ class PactlVolume(Volume):
     def volume_app(self):
         return "qpwgraph"
 
-    def get_volume(self):
-        vol, muted = super().get_volume()
+    async def get_volume(self):
+        vol, muted = await super().get_volume()
         if vol != self.volume:
             self.percent_box.update(f"{vol or 0}%")
 
         return vol, muted
 
-    def update_volume(self):
-        vol, muted = self.get_volume()
+    async def update_volume(self):
+        vol, muted = await self.get_volume()
         self.volume = vol
-
-    @expose_command()
-    def increase_vol(self):
-        super().increase_vol()
-        self.update_volume()
-
-    @expose_command()
-    def decrease_vol(self):
-        super().decrease_vol()
-        self.update_volume()
 
     @expose_command()
     def switch_sink(self):
@@ -174,8 +165,6 @@ class PactlVolume(Volume):
             ["pactl", "set-default-sink", name],
             text=True,
         )
-
-        self.update_volume()
 
         nick = self._get_nick(sink)
         send_notification(

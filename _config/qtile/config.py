@@ -104,7 +104,7 @@ keys = [
     # 'win + q' reload qtile config
     Key([MOD], "q", lazy.restart()),
     # 'win + shift + q' logout
-    Key([MOD, "shift"], "q", lazy.spawn("loginctl kill-session self")),
+    Key([MOD, "shift"], "q", lazy.shutdown()),
     # 'ctrl + alt + l' to  lock screan
     Key(["control", "mod1"], "l", lazy.spawn("loginctl lock-session")),
     # take a sreenshot
@@ -140,7 +140,10 @@ groups = [
     Group(
         "s",
         label="\U000f0239",
-        matches=[Match(wm_class=re.compile(r"^(firefox|Chromium)$"))],
+        matches=[
+            Match(wm_class="firefox"),
+            Match(wm_class="chromium"),
+        ],
     ),
     Group("d", label="\ue795", matches=[Match(wm_class="Alacritty")]),
     Group(
@@ -151,7 +154,10 @@ groups = [
     Group(
         "g",
         label="\U000f0b7b",
-        matches=[Match(wm_class=re.compile(r"^(Telegram|Element)"))],
+        matches=[
+            Match(wm_class="Telegram"),
+            Match(wm_class="org.telegram.desktop"),
+        ],
         layouts=[Stack(margin=1)],
     ),
     Group(
