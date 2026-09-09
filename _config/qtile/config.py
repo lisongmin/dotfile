@@ -35,6 +35,7 @@ from libqtile.config import Key, Screen, Group, Drag, Click, Match
 from libqtile.lazy import lazy
 from libqtile import bar
 from libqtile import hook
+from libqtile.backend.wayland import InputConfig  # type: ignore[import]
 from libqtile.layout.stack import Stack
 from libqtile.layout.max import Max
 from libqtile.layout.xmonad import MonadTall
@@ -61,8 +62,19 @@ from local_qtile_utils import (
 )
 from pactl_volume import PactlVolume
 
+
+keyboard_layout = "us"
+keyboard_options = ""
+
 if qtile.core.name == "wayland":
-    from wayland import wl_input_rules
+    wl_input_rules = {
+        "*": InputConfig(
+            kb_layout=keyboard_layout,
+            kb_options=keyboard_options,
+            tap=True,
+            natural_scroll=True,
+        ),
+    }
 
 TOOLBAR_WIDTH = 32
 TOOLBAR_ICON_SIZE = 22
