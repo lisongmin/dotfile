@@ -28,6 +28,7 @@ import re
 import subprocess
 import logging
 import shutil
+import os
 from pathlib import Path
 from libqtile import qtile
 from libqtile.config import Key, Screen, Group, Drag, Click, Match
@@ -352,8 +353,14 @@ log_level = logging.DEBUG
 wmname = "Qtile"
 
 
-@hook.subscribe.startup_once
-def autostart():
+def ensure_display_env_correct():
+    if os.environ.get("XDG_SESSION_TYPE") == "x11":
+        os.environ.pop("WAYLAND_DISPLAY", None)
+    if os.environ.get("XDG_SESSION_TYPE") == "wayland":
+        os.environ.pop("DISPLAY", None)
+
+
+def load_auto_start():
     home = Path("~").expanduser()
     auto_start_script = home / ".config/qtile/autostart.sh"
     auto_start_log = home / ".local/share/qtile/autostart.log"
@@ -365,6 +372,12 @@ def autostart():
 
     with open(auto_start_log, "w") as log_file:
         subprocess.Popen(["bash", auto_start_script], stdout=log_file, stderr=log_file)
+
+
+@hook.subscribe.startup_once
+def autostart():
+    ensure_display_env_correct()
+    load_auto_start()
 
 
 @hook.subscribe.screen_change
