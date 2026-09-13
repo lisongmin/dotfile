@@ -22,8 +22,6 @@ run-daemon() {
   fi
 }
 
-systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-
 # disable beep
 xset -b
 
