@@ -365,11 +365,35 @@ log_level = logging.DEBUG
 wmname = "Qtile"
 
 
+def load_environmentd():
+    home = Path("~").expanduser()
+    environmentd_path = home / ".config/environment.d"
+    for env_file in environmentd_path.glob("*.conf"):
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    key = key.strip()
+                    value = value.strip()
+                    if key and value:
+                        os.environ[key] = os.path.expandvars(value)
+
+
 def ensure_display_env_correct():
     if os.environ.get("XDG_SESSION_TYPE") == "x11":
         os.environ.pop("WAYLAND_DISPLAY", None)
+        subprocess.call(["systemctl", "--user", "unset-environment", "WAYLAND_DISPLAY"])
+        subprocess.call(["systemctl", "--user", "import-environment", "DISPLAY"])
     if os.environ.get("XDG_SESSION_TYPE") == "wayland":
         os.environ.pop("DISPLAY", None)
+        subprocess.call(["systemctl", "--user", "unset-environment", "DISPLAY"])
+        subprocess.call(
+            ["systemctl", "--user", "import-environment", "WAYLAND_DISPLAY"]
+        )
 
 
 def load_auto_start():
@@ -388,6 +412,7 @@ def load_auto_start():
 
 @hook.subscribe.startup_once
 def autostart():
+    load_environmentd()
     ensure_display_env_correct()
     load_auto_start()
 

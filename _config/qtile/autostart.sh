@@ -31,6 +31,7 @@ if [ -z "$WAYLAND_DISPLAY" ]; then
 fi
 
 systemctl --user start dunst
+systemctl --user start linux-id
 
 run-daemon picom -b
 run-daemon fcitx5
